@@ -1,0 +1,520 @@
+\documentclass{beamer}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt} 
+% \usepackage{graphicx}
+\usepackage{graphics}
+\usepackage[T1]{fontenc}
+\usepackage{verbatim}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+\usepackage{color}
+\makeatletter
+\preto{\@verbatim}{\topsep=-6pt \partopsep=-6pt }
+\makeatother
+%\usepackage{fix-cm}
+\setbeamercovered{transparent}
+
+
+\renewcommand{\ni}{\noindent}
+
+
+% \SweaveOpts{cache=TRUE, background="white"}
+
+
+\title[3-Intro to ddply]{Introduction to ddply}
+\subtitle{Cleaning and Summarizing Data}
+\date{\hspace{1in}}
+\institute[ISU]{Iowa State University}
+\graphicspath{{figures/}}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Outline}
+\begin{itemize}
+\item conditionals \& subsets\medskip
+\item \texttt{for} loops\medskip
+\item avoiding \texttt{for} loops with \texttt{ddply}\medskip
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Baseball Data}
+\begin{itemize}
+\item The \texttt{plyr} package contains the data set \texttt{baseball}
+\item seasonal batting statistics of all major league players (through 2007)
+\end{itemize}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(plyr)}
+\hlkwd{help}\hlstd{(baseball)}
+\hlkwd{head}\hlstd{(baseball)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}\tiny
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+           id year stint team lg  g  ab  r  h X2b X3b hr rbi sb cs bb so ibb hbp sh sf gidp
+4   ansonca01 1871     1  RC1    25 120 29 39  11   3  0  16  6  2  2  1  NA  NA NA NA   NA
+44  forceda01 1871     1  WS3    32 162 45 45   9   4  0  29  8  0  4  0  NA  NA NA NA   NA
+68  mathebo01 1871     1  FW1    19  89 15 24   3   1  0  10  2  1  2  0  NA  NA NA NA   NA
+99  startjo01 1871     1  NY2    33 161 35 58   5   1  1  34  4  2  3  0  NA  NA NA NA   NA
+102 suttoez01 1871     1  CL1    29 128 35 45   3   7  3  23  3  1  1  0  NA  NA NA NA   NA
+106 whitede01 1871     1  CL1    29 146 40 47   6   5  1  21  2  2  4  1  NA  NA NA NA   NA
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Baseball Data}
+\begin{itemize}
+\item We would like to create career summary statistics for each player
+\item Plan: subset on a player, and compute statistics
+\end{itemize}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ss} \hlkwb{<-} \hlkwd{subset}\hlstd{(baseball, id}\hlopt{==}\hlstr{"sosasa01"}\hlstd{)}
+\hlkwd{head}\hlstd{(ss)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\vspace{-12pt}
+\begin{knitrout}\tiny
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+            id year stint team lg   g  ab  r   h X2b X3b hr rbi sb cs bb  so ibb hbp sh sf gidp
+66822 sosasa01 1989     1  TEX AL  25  84  8  20   3   0  1   3  0  2  0  20   0   0  4  0    3
+66823 sosasa01 1989     2  CHA AL  33  99 19  27   5   0  3  10  7  3 11  27   2   2  1  2    3
+67907 sosasa01 1990     1  CHA AL 153 532 72 124  26  10 15  70 32 16 33 150   4   6  2  6   10
+69018 sosasa01 1991     1  CHA AL 116 316 39  64  10   1 10  33 13  6 14  98   2   2  5  1    5
+70599 sosasa01 1992     1  CHN NL  67 262 41  68   7   2  8  25 15  7 19  63   1   4  4  2    4
+71757 sosasa01 1993     1  CHN NL 159 598 92 156  25   5 33  93 36 11 38 135   6   4  0  1   14
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\vspace{-12pt}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(ss}\hlopt{$}\hlstd{h}\hlopt{/}\hlstd{ss}\hlopt{$}\hlstd{ab)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.26815
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Baseball Data}
+\begin{itemize}
+\item We would like to create career summary statistics for each player
+\item Plan: subset on a player, and compute statistics
+\end{itemize}
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ss} \hlkwb{<-} \hlkwd{subset}\hlstd{(baseball, id}\hlopt{==}\hlstr{"sosasa01"}\hlstd{)}
+\hlkwd{head}\hlstd{(ss)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\vspace{-12pt}
+\begin{knitrout}\tiny
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+            id year stint team lg   g  ab  r   h X2b X3b hr rbi sb cs bb  so ibb hbp sh sf gidp
+66822 sosasa01 1989     1  TEX AL  25  84  8  20   3   0  1   3  0  2  0  20   0   0  4  0    3
+66823 sosasa01 1989     2  CHA AL  33  99 19  27   5   0  3  10  7  3 11  27   2   2  1  2    3
+67907 sosasa01 1990     1  CHA AL 153 532 72 124  26  10 15  70 32 16 33 150   4   6  2  6   10
+69018 sosasa01 1991     1  CHA AL 116 316 39  64  10   1 10  33 13  6 14  98   2   2  5  1    5
+70599 sosasa01 1992     1  CHN NL  67 262 41  68   7   2  8  25 15  7 19  63   1   4  4  2    4
+71757 sosasa01 1993     1  CHN NL 159 598 92 156  25   5 33  93 36 11 38 135   6   4  0  1   14
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\vspace{-12pt}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(ss}\hlopt{$}\hlstd{h}\hlopt{/}\hlstd{ss}\hlopt{$}\hlstd{ab)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.26815
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+{\large We need an automatic way to calculate this}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{for} loops}
+\begin{itemize}
+\item Idea: repeat the same (set of) statement(s) for each element of an index set
+\item Setup: 
+\begin{itemize}
+\item Introduce counter variable (sometimes named \texttt{i})
+\item Reserve space for results
+\end{itemize}
+\item Generic Code:
+\end{itemize}
+
+\begin{verbatim}
+result <- rep(NA, length(indexset))
+for(i in indexset){
+  ... some statments ...
+  result[i] <- ...
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{for} loops for Baseball}
+\begin{itemize}
+\item Index set: player id
+\item Setup: 
+\end{itemize}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Index set}
+\hlstd{players} \hlkwb{<-} \hlkwd{unique}\hlstd{(baseball}\hlopt{$}\hlstd{id)}
+\hlstd{n} \hlkwb{<-} \hlkwd{length}\hlstd{(players)}
+
+\hlcom{# Place to store data}
+\hlstd{ba} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{, n)}
+
+\hlcom{# Loop}
+\hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{n)\{}
+  \hlstd{career} \hlkwb{<-} \hlkwd{subset}\hlstd{(baseball, id}\hlopt{==}\hlstd{players[i])}
+  \hlstd{ba[i]} \hlkwb{<-} \hlkwd{with}\hlstd{(career,} \hlkwd{mean}\hlstd{(h}\hlopt{/}\hlstd{ab,} \hlkwc{na.rm}\hlstd{=T))}
+\hlstd{\}}
+
+\hlcom{# Results}
+\hlkwd{summary}\hlstd{(ba)}
+\end{alltt}
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##   0.000   0.183   0.246   0.223   0.270   0.500       6
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{for} loops for Baseball}
+\begin{itemize}
+\item Index set: player id
+\item i=0
+\end{itemize}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Index set}
+\hlstd{players} \hlkwb{<-} \hlkwd{unique}\hlstd{(baseball}\hlopt{$}\hlstd{id)}
+\hlstd{n} \hlkwb{<-} \hlkwd{length}\hlstd{(players)}
+
+\hlcom{# Place to store data}
+\hlstd{ba} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{, n)}
+
+\hlkwd{head}\hlstd{(ba)}
+\end{alltt}
+\begin{verbatim}
+## [1] NA NA NA NA NA NA
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{for} loops for Baseball}
+\begin{itemize}
+\item Index set: player id
+\item i=1
+\end{itemize}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Index set}
+\hlstd{players} \hlkwb{<-} \hlkwd{unique}\hlstd{(baseball}\hlopt{$}\hlstd{id)}
+\hlstd{n} \hlkwb{<-} \hlkwd{length}\hlstd{(players)}
+
+\hlcom{# Place to store data}
+\hlstd{ba} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{, n)}
+
+\hlcom{# Loop}
+\hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{1}\hlstd{)\{}
+  \hlstd{career} \hlkwb{<-} \hlkwd{subset}\hlstd{(baseball, id}\hlopt{==}\hlstd{players[i])}
+  \hlstd{ba[i]} \hlkwb{<-} \hlkwd{with}\hlstd{(career,} \hlkwd{mean}\hlstd{(h}\hlopt{/}\hlstd{ab,} \hlkwc{na.rm}\hlstd{=T))}
+\hlstd{\}}
+\hlstd{i}
+\end{alltt}
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+\begin{alltt}
+\hlkwd{head}\hlstd{(ba)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.33712      NA      NA      NA      NA      NA
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{for} loops for Baseball}
+\begin{itemize}
+\item Index set: player id
+\item i=2
+\end{itemize}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Index set}
+\hlstd{players} \hlkwb{<-} \hlkwd{unique}\hlstd{(baseball}\hlopt{$}\hlstd{id)}
+\hlstd{n} \hlkwb{<-} \hlkwd{length}\hlstd{(players)}
+
+\hlcom{# Place to store data}
+\hlstd{ba} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{, n)}
+
+\hlcom{# Loop}
+\hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{2}\hlstd{)\{}
+  \hlstd{career} \hlkwb{<-} \hlkwd{subset}\hlstd{(baseball, id}\hlopt{==}\hlstd{players[i])}
+  \hlstd{ba[i]} \hlkwb{<-} \hlkwd{with}\hlstd{(career,} \hlkwd{mean}\hlstd{(h}\hlopt{/}\hlstd{ab,} \hlkwc{na.rm}\hlstd{=T))}
+\hlstd{\}}
+\hlstd{i}
+\end{alltt}
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+\begin{alltt}
+\hlkwd{head}\hlstd{(ba)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.33712 0.24892      NA      NA      NA      NA
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Your Turn}
+\begin{itemize}
+\item MLB rules for the greatest all-time hitters are that players have to have played at least 1000 games with at least as many at-bats in order to be considered\bigskip\bigskip
+\item Extend the for loop above to collect the additional information\\ Introduce and collect data for two new variables: \texttt{games} and \texttt{atbats}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{How did it go? What was difficult?}
+\begin{itemize}
+\item household chores (declaring variables, setting values each time) distract from real work\bigskip\bigskip
+\item indices are error-prone\bigskip\bigskip
+\item loops often result in slow code because R can compute quantities using entire vectors in an optimized way
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{plyr package}
+\begin{itemize}
+\item Routines from the plyr package help us to avoid for loops\bigskip
+\item usage:
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+ddply(.data, .variables, .fun=NULL, ...)
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\bigskip
+\item Split-apply-combine approach:
+\begin{enumerate}
+\item SPLIT data into subsets on each element of an index set
+\item APPLY the same statements for each suubset
+\item COMBINE the results into a new data frame
+\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Example}
+\begin{itemize}
+\item Goal: Compute mean statistics for each player
+\item Split the dataset by player ID, compute the mean for each column
+\end{itemize}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{allstats} \hlkwb{<-} \hlkwd{ddply}\hlstd{(baseball,} \hlkwd{.}\hlstd{(id), mean)}
+
+\hlkwd{head}\hlstd{(allstats)}
+\end{alltt}
+\begin{verbatim}
+##          id V1
+## 1 aaronha01 NA
+## 2 abernte02 NA
+## 3 adairje01 NA
+## 4 adamsba01 NA
+## 5 adamsbo03 NA
+## 6 adcocjo01 NA
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+{\large What went wrong? \\\hfill Not all data is numeric!}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Summarize}
+\begin{itemize}
+\item A special function: \texttt{summarise} or \texttt{summarize}
+\end{itemize}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summarise}\hlstd{(baseball,} \hlkwc{ab}\hlstd{=}\hlkwd{mean}\hlstd{(h}\hlopt{/}\hlstd{ab,} \hlkwc{na.rm}\hlstd{=T))}
+\end{alltt}
+\begin{verbatim}
+##        ab
+## 1 0.23398
+\end{verbatim}
+\begin{alltt}
+\hlkwd{summarize}\hlstd{(baseball,}
+          \hlkwc{ba} \hlstd{=} \hlkwd{mean}\hlstd{(h}\hlopt{/}\hlstd{ab,} \hlkwc{na.rm}\hlstd{=T),}
+          \hlkwc{games} \hlstd{=} \hlkwd{sum}\hlstd{(g,} \hlkwc{na.rm}\hlstd{=T),}
+          \hlkwc{hr} \hlstd{=} \hlkwd{sum}\hlstd{(hr,} \hlkwc{na.rm}\hlstd{=T),}
+          \hlkwc{ab} \hlstd{=} \hlkwd{sum}\hlstd{(ab,} \hlkwc{na.rm}\hlstd{=T))}
+\end{alltt}
+\begin{verbatim}
+##        ba   games     hr      ab
+## 1 0.23398 1580070 113577 4891061
+\end{verbatim}
+\begin{alltt}
+\hlkwd{summarize}\hlstd{(}\hlkwd{subset}\hlstd{(baseball, id}\hlopt{==}\hlstr{"sosasa01"}\hlstd{),}
+          \hlkwc{ba} \hlstd{=} \hlkwd{mean}\hlstd{(h}\hlopt{/}\hlstd{ab,} \hlkwc{na.rm}\hlstd{=T),}
+          \hlkwc{games} \hlstd{=} \hlkwd{sum}\hlstd{(g,} \hlkwc{na.rm}\hlstd{=T),}
+          \hlkwc{hr} \hlstd{=} \hlkwd{sum}\hlstd{(hr,} \hlkwc{na.rm}\hlstd{=T),}
+          \hlkwc{ab} \hlstd{=} \hlkwd{sum}\hlstd{(ab,} \hlkwc{na.rm}\hlstd{=T))}
+\end{alltt}
+\begin{verbatim}
+##        ba games  hr   ab
+## 1 0.26815  2354 609 8813
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{ddply + Summarize}
+{\large A powerful combination to create summary statistics}
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{careers} \hlkwb{<-} \hlkwd{ddply}\hlstd{(baseball,} \hlkwd{.}\hlstd{(id), summarize,}
+                 \hlkwc{ba} \hlstd{=} \hlkwd{mean}\hlstd{(h}\hlopt{/}\hlstd{ab,} \hlkwc{na.rm}\hlstd{=T),}
+                 \hlkwc{games} \hlstd{=} \hlkwd{sum}\hlstd{(g,} \hlkwc{na.rm}\hlstd{=T),}
+                 \hlkwc{homeruns} \hlstd{=} \hlkwd{sum}\hlstd{(hr,} \hlkwc{na.rm}\hlstd{=T),}
+                 \hlkwc{atbats} \hlstd{=} \hlkwd{sum}\hlstd{(ab,} \hlkwc{na.rm}\hlstd{=T))}
+
+\hlkwd{head}\hlstd{(careers)}
+\end{alltt}
+\begin{verbatim}
+##          id      ba games homeruns atbats
+## 1 aaronha01 0.30108  3298      755  12364
+## 2 abernte02 0.18244   681        0    181
+## 3 adairje01 0.23631  1165       57   4019
+## 4 adamsba01 0.20965   482        3   1019
+## 5 adamsbo03 0.23781  1281       37   4019
+## 6 adcocjo01 0.27517  1959      336   6606
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Your Turn}
+\begin{itemize}
+\item Find some summary statistics for each of the teams (variable \texttt{team})\medskip
+\begin{itemize}
+\item How many different (\texttt{unique}) players has the team had?
+\item What was the team's first/last season?
+\end{itemize}\medskip\bigskip
+\item Challenge: \\
+Find the number of players on each team over time. Does the number change?
+\end{itemize}
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{careers} \hlkwb{<-} \hlkwd{ddply}\hlstd{(baseball,} \hlkwd{.}\hlstd{(id), summarize,}
+                 \hlkwc{ba} \hlstd{=} \hlkwd{mean}\hlstd{(h}\hlopt{/}\hlstd{ab,} \hlkwc{na.rm}\hlstd{=T),}
+                 \hlkwc{games} \hlstd{=} \hlkwd{sum}\hlstd{(g,} \hlkwc{na.rm}\hlstd{=T),}
+                 \hlkwc{homeruns} \hlstd{=} \hlkwd{sum}\hlstd{(hr,} \hlkwc{na.rm}\hlstd{=T),}
+                 \hlkwc{atbats} \hlstd{=} \hlkwd{sum}\hlstd{(ab,} \hlkwc{na.rm}\hlstd{=T))}
+
+\hlkwd{head}\hlstd{(careers)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\end{frame}
+\end{document}

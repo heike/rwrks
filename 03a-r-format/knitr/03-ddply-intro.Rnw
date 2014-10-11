@@ -1,0 +1,340 @@
+\documentclass{beamer} 
+% \usepackage{graphicx}
+\usepackage{graphics}
+\usepackage[T1]{fontenc}
+\usepackage{verbatim}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+\usepackage{color}
+\makeatletter
+\preto{\@verbatim}{\topsep=-6pt \partopsep=-6pt }
+\makeatother
+%\usepackage{fix-cm}
+\setbeamercovered{transparent}
+
+
+\renewcommand{\ni}{\noindent}
+
+
+% \SweaveOpts{cache=TRUE, background="white"}
+
+
+\title[3-Intro to ddply]{Introduction to ddply}
+\subtitle{Cleaning and Summarizing Data}
+\date{\hspace{1in}}
+\institute[ISU]{Iowa State University}
+\graphicspath{{figures/}}
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+<<knitr-setup, include=FALSE, echo=FALSE>>=
+setwd("../")
+require(knitr)
+library(highlight)
+opts_chunk$set(cache=T, autodep=T, background = 'white', size='scriptsize', tidy=FALSE, fig.path='figures/fig-')
+options(width=55)
+@
+
+\begin{frame}
+\frametitle{Outline}
+\begin{itemize}
+\item conditionals \& subsets\medskip
+\item \texttt{for} loops\medskip
+\item avoiding \texttt{for} loops with \texttt{ddply}\medskip
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Baseball Data}
+\begin{itemize}
+\item The \texttt{plyr} package contains the data set \texttt{baseball}
+\item seasonal batting statistics of all major league players (through 2007)
+\end{itemize}
+<<plyr-demo, echo=T, eval=F>>=
+library(plyr)
+help(baseball)
+head(baseball)
+@
+<<plyr-demo-out, echo=F, eval=T, include=T, size='tiny', comment=NA>>=
+options(width=100)
+library(plyr)
+help(baseball)
+head(baseball)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Baseball Data}
+\begin{itemize}
+\item We would like to create career summary statistics for each player
+\item Plan: subset on a player, and compute statistics
+\end{itemize}
+<<subsets, echo=T, eval=F>>=
+ss <- subset(baseball, id=="sosasa01")
+head(ss)
+@
+\vspace{-12pt}
+<<subsets-out, echo=F, eval=T, include=T, size='tiny', comment=NA>>=
+options(width=100)
+ss <- subset(baseball, id=="sosasa01")
+head(ss)
+@
+\vspace{-12pt}
+<<subsets-mean, echo=T, eval=T>>=
+mean(ss$h/ss$ab)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Baseball Data}
+\begin{itemize}
+\item We would like to create career summary statistics for each player
+\item Plan: subset on a player, and compute statistics
+\end{itemize}
+
+<<subsets2, echo=T, eval=F>>=
+ss <- subset(baseball, id=="sosasa01")
+head(ss)
+@
+\vspace{-12pt}
+<<subsets-out2, echo=F, eval=T, include=T, size='tiny', comment=NA>>=
+options(width=100)
+ss <- subset(baseball, id=="sosasa01")
+head(ss)
+@
+\vspace{-12pt}
+<<subsets-mean2, echo=T, eval=T>>=
+mean(ss$h/ss$ab)
+@
+{\large We need an automatic way to calculate this}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{for} loops}
+\begin{itemize}
+\item Idea: repeat the same (set of) statement(s) for each element of an index set
+\item Setup: 
+\begin{itemize}
+\item Introduce counter variable (sometimes named \texttt{i})
+\item Reserve space for results
+\end{itemize}
+\item Generic Code:
+\end{itemize}
+
+\begin{verbatim}
+result <- rep(NA, length(indexset))
+for(i in indexset){
+  ... some statments ...
+  result[i] <- ...
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{for} loops for Baseball}
+\begin{itemize}
+\item Index set: player id
+\item Setup: 
+\end{itemize}
+<<baseballforloop, echo=c(-1)>>=
+options(width=80)
+# Index set
+players <- unique(baseball$id)
+n <- length(players)
+
+# Place to store data
+ba <- rep(NA, n)
+
+# Loop
+for(i in 1:n){
+  career <- subset(baseball, id==players[i])
+  ba[i] <- with(career, mean(h/ab, na.rm=T))
+}
+
+# Results
+summary(ba)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{for} loops for Baseball}
+\begin{itemize}
+\item Index set: player id
+\item i=0
+\end{itemize}
+<<baseballforloop-i0, echo=c(-1)>>=
+options(width=80)
+# Index set
+players <- unique(baseball$id)
+n <- length(players)
+
+# Place to store data
+ba <- rep(NA, n)
+
+head(ba)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{for} loops for Baseball}
+\begin{itemize}
+\item Index set: player id
+\item i=1
+\end{itemize}
+<<baseballforloop-i1, echo=c(-1)>>=
+options(width=80)
+# Index set
+players <- unique(baseball$id)
+n <- length(players)
+
+# Place to store data
+ba <- rep(NA, n)
+
+# Loop
+for(i in 1:1){
+  career <- subset(baseball, id==players[i])
+  ba[i] <- with(career, mean(h/ab, na.rm=T))
+}
+i
+head(ba)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\texttt{for} loops for Baseball}
+\begin{itemize}
+\item Index set: player id
+\item i=2
+\end{itemize}
+<<baseballforloop-i2, echo=c(-1)>>=
+options(width=80)
+# Index set
+players <- unique(baseball$id)
+n <- length(players)
+
+# Place to store data
+ba <- rep(NA, n)
+
+# Loop
+for(i in 1:2){
+  career <- subset(baseball, id==players[i])
+  ba[i] <- with(career, mean(h/ab, na.rm=T))
+}
+i
+head(ba)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Your Turn}
+\begin{itemize}
+\item MLB rules for the greatest all-time hitters are that players have to have played at least 1000 games with at least as many at-bats in order to be considered\bigskip\bigskip
+\item Extend the for loop above to collect the additional information\\ Introduce and collect data for two new variables: \texttt{games} and \texttt{atbats}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{How did it go? What was difficult?}
+\begin{itemize}
+\item household chores (declaring variables, setting values each time) distract from real work\bigskip\bigskip
+\item indices are error-prone\bigskip\bigskip
+\item loops often result in slow code because R can compute quantities using entire vectors in an optimized way
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{plyr package}
+\begin{itemize}
+\item Routines from the plyr package help us to avoid for loops\bigskip
+\item usage:
+<<ddplyexample, echo=T, eval=F, tidy=F, highlight=F>>=
+ddply(.data, .variables, .fun=NULL, ...)
+@
+\bigskip
+\item Split-apply-combine approach:
+\begin{enumerate}
+\item SPLIT data into subsets on each element of an index set
+\item APPLY the same statements for each suubset
+\item COMBINE the results into a new data frame
+\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Example}
+\begin{itemize}
+\item Goal: Compute mean statistics for each player
+\item Split the dataset by player ID, compute the mean for each column
+\end{itemize}
+<<baseball-ddply-example, warning=FALSE>>=
+allstats <- ddply(baseball, .(id), mean)
+
+head(allstats)
+@
+{\large What went wrong? \\\hfill Not all data is numeric!}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Summarize}
+\begin{itemize}
+\item A special function: \texttt{summarise} or \texttt{summarize}
+\end{itemize}
+<<baseball-summarize-example, warning=FALSE>>=
+summarise(baseball, ab=mean(h/ab, na.rm=T))
+
+summarize(baseball,
+          ba = mean(h/ab, na.rm=T),
+          games = sum(g, na.rm=T),
+          hr = sum(hr, na.rm=T),
+          ab = sum(ab, na.rm=T))
+
+summarize(subset(baseball, id=="sosasa01"), 
+          ba = mean(h/ab, na.rm=T),
+          games = sum(g, na.rm=T),
+          hr = sum(hr, na.rm=T),
+          ab = sum(ab, na.rm=T))
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{ddply + Summarize}
+{\large A powerful combination to create summary statistics}
+<<ddply-summarize-example, warning=FALSE>>=
+careers <- ddply(baseball, .(id), summarize,
+                 ba = mean(h/ab, na.rm=T),
+                 games = sum(g, na.rm=T),
+                 homeruns = sum(hr, na.rm=T),
+                 atbats = sum(ab, na.rm=T))
+
+head(careers)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Your Turn}
+\begin{itemize}
+\item Find some summary statistics for each of the teams (variable \texttt{team})\medskip
+\begin{itemize}
+\item How many different (\texttt{unique}) players has the team had?
+\item What was the team's first/last season?
+\end{itemize}\medskip\bigskip
+\item Challenge: \\
+Find the number of players on each team over time. Does the number change?
+\end{itemize}
+
+<<ddply-summarize-example2, warning=FALSE, eval=F>>=
+careers <- ddply(baseball, .(id), summarize,
+                 ba = mean(h/ab, na.rm=T),
+                 games = sum(g, na.rm=T),
+                 homeruns = sum(hr, na.rm=T),
+                 atbats = sum(ab, na.rm=T))
+
+head(careers)
+@
+\end{frame}
+\end{document}
