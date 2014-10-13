@@ -157,7 +157,7 @@
 \hlkwd{mean}\hlstd{(ss}\hlopt{$}\hlstd{h}\hlopt{/}\hlstd{ss}\hlopt{$}\hlstd{ab)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.26815
+## [1] 0.2682
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -199,7 +199,7 @@
 \hlkwd{mean}\hlstd{(ss}\hlopt{$}\hlstd{h}\hlopt{/}\hlstd{ss}\hlopt{$}\hlstd{ab)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.26815
+## [1] 0.2682
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -315,7 +315,7 @@ for(i in indexset){
 \hlkwd{head}\hlstd{(ba)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.33712      NA      NA      NA      NA      NA
+## [1] 0.3371     NA     NA     NA     NA     NA
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -351,7 +351,7 @@ for(i in indexset){
 \hlkwd{head}\hlstd{(ba)}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.33712 0.24892      NA      NA      NA      NA
+## [1] 0.3371 0.2489     NA     NA     NA     NA
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -435,8 +435,8 @@ ddply(.data, .variables, .fun=NULL, ...)
 \hlkwd{summarise}\hlstd{(baseball,} \hlkwc{ab}\hlstd{=}\hlkwd{mean}\hlstd{(h}\hlopt{/}\hlstd{ab,} \hlkwc{na.rm}\hlstd{=T))}
 \end{alltt}
 \begin{verbatim}
-##        ab
-## 1 0.23398
+##      ab
+## 1 0.234
 \end{verbatim}
 \begin{alltt}
 \hlkwd{summarize}\hlstd{(baseball,}
@@ -446,8 +446,8 @@ ddply(.data, .variables, .fun=NULL, ...)
           \hlkwc{ab} \hlstd{=} \hlkwd{sum}\hlstd{(ab,} \hlkwc{na.rm}\hlstd{=T))}
 \end{alltt}
 \begin{verbatim}
-##        ba   games     hr      ab
-## 1 0.23398 1580070 113577 4891061
+##      ba   games     hr      ab
+## 1 0.234 1580070 113577 4891061
 \end{verbatim}
 \begin{alltt}
 \hlkwd{summarize}\hlstd{(}\hlkwd{subset}\hlstd{(baseball, id}\hlopt{==}\hlstr{"sosasa01"}\hlstd{),}
@@ -457,8 +457,8 @@ ddply(.data, .variables, .fun=NULL, ...)
           \hlkwc{ab} \hlstd{=} \hlkwd{sum}\hlstd{(ab,} \hlkwc{na.rm}\hlstd{=T))}
 \end{alltt}
 \begin{verbatim}
-##        ba games  hr   ab
-## 1 0.26815  2354 609 8813
+##       ba games  hr   ab
+## 1 0.2682  2354 609 8813
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -479,13 +479,13 @@ ddply(.data, .variables, .fun=NULL, ...)
 \hlkwd{head}\hlstd{(careers)}
 \end{alltt}
 \begin{verbatim}
-##          id      ba games homeruns atbats
-## 1 aaronha01 0.30108  3298      755  12364
-## 2 abernte02 0.18244   681        0    181
-## 3 adairje01 0.23631  1165       57   4019
-## 4 adamsba01 0.20965   482        3   1019
-## 5 adamsbo03 0.23781  1281       37   4019
-## 6 adcocjo01 0.27517  1959      336   6606
+##          id     ba games homeruns atbats
+## 1 aaronha01 0.3011  3298      755  12364
+## 2 abernte02 0.1824   681        0    181
+## 3 adairje01 0.2363  1165       57   4019
+## 4 adamsba01 0.2097   482        3   1019
+## 5 adamsbo03 0.2378  1281       37   4019
+## 6 adcocjo01 0.2752  1959      336   6606
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
