@@ -4,6 +4,7 @@ install.packages("plyr")
 install.packages("MASS")
 install.packages("gdata")
 install.packages("foreign")
+install.packages("reshape2")
 
 # If you have problems with gdata, try XLConnect
 install.packages("XLConnect")
@@ -14,3 +15,4 @@ library(plyr)
 library(MASS)
 library(gdata)
 library(foreign)
+library(reshape2)
