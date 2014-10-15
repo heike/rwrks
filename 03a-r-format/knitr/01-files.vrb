@@ -1,0 +1,28 @@
+\frametitle{Reading Excel Data}
+We use gdata to accomplish this - If you are on Windows, you might need to install Strawberry Perl from http://strawberryperl.com/
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(gdata)}
+\hlstd{midwest2} \hlkwb{<-} \hlkwd{read.xls}\hlstd{(}\hlstr{"http://heike.github.io/rwrks/03a-r-format/data/01-data/midwest.xls"}\hlstd{)}
+
+\hlkwd{head}\hlstd{(midwest2)}
+\end{alltt}
+\begin{verbatim}
+##   Year.Month   Week.1     X   Week.2   X.1   Week.3
+## 1            End Date Value End Date Value End Date
+## 2   1994-Nov
+## 3   1994-Dec    5-Dec 1.086   12-Dec 1.057   19-Dec
+## 4   1995-Jan    2-Jan 1.025    9-Jan 1.046   16-Jan
+## 5   1995-Feb    6-Feb 1.045   13-Feb  1.04   20-Feb
+## 6   1995-Mar    6-Mar 1.053   13-Mar 1.042   20-Mar
+##     X.2   Week.4   X.3   Week.5   X.4
+## 1 Value End Date Value End Date Value
+## 2         28-Nov 1.122
+## 3 1.039   26-Dec 1.027
+## 4 1.031   23-Jan 1.054   30-Jan 1.055
+## 5 1.031   27-Feb 1.052
+## 6 1.048   27-Mar 1.065
+\end{verbatim}
+\end{kframe}
+\end{knitrout}

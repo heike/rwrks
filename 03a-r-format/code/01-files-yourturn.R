@@ -1,19 +1,11 @@
 #############
 # Your Turn
 
-gp_names <- read.table(file.choose(), 
+midwest_names <- read.table("http://heike.github.io/rwrks/03a-r-format/data/01-data/midwest.csv", 
                        header=FALSE, nrows=2, sep=",")
 
-gp_data <- read.table(file.choose(), 
+midwest_data <- read.table("http://heike.github.io/rwrks/03a-r-format/data/01-data/midwest.csv", 
                       header=FALSE, skip=2, sep=",")
-
-
-#############
-# Your Turn
-# read a csv file published as a webfile
-gp <- read.csv("http://heike.github.io/R-workshops/03-r-format/data/01-data/midwest.csv")
-# read (and find) a local csv file
-gp <- read.csv(file.choose())
 
 
 #############
