@@ -59,7 +59,7 @@ qplot(season, geom="bar", data=subset(baseball, ab > 200), binwidth=1) + ggtitle
 #*******************************************************************************
 
 
-profile <- read.csv("http://www.stat.iastate.edu/centers/CCGS/R\\%20workshops/03-r-format/data/OkCupid.csv", stringsAsFactors=FALSE)
+profile <- read.csv("http://heike.github.io/rwrks/03a-r-format/data/OkCupidSmall.csv", stringsAsFactors=FALSE)
 
 
 #State/City
