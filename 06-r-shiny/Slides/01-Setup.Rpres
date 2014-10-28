@@ -10,15 +10,15 @@ It's So Shiny!
 ***
 **Shiny** is an R package that allows you to easily create interactive web applets using R. 
 
-- Produced by [RStudio](http://www.rstudio.com/shiny/)
+- Produced by [RStudio](http://shiny.rstudio.com)
 - Code can be entirely within R (or customize with HTML/JavaScript)
-- Take a look at RStudio's [showcase](http://www.rstudio.com/shiny/showcase/) of Shiny applets
+- Take a look at RStudio's [showcase](http://shiny.rstudio.com/gallery/) of Shiny applets
 
 Shiny Documentation and Help
 ========================================================
 - [RStudio Tutorial](http://rstudio.github.io/shiny/tutorial/#welcome)  
 Much of tonight's material is borrowed from this tutorial
-- [Shiny Setup, Showcase, and Server setup](http://www.rstudio.com/shiny/)  
+- [Shiny Setup, Showcase, and Server setup](http://shiny.rstudio.com)  
 Useful if you want to use shiny on your own webserver
 - [Shiny Github Page](https://github.com/rstudio/shiny)  
 See the latest updates
