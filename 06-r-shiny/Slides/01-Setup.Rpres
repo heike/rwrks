@@ -1,7 +1,7 @@
 01 - Setup and Introduction to Shiny
 ========================================================
 author: R Workshops
-date: Spring 2014
+date: Fall 2014
 
 It's So Shiny!
 ========================================================
@@ -53,5 +53,5 @@ runExample("01_hello")
 ```
 
 The code for this applet is here:
-- [ui.R](../Code/Applet1/ui.R)
-- [server.R](../Code/Applet1/server.R)
+- [ui.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet1/ui.R)
+- [server.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet1/server.R)

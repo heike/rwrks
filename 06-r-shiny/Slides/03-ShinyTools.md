@@ -1,7 +1,7 @@
 03 - Tools for Shiny Apps
 ========================================================
 author: R Workshops
-date: Spring 2014
+date: Fall 2014
 
 Shiny Inputs
 ========================================================
@@ -38,7 +38,7 @@ Other User Interface Options
 Your Turn
 ========================================================
 Using your own data or the OkCupid dataset provided, create a simple Shiny app. 
-Use the skeleton files [ui.R](../Code/Skeleton/ui.R) and [server.R](../Code/Skeleton/server.R) as a starting point. 
+Use the skeleton files [ui.R](http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/ui.R) and [server.R](http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/server.R) as a starting point. 
 - Ideas: 
   - Plot some aspect of the data with color based on another aspect of the data
   - Use `subset()` and `checkboxInput()` to plot user-selected subsets

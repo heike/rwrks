@@ -1,15 +1,15 @@
 02 - Structure of a Shiny Applet
 ========================================================
 author: R Workshops
-date: Spring 2014
+date: Fall 2014
 
 A Tale of Two Files
 ========================================================
 Shiny applets are defined by two files, **ui.R** and **server.R**.
 These two files are enough to create a simple shiny applet. 
 
-- [**ui.R**](../Code/Skeleton/ui.R) defines the page layout and user interface
-- [**server.R**](../Code/Skeleton/server.R) contains the R code to create any output
+- [**ui.R**](http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/ui.R) defines the page layout and user interface
+- [**server.R**](http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/server.R) contains the R code to create any output
 
 ui.R
 ========================================================
@@ -19,22 +19,27 @@ ui.R
 library(shiny)
 
 # Define UI for new application
-shinyUI(pageWithSidebar(
+shinyUI(fluidPage(
 
   # Application title
-  headerPanel("Title"),
-
-  sidebarPanel(),
-
-  mainPanel()
+  titlePanel("Title"),
+  
+  sidebarLayout(
+      sidebarPanel(
+          # Inputs go here
+      ),
+      
+      mainPanel(
+          # Outputs go here
+      )
+  )
 ))
 ```
-
 
 ui.R
 ========================================================
 - Defines the `shinyUI()` function, which contains elements that describe the HTML page
-- Typical applets are constructed using the `pageWithSidebar()` function, which creates a side bar generally used for input and a main panel used for output
+- Typical applets are constructed using the `sidebarLayout()` function, which creates a side bar generally used for input and a main panel used for output
 - Elements are hierarchical functions:  
 components in the sidebar go into the `sidebarPanel()` function, separated by commas
 - Input variables are named in `ui.R` and then referenced in `server.R`
@@ -50,7 +55,6 @@ shinyServer(function(input, output) {
 
 })
 ```
-
 
 server.R
 ========================================================
@@ -68,7 +72,6 @@ Shiny Interactivity
 library(shiny)
 runExample("02_text")
 ```
-
 
 Type | Objects | Description 
 ----- | ----------------- | -----------------------------------
@@ -131,7 +134,6 @@ datasetInput <- reactive({
 })
 ```
 
-
 This statement checks to see if `input$dataset` contains "rock", "pressure", or "cars", then stores the corresponding data into the variable `datasetInput`.
 
 Reactivity
@@ -147,7 +149,6 @@ output$view <- renderTable({
 })
 ```
 
-
 Whenever either the dataset or the number of observations changes, this function will be re-executed and the output will change.
 
 Reactivity
@@ -157,6 +158,5 @@ Reactivity
 runExample("03_reactivity")
 ```
 
-
-Let's take a look at the [ui.R](../Code/Applet3/ui.R) and [server.R](../Code/Applet3/server.R) files that create the applet
+Let's take a look at the [ui.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet3/ui.R) and [server.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet3/server.R) files that create the applet
 

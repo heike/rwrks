@@ -1,7 +1,7 @@
 01 - Setup and Introduction to Shiny
 ========================================================
 author: R Workshops
-date: Spring 2014
+date: Fall 2014
 
 It's So Shiny!
 ========================================================
@@ -32,7 +32,6 @@ Installing Shiny
 ```r
 install.packages("shiny")
 ```
-
 Open up the file 01-Setup.R on the website and run the first code chunk to get setup for this workshop. You should have the packages `shiny`, `ggplot2`, `lubridate`, and `plyr` loaded. 
 
 A Simple Example
@@ -42,7 +41,6 @@ A Simple Example
 library(shiny)
 runExample("01_hello")
 ```
-
 <center>
 <img src="01-Setup-figure/HelloShinyScreenshot.png" alt="Picture of Hello Shiny! Applet">
 </center>
@@ -57,7 +55,6 @@ library(shiny)
 runExample("01_hello")
 ```
 
-
 The code for this applet is here:
-- [ui.R](../Code/Applet1/ui.R)
-- [server.R](../Code/Applet1/server.R)
+- [ui.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet1/ui.R)
+- [server.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet1/server.R)

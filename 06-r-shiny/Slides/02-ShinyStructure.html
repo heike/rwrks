@@ -510,7 +510,7 @@ body {
 }
 
 .reveal .slides section .mediaOnly {
-   position: fixed;
+   position: absolute;
    width: 100%;
    top: 2.5em;
    bottom: 0;
@@ -784,7 +784,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>02 - Structure of a Shiny Applet</h1><p>R Workshops<br/>Spring 2014</p>
+<h1>02 - Structure of a Shiny Applet</h1><p>R Workshops<br/>Fall 2014</p>
 
 <div class="slideContent" >
 
@@ -798,8 +798,8 @@ hljs.initHighlightingOnLoad();
 These two files are enough to create a simple shiny applet. </p>
 
 <ul>
-<li><a href="../Code/ui.R"><strong>ui.R</strong></a> defines the page layout and user interface</li>
-<li><a href="../Code/server.R"><strong>server.R</strong></a> contains the R code to create any output</li>
+<li><a href="http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/ui.R"><strong>ui.R</strong></a> defines the page layout and user interface</li>
+<li><a href="http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/server.R"><strong>server.R</strong></a> contains the R code to create any output</li>
 </ul>
 
 </div>
@@ -811,14 +811,20 @@ These two files are enough to create a simple shiny applet. </p>
 <pre><code class="r">library(shiny)
 
 # Define UI for new application
-shinyUI(pageWithSidebar(
+shinyUI(fluidPage(
 
   # Application title
-  headerPanel(&quot;Title&quot;),
+  titlePanel(&quot;Title&quot;),
 
-  sidebarPanel(),
+  sidebarLayout(
+      sidebarPanel(
+          # Inputs go here
+      ),
 
-  mainPanel()
+      mainPanel(
+          # Outputs go here
+      )
+  )
 ))
 </code></pre>
 
@@ -830,7 +836,7 @@ shinyUI(pageWithSidebar(
 <div class="slideContent" >
 <ul>
 <li>Defines the <code>shinyUI()</code> function, which contains elements that describe the HTML page</li>
-<li>Typical applets are constructed using the <code>pageWithSidebar()</code> function, which creates a side bar generally used for input and a main panel used for output</li>
+<li>Typical applets are constructed using the <code>sidebarLayout()</code> function, which creates a side bar generally used for input and a main panel used for output</li>
 <li>Elements are hierarchical functions:<br/>
 components in the sidebar go into the <code>sidebarPanel()</code> function, separated by commas</li>
 <li>Input variables are named in <code>ui.R</code> and then referenced in <code>server.R</code></li>
@@ -1027,7 +1033,7 @@ runExample(&quot;02_text&quot;)
 <pre><code class="r">runExample(&quot;03_reactivity&quot;)
 </code></pre>
 
-<p>Let&#39;s take a look at the <a href="../Code/Applet3/ui.R">ui.R</a> and <a href="../Code/Applet3/server.R">server.R</a> files that create the applet</p>
+<p>Let&#39;s take a look at the <a href="http://heike.github.io/rwrks/06-r-shiny/Code/Applet3/ui.R">ui.R</a> and <a href="http://heike.github.io/rwrks/06-r-shiny/Code/Applet3/server.R">server.R</a> files that create the applet</p>
 
 </div>
 
