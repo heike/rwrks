@@ -16,8 +16,8 @@ It's So Shiny!
 
 Shiny Documentation and Help
 ========================================================
-- [RStudio Tutorial](http://rstudio.github.io/shiny/tutorial/#welcome)  
-Much of tonight's material is borrowed from this tutorial
+- [RStudio Tutorial](http://shiny.rstudio.com/tutorial/)  
+Much of tonight's material is motivated by this tutorial
 - [Shiny Setup, Showcase, and Server setup](http://shiny.rstudio.com)  
 Useful if you want to use shiny on your own webserver
 - [Shiny Github Page](https://github.com/rstudio/shiny)  
@@ -39,22 +39,8 @@ A Simple Example
 
 ```r
 library(shiny)
-runExample("01_hello")
+runApp("shinyApps/01_Hello", display.mode = "showcase")
 ```
 <center>
 <img src="01-Setup-figure/HelloShinyScreenshot.png" alt="Picture of Hello Shiny! Applet">
 </center>
-
-
-
-A Simple Example
-========================================================
-
-```r
-library(shiny)
-runExample("01_hello")
-```
-
-The code for this applet is here:
-- [ui.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet1/ui.R)
-- [server.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet1/server.R)

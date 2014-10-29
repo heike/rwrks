@@ -38,7 +38,12 @@ Other User Interface Options
 Your Turn
 ========================================================
 Using your own data or the OkCupid dataset provided, create a simple Shiny app. 
-Use the skeleton files [ui.R](http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/ui.R) and [server.R](http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/server.R) as a starting point. 
+Use the 03_OKCupid app as a starting point.
+
+```{r example1,eval=F}
+runApp("shinyApps/03_OKCupid", display.mode = "showcase")
+```
+
 - Ideas: 
   - Plot some aspect of the data with color based on another aspect of the data
   - Use `subset()` and `checkboxInput()` to plot user-selected subsets
