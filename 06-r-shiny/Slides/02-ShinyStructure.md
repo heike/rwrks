@@ -77,7 +77,7 @@ Your Turn
 
 
 ```r
-shiny::runApp("shinyApps/01_hello", display.mode = "showcase")
+shiny::runApp("shinyApps/01_Hello", display.mode = "showcase")
 ```
 
 * __Challenge 1:__ add an input to change the mean and standard deviation (Hint: see `?numericInput`).
