@@ -39,7 +39,7 @@ A Simple Example
 
 ```r
 library(shiny)
-runApp("shinyApps/01_Hello", display.mode = "showcase")
+runApp("shinyApps/01_Hello")
 ```
 <center>
 <img src="01-Setup-figure/HelloShinyScreenshot.png" alt="Picture of Hello Shiny! Applet">

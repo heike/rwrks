@@ -42,7 +42,7 @@ Use the 03_OKCupid app as a starting point.
 
 
 ```r
-runApp("shinyApps/03_OKCupid", display.mode = "showcase")
+runApp("shinyApps/03_OKCupid")
 ```
 
 - Ideas: 
