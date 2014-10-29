@@ -9,8 +9,8 @@ A Tale of Two Files
 
 The quickest/easiest way to create a shiny app is to define the user interface in a file named **ui.R** and the server side functionality in **server.R**.
 
-- [**ui.R**](http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/ui.R) defines the page layout and user interface
-- [**server.R**](http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/server.R) contains the R code to create any output
+- **ui.R** defines the page layout and user interface
+- **server.R** contains the R code to create any output
 
 ui.R
 ========================================================
@@ -19,31 +19,23 @@ ui.R
 ```r
 library(shiny)
 
-# Define UI for new application
+# A simple/common user interface template
 shinyUI(fluidPage(
 
   # Application title
   titlePanel("Title"),
   
-  sidebarLayout(
-      sidebarPanel(
-          # Inputs go here
-      ),
-      
-      mainPanel(
-          # Outputs go here
-      )
+  sidebarPanel(
+    # Define some inputs here
+  ),
+  
+  mainPanel(
+    # output (from the server) go here
   )
+
 ))
 ```
 
-ui.R
-========================================================
-- Defines the `shinyUI()` function, which contains elements that describe the HTML page
-- Typical applets are constructed using the `sidebarLayout()` function, which creates a side bar generally used for input and a main panel used for output
-- Elements are hierarchical functions:  
-components in the sidebar go into the `sidebarPanel()` function, separated by commas
-- Input variables are named in `ui.R` and then referenced in `server.R`
 
 server.R
 ========================================================
@@ -51,69 +43,16 @@ server.R
 ```r
 library(shiny)
 
-# Define server logic required to create application output
+# Server side logic 
 shinyServer(function(input, output) {
-
+  # do something
 })
 ```
 
-server.R
-========================================================
-
-- Defines the `shinyServer()`, which is a function with input and output variables. 
-- Contains all of the R code to generate any output
-- (Later) can also be used to modify inputs
-- Generally much longer than `ui.R` - all the interesting stuff happens in `server.R`
-
-
-Shiny Interactivity
-========================================================
-
-```r
-library(shiny)
-runExample("02_text")
-```
-
-Type | Objects | Description 
------ | ----------------- | -----------------------------------
-Input | Dataset | Choose a dataset from a dropdown list
-Input | # Observations | Size of the table to display
-Output | Summary | summary statistics for each variable
-Output | Table | First n observations of the data table
-
-Shiny Interactivity
-========================================================
-left:40%
-Input
-- dropdown list
-- numeric input
-
-Output 
-- text
-- table 
-
-***
-<center>
-<img src="02-ShinyStructure-figure/shiny-text.png" alt="Picture of Shiny Text Applet">
-</center>
-
-Shiny Interactivity
-========================================================
-
-Input   | Shiny UI syntax
-------------- | ----------------------------------------------
-dropdown list | `selectInput(inputId, label, choices, selected = NULL, multiple = FALSE)`
-numeric input | `numericInput(inputId, label, value, min = NA, max = NA, step = NA)`
-
-Output  | Shiny UI syntax
------------ | ---------------
-text | `verbatimTextOutput(outputId)`
-table | `tableOutput(outputId)`
-
-
 Reactivity
 ========================================================
-Shiny applets work because of *reactive expressions*, which automatically update outputs when  input values change. 
+
+shiny is built on the idea of **reactive programming**. The idea that outputs should be automatically updated whenever an input value changes.
 
 ```
 input values => R code => output values
@@ -121,46 +60,43 @@ input values => R code => output values
 
 **Reactive expressions** keep track of what values they read and what values they change. If those values become "out of date", they know their return value is out of date and will automatically recalculate.
 
-Reactivity
+
+An example
 ========================================================
-We can create a reactive expression by passing a normal expression into `reactive`. 
 
 
 ```r
-datasetInput <- reactive({
-   switch(input$dataset,
-          "rock" = rock,
-          "pressure" = pressure,
-          "cars" = cars)
-})
+shiny::runApp("shinyApps/02_Reactivity", display.mode = "showcase")
 ```
 
-This statement checks to see if `input$dataset` contains "rock", "pressure", or "cars", then stores the corresponding data into the variable `datasetInput`.
 
-Reactivity
+Your Turn
 ========================================================
-Reactive values can be turned into `output` objects that are passed to the shinyServer function. 
 
-This output depends on both the dataset and the number of observations. 
+* Consider extending the hello world example:
 
 
 ```r
-output$view <- renderTable({
-   head(datasetInput(), n = input$obs)
-})
+shiny::runApp("shinyApps/01_hello", display.mode = "showcase")
 ```
 
-Whenever either the dataset or the number of observations changes, this function will be re-executed and the output will change.
+* __Challenge 1:__ add an input to change the mean and standard deviation (Hint: see `?numericInput`).
+* __Challenge 2:__ add an input to simulate from a gamma as well as a normal (Hint: you can simulate from gamma distribution with `rgamma`).
+* __Challenge 3:__ Extend __Challenge 2__ so that there are dynamic inputs according to the desired distribution. That is, display mean and std dev inputs for normal distribution and a shape input for gamma (Hint: see `conditionalPanel`).
 
-Reactivity
+Your Turn Solutions
 ========================================================
 
+
 ```r
-runExample("03_reactivity")
+library(shiny)
+runGitHub('shiny_apps', 'cpsievert', 
+          subdir = 'extend1', 
+          display.mode = "showcase")
+runGitHub('shiny_apps', 'cpsievert', 
+          subdir = 'extend2',
+          display.mode = "showcase")
+runGitHub('shiny_apps', 'cpsievert', 
+          subdir = 'extend3', 
+          display.mode = "showcase")
 ```
-
-Let's take a look at the [ui.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet3/ui.R) and [server.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet3/server.R) files that create the applet
-
-
-
-
