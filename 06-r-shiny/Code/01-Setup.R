@@ -17,6 +17,10 @@ if(length(to.install)>0){
   qplot(x=0, y=0, label="Good to go!", geom="text") + theme_bw() + theme(axis.text=element_blank(), axis.title=element_blank(), axis.ticks=element_blank())
 }
 
-# Simple Shiny Applet
-library(shiny)
-runExample("01_hello")
+# download example apps
+if (!file.exists("shinyApps")) {
+  tmp <- tempfile(fileext = ".zip")
+  download.file("http://heike.github.io/rwrks/06-r-shiny/Code/Applets.zip", tmp, quiet = TRUE)
+  unzip(tmp, exdir = "shinyApps")
+  unlink(tmp)
+}

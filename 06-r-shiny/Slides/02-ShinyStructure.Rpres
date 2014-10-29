@@ -3,10 +3,11 @@
 author: R Workshops
 date: Fall 2014
 
+
 A Tale of Two Files
 ========================================================
-Shiny applets are defined by two files, **ui.R** and **server.R**.
-These two files are enough to create a simple shiny applet. 
+
+The quickest/easiest way to create a shiny app is to define the user interface in a file named **ui.R** and the server side functionality in **server.R**.
 
 - [**ui.R**](http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/ui.R) defines the page layout and user interface
 - [**server.R**](http://heike.github.io/rwrks/06-r-shiny/Code/Skeleton/server.R) contains the R code to create any output
@@ -153,4 +154,7 @@ runExample("03_reactivity")
 ```
 
 Let's take a look at the [ui.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet3/ui.R) and [server.R](http://heike.github.io/rwrks/06-r-shiny/Code/Applet3/server.R) files that create the applet
+
+
+
 
