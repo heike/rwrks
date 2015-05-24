@@ -4,7 +4,8 @@ Code licensed under the BSD License:
 http://developer.yahoo.net/yui/license.txt
 version: 2.2.2
 */
-body {font:13px arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}table {font-size:inherit;font:100%;}select, input, textarea {font:99% arial,helvetica,clean,sans-serif;}pre, presol, code {font:115% monospace;*font-size:100%;}body * {line-height:1.5em;}
+body {font:13px arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}
+table {font-size:inherit;font:100%;}select, input, textarea {font:99% arial,helvetica,clean,sans-serif;}pre, code {font:115% monospace;*font-size:100%;}body * {line-height:1.5em;}
 
 * {
 	margin: 0; padding:0; 
@@ -13,7 +14,7 @@ body {font:13px arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;
 
 body {margin: 1em;}
 
-h1, h2, h3, h4, h5, h6, p, pre, presol, blockquote, 
+h1, h2, h3, h4, h5, h6, p, pre, blockquote, 
 label, ul, ol, dl, li, fieldset, address { margin: 1em 0; }
 li, dd { margin-left:5%; }
 fieldset { padding: .5em; }
@@ -21,15 +22,7 @@ code, pre {
   font-family: monospace; 
   font-size: 100%;
   border: 1px solid #ccc;
-  background-color: #DCE6CF;
-}
-
-presol {
-  font-family: monospace; 
-  font-size: 100%;
-  border: 1px solid #ccc;
-  foreground-color: #DCE6CF;
-  background-color: #DCE6CF;
+  background-color: #64A8D1;
 }
 
 small {font-size: 0.8em;}
@@ -70,24 +63,28 @@ h3 {font-size: 0.9em; font-weight: bold}
 html {background: url("/images/spot.gif") no-repeat 95% 50px;}
 
 /* Colour inspiration: 
-http://wellstyled.com/tools/colorscheme2/index-en.html?compl;50;0;150;0.5;-0.9;0.5;0.5;0.1;0.9;0.75;0.75;0.5;-0.9;0.5;0.5;0.1;0.9;0.75;0.75;0.5;-0.9;0.5;0.5;0.1;0.9;0.75;0.75;0.5;-0.9;0.5;0.5;0.1;0.9;0.75;0.75;0
+http://colorschemedesigner.com/#
 
-Greens     Purples
-#DCE6CF     #E6CFE0
-#86BF30     #BF309B
-#B8E673     #B85CA1
-#668040     #804070
-*/
+Primary Color:
+136494	28516A	053A59	5FAEDD	CAE4F3
+medium  grey    dark    light   x-light
 
-a:link, a:visited {color: #804070;}
-a:hover {background-color: #DCE6CF }
+Complementary Color:
+E98812	A67539	8C4F05	F8B562	F8D1A1*/
 
+
+
+a:link, a:visited {color: #136494;}
+a:hover {background-color: #CAE4F3 }
+
+/*
 td.caption {font-size: 0.9em; color: #333; padding: 4px; background-color:#e9e9e9;}
+*/
 
 .box {
 	margin: auto;
 	border-left: 5px solid #668040;
-	background-color: #DCE6CF;
+	background-color: #64A8D1;
 }
 .box p {margin: 0.3em 0;}
 
@@ -96,13 +93,15 @@ td.caption {font-size: 0.9em; color: #333; padding: 4px; background-color:#e9e9e
 }
 
 h1 {
-	border-left: 8px solid #804070;
+  color: #28516A;
+	border-left: 8px solid #8C4F05;
 	margin-left: -23px;
 	padding-left: 10px;
 }
 
 h2 {
-	border-left: 3px solid #668040;
+  color: #053A59;
+	border-left: 3px solid #A67539;
 	margin-left: -8px;
 }
 
@@ -121,8 +120,10 @@ h2.subhead {margin-top: 0; border-left: 0; margin-bottom: 2em;}
 /* Table formatting -------------------- */
 
 table {border-collapse: collapse; margin-bottom: 1.5em;}
-td, th {vertical-align: top; padding-right: 1em;}
-th {font-weight: bold; text-align: left; font-size: 0.8em; border-bottom: 1px solid #666;}
+td {vertical-align: top; padding-right: 1em;}
+th {vertical-align: bottom; padding-right: 1em;}
+th {font-weight: bold; text-align: left; font-size: 0.8em; border-bottom: 1px solid #F8B562;}
+tr.topic {font-weight: bold; text-align: left;  color: #8C4F05;}
 tr td {padding-bottom: 0.25em;}
 tr.first td {padding-top: 1em;}
 
