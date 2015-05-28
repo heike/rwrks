@@ -34,7 +34,7 @@
 <<knitr-setup, include=FALSE, echo=FALSE>>=
 setwd("../")
 require(knitr)
-library(highlight)
+#library(highlight)
 opts_chunk$set(cache=T, autodep=T, background = 'white', size='scriptsize', tidy=FALSE, fig.path='figures/fig-')
 # tidy.opts=list(keep.blank.line=FALSE, width.cutoff=40, reindent.spaces=4)
 options(width=55)
