@@ -1,8 +1,8 @@
 ---
 title: "More dplyr"
-author: "Di Cook, Eric Hare"
-date: "May 14, 2015"
-output: ioslides_presentation
+author: "Eric Hare, Andee Kaplan, Carson Sievert"
+date: "June 10, 2015"
+output: slidy_presentation
 ---
 
 Using the packages tidyr, dplyr
@@ -191,6 +191,14 @@ Select
 ```{r}
 french_fries %>%
     select(time, treatment, subject, rep, potato) %>%
+    head
+```
+
+Mutate
+========================================================
+```{r}
+french_fries %>%
+    mutate(rancid2 = rancid^2) %>%
     head
 ```
 
