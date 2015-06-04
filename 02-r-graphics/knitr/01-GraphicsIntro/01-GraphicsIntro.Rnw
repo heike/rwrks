@@ -33,7 +33,7 @@ data(Titanic)
 titanic <- as.data.frame(Titanic)
 @
 
-\title[Advanced Graphics in R ]{2 - Advanded Graphics in R}
+\title[Day 2 - R Graphics with ggplot2]{Day 2 - R Graphics with ggplot2}
 \subtitle{01 - Basic Plots}
 \date{\hspace{1in}}
 \institute[ISU]{Iowa State University}
