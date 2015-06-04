@@ -252,9 +252,9 @@ head(ba)
 \begin{itemize}
 \item A special function: \texttt{summarise} or \texttt{summarize}
 \end{itemize}
-<<baseball-summarize-example, warning=FALSE>>=
+<<baseball-summarize-example, warning=FALSE, message=FALSE>>=
 library(dplyr)
-baseball <- read.csv("data/baseball.csv")
+baseball <- read.csv("../data/baseball.csv")
 summarise(baseball, ab=mean(h/ab, na.rm=T))
 
 summarise(baseball,

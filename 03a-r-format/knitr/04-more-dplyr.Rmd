@@ -2,14 +2,25 @@
 title: "More dplyr"
 author: "Eric Hare, Andee Kaplan, Carson Sievert"
 date: "June 10, 2015"
-output: slidy_presentation
+output:
+  ioslides_presentation: default
+  beamer_presentation:
+    keep_tex: yes
 ---
 
-Using the packages tidyr, dplyr
-========================================================
+##Using the packages tidyr, dplyr
+
 During a ten week sensory experiment, 12 individuals were asked to assess taste of french fries on several scales (how potato-y, buttery, grassy, rancid, paint-y do the fries taste?)
 
 French fries were fried in one of three different oils, and each week individuals had to assess six batches of french fries (all three oils, replicated twice)
+
+```{r, echo=FALSE}
+library(knitr)
+opts_chunk$set(message = FALSE, warning = FALSE)
+
+```
+
+
 ```{r, echo = FALSE, results='asis'}
 library(xtable)
 library(reshape2)
@@ -18,8 +29,7 @@ library(tidyr)
 print(xtable(head(french_fries)), comment = FALSE)
 ```
 
-This format is not ideal for data analysis
-========================================================
+##This format is not ideal for data analysis
 What code would be needed to plot each of the ratings over time as a different color?
 ```{r, eval=FALSE}
 library(ggplot2)
@@ -34,8 +44,7 @@ qplot("1_potato", potato, data = french_sub, fill = I("red"), geom = "boxplot") 
     xlab("variable") + ylab("rating")
 ```
 
-The Plot
-========================================================
+##The Plot
 ```{r, echo=FALSE}
 library(ggplot2)
 
@@ -49,8 +58,7 @@ qplot("1_potato", potato, data = french_sub, fill = I("red"), geom = "boxplot") 
     xlab("variable") + ylab("rating")
 ```
 
-What we have and what we want
-========================================================
+##What we have and what we want
 We want to change this **wide format**:
 
 ![Wide Format](figures/tableoverview.png)
@@ -60,8 +68,7 @@ to this **long format**:
 
 ![Long Format](figures/tablelong.png)
 
-Gathering
-========================================================
+##Gathering
 - When gathering, you need to specify the **keys** (identifiers) and the **values** (measures).
 
 Keys/Identifiers:
@@ -74,16 +81,14 @@ Values/Measures:
 - Collected during the experiment (not known in advance)
 - Usually numeric quantities
 
-Gathering the French Fry Data
-========================================================
+##Gathering the French Fry Data
 ```{r}
 french_fries_long <- gather(french_fries, key = variable, value = rating, potato:painty)
 
 head(french_fries_long)
 ```
 
-Let's Reconstruct our Plot
-========================================================
+##Let's Reconstruct our Plot
 ```{r, fig.show='hide'}
 french_fries_long_sub <- french_fries_long[
   french_fries_long$time == 10,]
@@ -96,16 +101,14 @@ qplot(variable, rating, data = french_fries_long_sub, fill = variable, geom = "b
 qplot(variable, rating, data = french_fries_long_sub, fill = variable, geom = "boxplot")
 ```
 
-Long to Wide
-========================================================
+##Long to Wide
 In certain applications, we may wish to take a long dataset and convert it to a wide dataset (Perhaps displaying in a table).
 
 ```{r}
 head(french_fries_long)
 ```
 
-Spread
-========================================================
+##Spread
 We use the **spread** function from tidyr to do this:
 
 ```{r}
@@ -114,32 +117,33 @@ french_fries_wide <- spread(french_fries_long, key = variable, value = rating)
 head(french_fries_wide)
 ```
 
-YOUR TURN
-========================================================
+##YOUR TURN
 1. Read in the billboard top 100 music data, which contains N'Sync and Backstreet Boys songs that entered the billboard charts in the year 2000
-```{r}
-billboard <- read.csv("http://heike.github.io/rwrks/03a-r-format/data/billboard.csv")
-```
+    ```{r}
+    billboard <- read.csv("http://heike.github.io/rwrks/03a-r-format/data/billboard.csv")
+    ```
 2. Use ``tidyr`` to convert this data into a long format appropriate for plotting a time series (date on the x axis, chart position on the y axis)
+
+##
+
 3. Use ``ggplot2`` to create this time series plot:
-```{r, echo=FALSE, fig.width=15, fig.height=5}
-long_billboard <- gather(billboard, key = week, value = rank, X1:X76)
-long_billboard$week <- as.numeric(gsub("X", "", long_billboard$week))
 
-qplot(week, rank, data = long_billboard, geom = "line", colour = artist, group = track)
-```
+    ```{r, echo=FALSE, fig.width=8, fig.height=5}
+    long_billboard <- gather(billboard, key = week, value = rank, X1:X76)
+    long_billboard$week <- as.numeric(gsub("X", "", long_billboard$week))
+    
+    qplot(week, rank, data = long_billboard, geom = "line", colour = artist, group = track)
+    ```
 
-The Split-Apply-Combine Approach
-========================================================
+##The Split-Apply-Combine Approach
 - *Split* a dataset into many smaller sub-datasets
 - *Apply* some function to each sub-dataset to compute a result
 - *Combine* the results of the function calls into a one dataset
 
-![Picture of Sample Applet](figures/sac.png)
+<img src="figures/sac.png" alt="Picture of Sample Applet" width=500></img>
 
 
-Split-Apply-Combine in dplyr
-========================================================
+##Split-Apply-Combine in dplyr
 ```{r}
 library(dplyr)
 
@@ -148,8 +152,7 @@ french_fries_apply <- summarise(french_fries_split, rating = mean(rating, na.rm 
 french_fries_apply
 ```
 
-The pipe operator
-========================================================
+##The pipe operator
 - dplyr allows us to chain together these data analysis tasks using the `%>%` (pipe) operator
 - `x %>% f(y)` is shorthand for `f(x, y)`
 - Example:
@@ -161,8 +164,7 @@ french_fries %>%
     summarise(rating = mean(rating, na.rm = TRUE))
 ```
 
-dplyr verbs
-========================================================
+##dplyr verbs
 There are five primary dplyr **verbs**, representing distinct data analysis tasks:
 
 - Filter: Remove the rows of a data frame, producing subsets
@@ -171,47 +173,41 @@ There are five primary dplyr **verbs**, representing distinct data analysis task
 - Mutate: Add new columns that are functions of existing columns
 - Summarise: Create collapsed summaries of a data frame
     
-Filter
-========================================================
+##Filter
 ```{r}
 french_fries %>%
     filter(subject == 3, time == 1)
 ```
 
-Arrange
-========================================================
+##Arrange
 ```{r}
 french_fries %>%
     arrange(desc(rancid)) %>%
     head
 ```
 
-Select
-========================================================
+##Select
 ```{r}
 french_fries %>%
     select(time, treatment, subject, rep, potato) %>%
     head
 ```
 
-Mutate
-========================================================
+##Mutate
 ```{r}
 french_fries %>%
     mutate(rancid2 = rancid^2) %>%
     head
 ```
 
-Summarise
-========================================================
+##Summarise
 ```{r}
 french_fries %>%
     group_by(time, treatment) %>%
     summarise(mean_rancid = mean(rancid), sd_rancid = sd(rancid))
 ```
 
-YOUR TURN
-========================================================
+##YOUR TURN
 Read in the flights data:
 ```{r}
 flights <- read.csv("http://heike.github.io/rwrks/03a-r-format/data/flights.csv")
@@ -221,8 +217,7 @@ This dataset contains information on over 300,000 flights that departed from New
 1. Using dplyr and the pipe operator, create a data frame consisting of the average arrival delay (``arr_delay``) based on the destination airport (``dest``). Sort this data frame in descending order, so the destination airport with the largest delay is first.
 2. Find out the most used airports for each airline carrier.
 
-Dates and Times
-========================================================
+##Dates and Times
 Dates are deceptively hard to work with in R.
 
 **Example**: 02/05/2012. Is it February 5th, or May 2nd?
@@ -234,8 +229,7 @@ Other things are difficult too:
 
 The **lubridate** package helps tackle some of these issues.
 
-Basic Lubridate Use
-========================================================
+##Basic Lubridate Use
 ```{r, results='hold'}
 library(lubridate)
 
@@ -245,8 +239,7 @@ now() + hours(4)
 today() - days(2)
 ```
 
-Parsing Dates
-========================================================
+##Parsing Dates
 ```{r, results='hold'}
 ymd("2013-05-14")
 mdy("05/14/2013")
@@ -254,8 +247,7 @@ dmy("14052013")
 ymd_hms("2013:05:14 14:50:30", tz = "America/Chicago")
 ```
 
-YOUR TURN
-========================================================
+##YOUR TURN
 1. Using the ``flights`` data, create a new column Date using lubridate. You will need to paste together the columns year, month, and day in order to do this. See the ``paste`` function.
 2. Use dplyr to calculate the average departure delay for each date.
 3. Plot a time series of the date versus the average departure delay
