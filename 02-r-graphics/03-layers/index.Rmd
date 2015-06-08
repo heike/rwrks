@@ -1,7 +1,7 @@
 ---
 title: "Advanced Graphics in R"
 subtitle: "ggplot2: A Layered Grammar of Graphics"
-author: "Iowa State University"
+author: "Carson Sievert (Iowa State University)"
 date: "`r Sys.Date()`"
 output:
   ioslides_presentation:
