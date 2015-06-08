@@ -15,8 +15,6 @@ css:
 knitr::opts_chunk$set(fig.width=6, fig.height=4, fig.align='center', cache=TRUE, tidy=FALSE, warning = FALSE, message = FALSE)
 ```
 
----
-
 ## BP Oil Spill
 
 <div align = "center">
@@ -124,11 +122,6 @@ map_floats <- map_outline +
 map_floats
 ```
 
-```{r}
-map_outline +
-  geom_point(data = floats, aes(x = Longitude, y = Latitude, colour = Depth))
-```
-
 ----
 
 ```{r}
@@ -162,6 +155,8 @@ p <- p + scale_x_log10() + scale_y_log10()
 p
 ```
 
+---
+
 ```{r}
 # coordinate system
 p + coord_polar()
@@ -182,7 +177,7 @@ p + facet_grid(. ~ cut)
   </a>
 </div>
 
-## Layering defaults
+---
 
 * Each `geom_*` function is really a layer with certain defaults for statistic, position, and, well, geometry.
 
@@ -195,11 +190,11 @@ args(geom_bar)
 ## Defaults aren't always right!!
 
 ```{r, out.extra='style="float:left"', fig.show = "hold", fig.width=3.3}
-base <- ggplot(diamonds, aes(x = cut, fill = clarity)) 
-base + geom_bar() + theme(legend.position = "none") # bad!!!
-base + geom_bar(position = "fill") + 
-  theme(legend.position = "none")                   # better
-base + geom_bar(position = "dodge")                 # better
+base <- ggplot(diamonds, aes(x = cut, fill = clarity)) + theme(legend.position = "none")
+base + geom_bar()                                   # bad!!!
+base + geom_bar(position = "fill")                  # better
+base + geom_bar(position = "dodge") + 
+  theme(legend.position = "bottom")                 # better
 ```
 
 ## Your Turn
