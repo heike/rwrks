@@ -55,7 +55,7 @@ for(i in 1:10){
     print(i)
 }
 
-data(tips)
+data(tips, package="reshape2")
 
 id <- c("total_bill", "tip", "size")
 for (colname in id) {
