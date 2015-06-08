@@ -1,12 +1,12 @@
 
-install.packages("plyr")
+install.packages("dplyr")
 
-library(plyr)
-library(help="plyr")
-help(package="plyr")
+library(dplyr)
+library(help="dplyr")
+help(package="dplyr")
 
 ?vignette
-vignette(package="plyr")
+vignette(package="dplyr")
 vignette()
 vignette(package="xtable")
 
