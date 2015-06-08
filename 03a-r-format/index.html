@@ -7,32 +7,37 @@
 
 <body>
 <div id="navbar">
-		  <p><a href="http://www.stat.iastate.edu/">&#8594;home</a></p>
+		  <p><a href="http://heike.github.io/rwrks/">&#8594;home</a></p>
 		  <p><a href="#registration">&#8594;registration</a></p>
 		  <p><a href="#yourown">&#8594;getting ready</a></p>
 			</div>
 	<div id="wrap">
 
-<h1>Data Formatting and Reshaping in R</h1>
+<h1>Data Wrasstlin' in R</h1>
 
 <p><strong>June 10, 2015, 3121 Snedecor</strong><br />
 
 
 <p><!--Heike Hofmann, <a href="mailto:hofmann@iastate.edu">hofmann@iastate.edu</a>.<br />-->
 Eric Hare, <a href="mailto:erichare@iastate.edu">erichare@iastate.edu</a>.<br />
-Karsten Maurer, <a href="mailto:karstenm@iastate.edu">karstenm@iastate.edu</a>.<br />
+Andee Kaplan, <a href="mailto:ajkaplan@iastate.edu">ajkaplan@iastate.edu</a>.<br />
 Carson Sievert, <a href="mailto:cpsievert@iastate.edu">cpsievert@iastate.edu</a>.</br>
 </p>
 
 
-	<p>This workshop is designed to help you with formatting and reshaping data based on the R packages plyr and reshape.
+	<p>Howdy R users! Unorganized and unruly data got you in a pickle? Come on down to the Data Wrasstlin' portion of the Week of R and we'll help you learn the tools to quickly and painlessly organize, clean, manipulate, and summarize your data. You can put the trials of manipulating data in Excel out of your mind and use your ace in the hole, the dplyr, tidyr, and stringr packages, to get your data into order in minutes. Learn how to read data in directly from Excel files and other common formats. If it takes forever to get records re-formatted from rows to columns, this is the course for you! Yeehaw!<br>
 	
 	The course will be data centric, with lots of different data sets that illustrate examples of the different  techniques used for different problems.
 	  </p>
 	  The course will be a mix of instruction and follow-up exercises. It will be held in a computer lab but you are encouraged to bring your own laptops, with software already loaded. A list of software will be available at this site several days prior to the workshop.
 
 <h2>Registration:<a name="registration"></h2>
-<a href="https://www.eventbrite.com/e/isu-statistics-graphics-with-ggplot2-tickets-12818256751?ref=ebtnebregn" target="_blank"><img src="https://www.eventbrite.com/custombutton?eid=12818256751" alt="Eventbrite - ISU Statistics: Graphics with ggplot2" /></a>
+
+<a href="https://www.eventbrite.com/e/isu-statistics-data-wrasstlin-with-r-tickets-17235877975" target="_blank">Sign-up</a> is done through EventBrite.
+
+<!--<p>
+Please contact Heike Hofmann (<a href="mailto:hofmann@iastate.edu">hofmann@iastate.edu</a>) for fees in case you are not affiliated with the university.
+-->
 
 <p>
 Please contact Heike Hofmann (<a href="mailto:hofmann@iastate.edu">hofmann@iastate.edu</a>) for fees in case you are not affiliated with the university.
@@ -64,7 +69,7 @@ Please contact Heike Hofmann (<a href="mailto:hofmann@iastate.edu">hofmann@iasta
 	</tr>
 	<tr class="" >
 		<td >1:30 - 2:00</td>
-		<td><a href="knitr/01-files.pdf">Reading Files</a></td>
+		<td><a href="pdfs/01-files.pdf">Reading Files</a></td>
 		<td>Excel files vs text, data organization<br>
 		<a href="code/01-files.R">01-files.R</a>,
 		<a href="data/01-data/midwest.csv">midwest.csv</a>,
@@ -75,7 +80,7 @@ Please contact Heike Hofmann (<a href="mailto:hofmann@iastate.edu">hofmann@iasta
     </tr>
     <tr class="">
 		<td> 2:00 - 3:10</td>
-		<td><a href="knitr/03-dplyr-intro.pdf">Intro to dplyr</a></td>
+		<td><a href="knitr/03-dplyr-intro.html">Intro to dplyr</a></td>
 		<td>for-loops, intro to dplyr, summarize<br>
 		<a href="code/03-dplyr-intro.R">03-dplyr-intro.R</a>,
 		<a href="code/03-dplyr-intro-yourturn.R"><font color="#FFFFFF">Your turn solutions</font></a>
@@ -87,12 +92,9 @@ Please contact Heike Hofmann (<a href="mailto:hofmann@iastate.edu">hofmann@iasta
 	</tr>
     <tr class="">
 		<td> 3:30 - 4:50</td>
-		<td><a href="knitr/04-more-ddply.pdf">More dplyr: an example</a></td>
-		<td>stringr, transform, plyr variations<br>
-		<a href="code/04-ddply.R">04-ddply.R</a>,
-		<a href="data/OkCupid.csv">OkCupid.csv</a>, 
-    <a href="data/OkCupidSmall.csv">Smaller Version of OkCupid data</a>
-  	<a href="code/04-ddply-yourturn.R"><font color="#FFFFFF">Your turn solutions</font></a>
+		<td><a href="knitr/04-more-dplyr.html">More dplyr: an example</a></td>
+		<td>tidyr, dplyr verbs, lubridate<br>
+		<a href="code/04-more-dplyr.R">04-more-dplyr.R</a>
 		</td>
 	</tr>
 	<tr class="">
@@ -115,7 +117,7 @@ Please contact Heike Hofmann (<a href="mailto:hofmann@iastate.edu">hofmann@iasta
 
   <li>Investigate and work with different types of objects</li>
 
-	<li>Working with ddply and its variations to get summary statistics from objects.</li>
+	<li>Working with dplyr and its variations to get summary statistics from objects.</li>
 
 </ul>
 
@@ -124,16 +126,15 @@ Please contact Heike Hofmann (<a href="mailto:hofmann@iastate.edu">hofmann@iasta
 <h2>Getting Ready on your own machine<a name="yourown"></h2>
 <p> You can bring your own laptop and work on it, if you like to. In order to keep up with everybody else, we're asking that you start installing the following pieces of software ahead of coming to the workshop:
 <ul>
-<li> Install R version 3.0  (from <a href="http://www.r-project.org">www.r-project.org</a>) </li>
+<li> Install R version 3.2.0  (from <a href="http://www.r-project.org">www.r-project.org</a>) </li>
 <li>Once R is installed, start the application by double-clicking the icon. Copy and paste the following commands into the R Console Window:
 <pre>
 install.packages("ggplot2", dependencies=TRUE)
 # installs a few other packages as well
-install.packages("plyr")
-install.packages("MASS")
-install.packages("gdata")
-install.packages("foreign")
+install.packages("dplyr")
+install.packages("tidyr")
 install.packages("reshape2")
+install.packages("lubridate")
 </pre>
 </li>
 </ul>

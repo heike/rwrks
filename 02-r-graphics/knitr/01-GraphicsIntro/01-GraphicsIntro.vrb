@@ -1,4 +1,4 @@
-\frametitle {Bar Plots}
+\frametitle{Bar Plots}
 
 Bar plot faceted by gender and class
 
@@ -11,7 +11,7 @@ Bar plot faceted by gender and class
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=.9\linewidth]{figure/kdiamondbar2}
+{\centering \includegraphics[width=.9\linewidth]{figure/kdiamondbar2-1}
 
 }
 

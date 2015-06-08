@@ -14,7 +14,7 @@
 
 \title[ 1-Intro]{1 - Intro to R}
 \subtitle{Data Structures}
-\author[ K. Maurer, S. VanderPlas, E. Hare]{Karsten Maurer, Eric Hare, and Susan VanderPlas}
+\author[E. Hare, A. Kaplan, C. Sievert]{Eric Hare, Andee Kaplan, Carson Sievert}
 \date{}
 \institute[ISU]{Iowa State University}
 

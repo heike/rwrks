@@ -1,0 +1,217 @@
+---
+title: "Advanced Graphics in R"
+subtitle: "ggplot2: A Layered Grammar of Graphics"
+author: "Iowa State University"
+date: "`r Sys.Date()`"
+output:
+  ioslides_presentation:
+    transition: default
+    widescreen: true
+css:
+  styles.css
+---
+
+```{r, message = FALSE, echo = FALSE}
+knitr::opts_chunk$set(fig.width=6, fig.height=4, fig.align='center', cache=TRUE, tidy=FALSE, warning = FALSE, message = FALSE)
+```
+
+---
+
+## BP Oil Spill
+
+<div align = "center">
+  <img src = "satelitepicBPoilspill.png">
+</div>
+
+## Data Sets
+
+1. NOAA Data
+    * National Oceanic and Atmospheric Administration
+    * Temperature and Salinity Data in Gulf of Mexico
+    * Measured using Floats, Gliders and Boats
+
+2. US Fisheries and Wildlife Data
+    * Animal Sightings on the Gulf Coast
+    * Birds, Turtles and Mammals
+    * Status: Oil Covered or Not
+
+Both data sets have geographic coordinates for ever observation
+
+## Loading NOAA Data
+
+```{r}
+x <- ls()
+noaa <- "http://www.public.iastate.edu/~hofmann/looking-at-data/data/noaa.rdata"
+if (!file.exists("noaa.rdata")) download.file(noaa, "noaa.rdata")
+load("noaa.rdata")
+setdiff(ls(), x)
+```
+
+## Floats Data
+
+```{r}
+str(floats)
+```
+
+## Floats
+
+```{r}
+library(ggplot2)
+qplot(Longitude, Latitude, colour = callSign, data = floats) + 
+  coord_map()
+```
+
+## A note on `qplot()` versus `ggplot()`
+
+* `qplot()` makes many assumptions to save you some typing.
+* Although it's often useful for quick, interactive, exploratory data analysis; eventually you'll want the full flexibility of `ggplot()`.
+* `qplot()` assumes variable names are _aesthetics_ (a mapping from data to visual elements), but with `ggplot()`, you have to specify them.
+
+```{r, eval = FALSE}
+ggplot(data = floats, aes(x = Longitude, y = Latitude, colour = callSign)) +
+  geom_point() + coord_map()
+```
+
+* [RStudio's ggplot2 cheatsheet](http://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf) provides a great visual of this difference.
+
+## Gliders Data
+
+```{r}
+str(gliders)
+```
+
+## Gliders
+
+```{r}
+ggplot(data = gliders, aes(x = Longitude, y = Latitude, colour = callSign)) + 
+  geom_point() + coord_map()
+```
+
+## Boats Data
+
+```{r}
+str(boats)
+```
+
+## Boats
+
+```{r}
+ggplot(data = boats, aes(x = Longitude, y = Latitude, colour = callSign)) + 
+  geom_point() + coord_map()
+```
+
+## Provide some context
+
+* All of this data comes from the same geographic region.
+* It'd be nice if we could _overlay_ this information onto a map!
+* This is where ggplot2's layering idea becomes useful.
+
+---
+
+```{r}
+states <- map_data("state")
+map_outline <- ggplot() +
+  geom_path(data = states, aes(x = long, y = lat, group = group)) + 
+  xlim(c(-91, -80)) + ylim(c(22,32)) + coord_map()
+map_outline
+```
+
+---
+
+```{r}
+map_floats <- map_outline +
+  geom_point(data = floats, aes(x = Longitude, y = Latitude, colour = callSign))
+map_floats
+```
+
+```{r}
+map_outline +
+  geom_point(data = floats, aes(x = Longitude, y = Latitude, colour = Depth))
+```
+
+----
+
+```{r}
+rig # location of BP Oil rig
+map_floats +
+  geom_point(data = rig, aes(x, y), shape = "x", size = 5) + 
+  geom_text(data = rig, aes(x, y), label = "BP Oil rig", 
+            size = 5, hjust = -0.1)
+```
+
+## Your Turn
+
+* Use your ggplot2 skills to explore any (or all!) of the floats/gliders/boats data. Be creative!!
+
+# How _exactly_ does layering work?
+
+## A simpler example
+
+```{r}
+p <- ggplot(data = diamonds, aes(x = carat, y = price)) +
+  geom_point() +           # layer 1
+  geom_smooth(method = lm) # layer 2
+p
+```
+
+## Plot-level things
+
+```{r}
+# scales
+p <- p + scale_x_log10() + scale_y_log10()  
+p
+```
+
+```{r}
+# coordinate system
+p + coord_polar()
+```
+
+---
+
+```{r}
+# facets
+p + facet_grid(. ~ cut)
+```
+
+---
+
+<div align = "center">
+  <a href = "http://www.voovarb.com/ggplot2Intro/ggplot_structure.png">
+    <img src = "ggplot_structure.png" width = "1000" height = "1200">
+  </a>
+</div>
+
+## Layering defaults
+
+* Each `geom_*` function is really a layer with certain defaults for statistic, position, and, well, geometry.
+
+```{r}
+args(geom_point)
+args(geom_smooth)
+args(geom_bar)
+```
+
+## Defaults aren't always right!!
+
+```{r, out.extra='style="float:left"', fig.show = "hold", fig.width=3.3}
+base <- ggplot(diamonds, aes(x = cut, fill = clarity)) 
+base + geom_bar() + theme(legend.position = "none") # bad!!!
+base + geom_bar(position = "fill") + 
+  theme(legend.position = "none")                   # better
+base + geom_bar(position = "dodge")                 # better
+```
+
+## Your Turn
+
+* Read in the animal.csv data
+
+```{r}
+animals <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/animal.csv")
+```
+
+* Plot the location of animal sightings on a map of the region
+* On this plot, try to color points by class of animal and/or
+status of animal
+* Advanced: Could we indicate time somehow?
+

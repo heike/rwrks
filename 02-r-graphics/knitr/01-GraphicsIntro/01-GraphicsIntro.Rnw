@@ -18,7 +18,7 @@
 %load packages that will be invisible on slides
 
 <<config11, include=FALSE >>=
-opts_chunk$set(background = 'white', cache=TRUE, tidy=FALSE)
+opts_chunk$set(background = 'white', cache=FALSE, tidy=FALSE)
 opts_chunk$set(size = 'footnotesize')
 options(width=55) # limit width of output so that it fits on the slide
 opts_chunk$set(fig.width=6, fig.height=4, out.width='.9\\linewidth', fig.align='center')
@@ -33,7 +33,7 @@ data(Titanic)
 titanic <- as.data.frame(Titanic)
 @
 
-\title[Advanced Graphics in R ]{2 - Advanded Graphics in R}
+\title[Day 2 - R Graphics with ggplot2]{Day 2 - R Graphics with ggplot2}
 \subtitle{01 - Basic Plots}
 \date{\hspace{1in}}
 \institute[ISU]{Iowa State University}

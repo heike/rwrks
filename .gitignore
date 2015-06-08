@@ -3,3 +3,17 @@
 .RData
 
 rwrks.Rproj
+
+*.log
+
+*.nav
+
+*.tex
+
+*.gz
+
+*.snm
+
+*.toc
+
+*.vrb

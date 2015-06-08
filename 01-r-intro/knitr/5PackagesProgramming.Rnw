@@ -13,7 +13,7 @@
 
 \title[ 1-Intro]{1 - Intro to R}
 \subtitle{Packages and Basic Programming}
-\author[ K. Maurer, S. VanderPlas, E. Hare]{Karsten Maurer, Eric Hare, and Susan VanderPlas}
+\author[E. Hare, A. Kaplan, C. Sievert]{Eric Hare, Andee Kaplan, Carson Sievert}
 \date{}
 \institute[ISU]{Iowa State University}
 
@@ -45,7 +45,7 @@ options(width=55)
 \begin{frame}
     \frametitle{Install Package Demo}
     \begin{itemize}
-        \item Demo how to install and load the \texttt{plyr} package
+        \item Demo how to install and load the \texttt{dplyr} package
     \end{itemize}
 \end{frame}
 
@@ -68,7 +68,7 @@ options(width=55)
     \frametitle{Handy Packages}
     \begin{itemize}
         \item \texttt{ggplot2} : Statistical graphics
-        \item \texttt{plyr} / \texttt{reshape2} : Manipulating data structures
+        \item \texttt{dplyr} / \texttt{tidyr} : Manipulating data structures
         \item \texttt{lme4} : Mixed models
         \item \texttt{knitr} : integrate LaTeX, HTML, or Markdown with R for easy reproducible research
   \end{itemize}
