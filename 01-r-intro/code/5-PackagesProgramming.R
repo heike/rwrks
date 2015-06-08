@@ -10,7 +10,7 @@ vignette(package="dplyr")
 vignette()
 vignette(package="xtable")
 
-?ddply
+?summarise
 
 browseURL("http://cran.r-project.org/web/views/")
 
