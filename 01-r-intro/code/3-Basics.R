@@ -77,8 +77,6 @@ round(-2.579, digits = 2)
 signif(2.579, 2)
 signif(23511,2)
 
-.Last.value
-
 ###################################################
 ### Variable Storage
 ###################################################
@@ -103,7 +101,7 @@ LoveForPuppies = Inf
 
 1/sqrt(2*pi)*exp(0) # combine functions to get crazy math
 
-normaldensity <- .Last.value # super useful!!!
+normaldensity <- 1/sqrt(2*pi)*exp(0)
 
 vec <- c(1, 2, 3) # define a vector
 

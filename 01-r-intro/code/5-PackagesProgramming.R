@@ -1,16 +1,16 @@
 
-install.packages("plyr")
+install.packages("dplyr")
 
-library(plyr)
-library(help="plyr")
-help(package="plyr")
+library(dplyr)
+library(help="dplyr")
+help(package="dplyr")
 
 ?vignette
-vignette(package="plyr")
+vignette(package="dplyr")
 vignette()
 vignette(package="xtable")
 
-?ddply
+?summarise
 
 browseURL("http://cran.r-project.org/web/views/")
 
@@ -55,7 +55,7 @@ for(i in 1:10){
     print(i)
 }
 
-data(tips)
+data(tips, package="reshape2")
 
 id <- c("total_bill", "tip", "size")
 for (colname in id) {
