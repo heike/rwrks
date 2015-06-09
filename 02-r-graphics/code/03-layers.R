@@ -2,11 +2,16 @@
 # Read in data
 # ---------------------------------------------------------------------------
 
-x <- ls()
-noaa <- "http://heike.github.io/rwrks/02-r-graphics/data/03-data/noaa.rdata"
-if (!file.exists("noaa.rdata")) download.file(noaa, "noaa.rdata")
-load("noaa.rdata")
-setdiff(ls(), x)
+#x <- ls()
+#noaa <- "http://heike.github.io/rwrks/02-r-graphics/data/03-data/noaa.rdata"
+#if (!file.exists("noaa.rdata")) download.file(noaa, "noaa.rdata")
+#load("noaa.rdata")
+#setdiff(ls(), x)
+
+boats <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/boats.csv")
+floats <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/floats.csv")
+gliders <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/gliders.csv")
+rig <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/rig.csv")
 
 # ---------------------------------------------------------------------------
 # Start analyzing
