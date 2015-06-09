@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------
 
 x <- ls()
-noaa <- "http://www.public.iastate.edu/~hofmann/looking-at-data/data/noaa.rdata"
+noaa <- "http://heike.github.io/rwrks/02-r-graphics/data/03-data/noaa.rdata"
 if (!file.exists("noaa.rdata")) download.file(noaa, "noaa.rdata")
 load("noaa.rdata")
 setdiff(ls(), x)
