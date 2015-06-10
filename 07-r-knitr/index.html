@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title>Document Creation with Knitr. Statistical Computing. Iowa State.</title>
+	<title>knitr and rmarkdown. Statistical Computing. Iowa State.</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
@@ -13,7 +13,7 @@
 </div>
 <div id="wrap">
 
-<h1>Dynamic Documents with Knitr</h1>
+<h1>knitr and rmarkdown</h1>
 
 <p><strong>June 11 2015, 1:30 - 5:00, 3121 Snedecor</strong><br />
 
@@ -24,13 +24,12 @@ Carson Sievert, <a href="mailto:sievert@iastate.edu">sievert@iastate.edu</a>.<br
 </p>
 
 
-	<p>The <em>Dynamic Documents with Knitr</em> workshop will teach you how create reproducible documents containing your code, R output, and text.
+	<p>The <em>knitr and R Markdown</em> workshop will teach you how create flexible, dynamic, and interactive documents containing your code, R output, and text.
 	
-	The course will show you how to create dynamic LaTeX documents and web pages from R which integrate your code, graphs, and data to create truly reproducible research and provide context for your data analysis. This course will also be useful for instructors who wish to create multiple test forms easily.
 	  </p>
 	  The course will be a mix of instruction and interactive activities. It will be held in a computer lab but you are encouraged to bring your own laptops, with software already loaded. A list of software will be available at this site several days prior to the workshop.
 
-<h2>Registration:<a name="registration"></h2>
+<h2>Registration:</h2><a name="registration"></a>
 
 <a href="https://www.eventbrite.com/e/isu-statistics-knitting-documents-making-your-analysis-reproducible-tickets-17236248082" target="_blank">Sign-up</a> is done through EventBrite.
 
@@ -53,38 +52,22 @@ Carson Sievert, <a href="mailto:sievert@iastate.edu">sievert@iastate.edu</a>.<br
 	<tr class="topic first"><td colspan="3"></td></tr>
 	<tr class="">
 		<td > 1:30 &#8211; 2:00</td>
-		<td>Install RStudio and Knitr</td>
+		<td>Install RStudio and R Markdown</td>
 		<td>This will make sure that everybody's system is up and running. <br><b>You should try to install Rstudio and run the R install script ahead of time, so that this time can be used to address potential problems.</b> <br>
 		<a href="http://www.rstudio.com/ide/download/desktop">Install RStudio</a>, <a href="code/01-Setup.R">Setup.R</a>
 		</td>
 	</tr>
 	<tr class="" >
 		<td > 2:00 &#8211; 3:00</td>
-		<td  valign="top"><a href="pdfs/01-Intro.pdf">Motivating Example</a> </td>
-		<td  valign="top">Creating dynamic LaTeX documents with knitr and R<br>
-		<a href="code/minimal-knitr.Rnw">LatexDocument.Rnw</a>, <a href="code/01-YourTurn.pdf">Your Turn pdf sample</a> <a href="code/01-YourTurn.Rnw" style="color: white;">Your Turn Solutions</a>
+		<td  valign="top"><a href="http://cpsievert.github.io/slides/rmd">Motivation</a> </td>
+		<td  valign="top">Why use knitr and R Markdown? What are the strengths and limitations?
 	</tr>
 	<tr class="">
-		<td> 3:00 &#8211; 3:45</td>
-		<td><a href="pdfs/02-RFunctions.pdf">R functions for creating LaTeX output</a></td>
-		<td>Use R packages like xtable and Hmisc to format R objects for LaTeX documents.
-		<br />
-		<a href="code/02-RFunctions.R">LatexInR.R</a>, <a href="code/02-blank.Rnw">Blank Your Turn Rnw file</a>, <a href="code/02-YourTurn.pdf">Your Turn pdf sample</a> <a href="code/02-YourTurn.Rnw" style="color: white;">Your Turn Solutions</a>
+		<td> 3:00 &#8211; 4:45</td>
+		<td><a href="http://cpsievert.github.io/slides/rmd#9">Using knitr & R Markdown</a></td>
+		<td> What is knitr and R Markdown? What are code chunks? What are chunk options? How can they be used to elegantly specify content presentation?
 		</td>
 	</tr>
-  <!--
-	<tr class="">
-		<td> 6:45 &#8211; 7:00 </td>
-		<td><strong> coffee break </strong></td>
-	</tr>
-	-->
-		<tr class="">
-		<td> 3:45 &#8211; 4:45</td>
-		<td><a href="http://cpsievert.github.io/slides/markdown/">Creating Webpages with knitr and markdown</a></td>
-    <td>Use knitr and markdown to create dynamic webpages quickly and easily within R.
-		</td>
-	</tr>
-
 	<tr class="">
 		<td> 4:45 &#8211; 5:00</td>
 		<td>Questions and Survey</td>
@@ -104,27 +87,18 @@ We very much appreciate any feedback you can give us. You can find a form here: 
 
 
 <ul>
-  <li>Create LaTeX documents within R</li>
-
-  <li>Format graphics and R code directly within your latex document</li>
-  
-  <li>Use R packages like xtable and Hmisc to print function output to LaTeX documents</li>
-
-	<li>Create webpages with R and markdown</li>
-
-	<li>Understand the advantages of reproducible research tools like knitr to science</li>
-
-
+  <li>  
+    Create documents that contain your R code/output/results and convert between HTML/pdf/Word at the click of a button.
+  </li>
+  <li>Use the pander package to format R output in your documents</li>
 </ul>
 
-
-
-<h2>Getting Ready on your own machine<a name="yourown"></h2>
+<h2>Getting Ready on your own machine<a name="yourown"></a></h2>
 <p> You can bring your own laptop and work on it, if you like to. In order to keep up with everybody else, we're asking that you start installing the following pieces of software ahead of coming to the workshop:
 <ul>
 <li> Install the newest R version 3.2.0 (from <a href="http://www.r-project.org">www.r-project.org</a>) </li>
 <li> Install RStudio (from <a href="http://www.rstudio.com/">www.rstudio.com</a>) </li>
-<li> Within R, use "install.packages('knitr')" to install the knitr package used in this workshop</li>
+<li> Within R, use "install.packages('rmarkdown')" to install the rmarkdown package used in this workshop</li>
 </ul>
 
 <h2>Useful links</h2>
@@ -132,9 +106,9 @@ We very much appreciate any feedback you can give us. You can find a form here: 
 <p>Recommended Reading:</p>
 
 <ul>
-  <li><a href="http://yihui.name/knitr/">Knitr documentation</a>. Contains options for formatting code output, pictures, and tables using knitr with LaTeX and markdown documents.</li>
-  <li><a href="http://bit.ly/117OLVl">Knitr manual</a></li>
-  <li><a href="http://bit.ly/114GNdP">Knitr graphics manual</a></li>
+  <li><a href="http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown Quick Reference</a>.
+  <li><a href="http://rmarkdown.rstudio.com/">R Markdown website</a>.
+  <li><a href="http://yihui.name/knitr/">Knitr documentation</a>.
   <li><a href="http://www.amazon.com/dp/1482203537/ref=cm_sw_su_dp">Dynamic Documents with R and knitr</a> (knitr book)</li>
 </ul>
 </div>
