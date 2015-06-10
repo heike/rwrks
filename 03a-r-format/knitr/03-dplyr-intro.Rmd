@@ -4,6 +4,7 @@ author: "Eric Hare, Andee Kaplan, Carson Sievert"
 date: "June 10, 2015"
 output:
   ioslides_presentation: default
+  beamer_presentation: default
 ---
 
 ```{r, echo=FALSE}
