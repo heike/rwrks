@@ -31,20 +31,7 @@ print(xtable(head(french_fries)), comment = FALSE)
 
 ##This format is not ideal for data analysis
 What code would be needed to plot each of the ratings over time as a different color?
-```{r, eval=FALSE}
-library(ggplot2)
 
-french_sub <- french_fries[french_fries$time == 10,]
-
-qplot("1_potato", potato, data = french_sub, fill = I("red"), geom = "boxplot") +
-    geom_boxplot(aes(x = "2_buttery", y = buttery), fill = I("orange")) +
-    geom_boxplot(aes(x = "3_grassy", y = grassy), fill = I("yellow")) +
-    geom_boxplot(aes(x = "4_rancid", y = rancid), fill = I("green")) +
-    geom_boxplot(aes(x = "5_painty", y = painty), fill = I("blue")) +
-    xlab("variable") + ylab("rating")
-```
-
-##The Plot
 ```{r, echo=FALSE}
 library(ggplot2)
 
@@ -63,7 +50,6 @@ We want to change this **wide format**:
 
 ![Wide Format](figures/tableoverview.png)
 
-***
 to this **long format**:
 
 ![Long Format](figures/tablelong.png)
@@ -72,12 +58,14 @@ to this **long format**:
 - When gathering, you need to specify the **keys** (identifiers) and the **values** (measures).
 
 Keys/Identifiers:
+
 - Identify a record (must be unique)
 - Example: Indices on an random variable
 - Fixed by design of experiment (known in advance)
 - May be single or composite (may have one or more variables)
 
 Values/Measures:
+
 - Collected during the experiment (not known in advance)
 - Usually numeric quantities
 
