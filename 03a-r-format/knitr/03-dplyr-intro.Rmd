@@ -89,6 +89,8 @@ ba <- rep(NA, n)
 head(ba)
 ```
 
+**Batman!**
+
 ##`for` loops for Baseball
 - Index set: player id
 - `i = 1`: 
