@@ -16,6 +16,7 @@ install_pkg <- function(x) {
 }
 install_pkg("animation")
 install_pkg("shiny")
+install_pkg("ggplot2")
 install_pkg("DT")
 install_pkg("devtools")
 devtools::install_github("rstudio/rticles")
@@ -26,3 +27,4 @@ library(shiny)
 library(DT)
 library(rticles)
 library(plotly)
+library(ggplot2)
