@@ -15,6 +15,7 @@ install_pkg <- function(x) {
   if (!requireNamespace(x)) install.packages(x)
 }
 install_pkg("animation")
+install_pkg("shiny")
 install_pkg("DT")
 install_pkg("devtools")
 devtools::install_github("rstudio/rticles")
