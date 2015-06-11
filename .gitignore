@@ -17,3 +17,5 @@ rwrks.Rproj
 *.toc
 
 *.vrb
+
+**/.DS_Store

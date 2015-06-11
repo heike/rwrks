@@ -1,47 +1,14 @@
-## ----knitr-setup, include=FALSE, echo=FALSE------------------------------
-setwd("../")
-require(knitr)
-library(highlight)
-opts_chunk$set(cache=T, autodep=T, background = 'white', size='scriptsize', tidy=FALSE, fig.path='figures/fig-')
-options(width=55)
-
-## ----plyr-demo, echo=T, eval=F-------------------------------------------
-## library(plyr)
-## help(baseball)
-## head(baseball)
-
-## ----plyr-demo-out, echo=F, eval=T, include=T, size='tiny', comment=NA----
-options(width=100)
-library(plyr)
-help(baseball)
+# ------------------------------------------------------------------------
+data(baseball, package = "plyr")
+help(baseball, package = "plyr")
 head(baseball)
 
-## ----subsets, echo=T, eval=F---------------------------------------------
-## ss <- subset(baseball, id=="sosasa01")
-## head(ss)
-
-## ----subsets-out, echo=F, eval=T, include=T, size='tiny', comment=NA-----
-options(width=100)
+## ----subsets-------------------------------------------------------------
 ss <- subset(baseball, id=="sosasa01")
 head(ss)
-
-## ----subsets-mean, echo=T, eval=T----------------------------------------
 mean(ss$h/ss$ab)
 
-## ----subsets2, echo=T, eval=F--------------------------------------------
-## ss <- subset(baseball, id=="sosasa01")
-## head(ss)
-
-## ----subsets-out2, echo=F, eval=T, include=T, size='tiny', comment=NA----
-options(width=100)
-ss <- subset(baseball, id=="sosasa01")
-head(ss)
-
-## ----subsets-mean2, echo=T, eval=T---------------------------------------
-mean(ss$h/ss$ab)
-
-## ----baseballforloop, echo=c(-1)-----------------------------------------
-options(width=80)
+## ----baseballforloop-----------------------------------------------------
 # Index set
 players <- unique(baseball$id)
 n <- length(players)
@@ -58,8 +25,7 @@ for(i in 1:n){
 # Results
 summary(ba)
 
-## ----baseballforloop-i0, echo=c(-1)--------------------------------------
-options(width=80)
+## ----baseballforloop2----------------------------------------------------
 # Index set
 players <- unique(baseball$id)
 n <- length(players)
@@ -67,45 +33,40 @@ n <- length(players)
 # Place to store data
 ba <- rep(NA, n)
 
+# Results
 head(ba)
 
-## ----baseballforloop-i1, echo=c(-1)--------------------------------------
-options(width=80)
+## ----baseballforloop3----------------------------------------------------
 # Index set
 players <- unique(baseball$id)
-n <- length(players)
 
 # Place to store data
-ba <- rep(NA, n)
+ba <- rep(NA, length(players))
 
-# Loop
-for(i in 1:1){
+for(i in 1:1){ #loop
   career <- subset(baseball, id==players[i])
   ba[i] <- with(career, mean(h/ab, na.rm=T))
 }
-i
+
 head(ba)
 
-## ----baseballforloop-i2, echo=c(-1)--------------------------------------
-options(width=80)
+## ----baseballforloop4----------------------------------------------------
 # Index set
 players <- unique(baseball$id)
-n <- length(players)
 
 # Place to store data
-ba <- rep(NA, n)
+ba <- rep(NA, length(players))
 
-# Loop
-for(i in 1:2){
+for(i in 1:2){ #loop
   career <- subset(baseball, id==players[i])
   ba[i] <- with(career, mean(h/ab, na.rm=T))
 }
-i
+
 head(ba)
 
-## ----baseball-summarize-example, warning=FALSE---------------------------
+## ----baseball-summarize-example------------------------------------------
 library(dplyr)
-baseball <- read.csv("data/baseball.csv")
+baseball <- read.csv("../data/baseball.csv")
 summarise(baseball, ab=mean(h/ab, na.rm=T))
 
 summarise(baseball,
@@ -120,7 +81,7 @@ summarise(subset(baseball, id=="sosasa01"),
           hr = sum(hr, na.rm=T),
           ab = sum(ab, na.rm=T))
 
-## ----ddply-summarize-example, warning=FALSE------------------------------
+## ----ddply-summarize-example---------------------------------------------
 careers <- summarise(group_by(baseball, id),
                  ba = mean(h/ab, na.rm=T),
                  games = sum(g, na.rm=T),

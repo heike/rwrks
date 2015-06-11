@@ -4,6 +4,7 @@ author: "Eric Hare, Andee Kaplan, Carson Sievert"
 date: "June 10, 2015"
 output:
   ioslides_presentation: default
+  beamer_presentation: default
 ---
 
 ```{r, echo=FALSE}
@@ -13,7 +14,7 @@ opts_chunk$set(message = FALSE, warning = FALSE)
 
 ##Baseball Data
 
- - The \texttt{plyr} package contains the data set \texttt{baseball} 
+ - The `plyr` package contains the data set `baseball`
  - seasonal batting statistics of all major league players (through 2007)
  
  
@@ -39,7 +40,7 @@ We need an **automatic** way to calculate this.
 ##`for` loops
 - Idea: repeat the same (set of) statement(s) for each element of an index set
 - Setup: 
-    - Introduce counter variable (sometimes named \texttt{i})
+    - Introduce counter variable (sometimes named `i`)
     - Reserve space for results
 - Generic Code:
 
@@ -89,6 +90,8 @@ ba <- rep(NA, n)
 head(ba)
 ```
 
+**Batman!**
+
 ##`for` loops for Baseball
 - Index set: player id
 - `i = 1`: 
@@ -110,7 +113,7 @@ head(ba)
 
 ##`for` loops for Baseball
 - Index set: player id
-- `i = 1`: 
+- `i = 2`: 
 
 ```{r baseballforloop4}
 # Index set
