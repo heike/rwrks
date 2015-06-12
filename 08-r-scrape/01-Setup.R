@@ -7,7 +7,7 @@ install.packages("XML2R")
 Sys.which("phantomjs")
 # now install rdom via devtools
 install.packages("devtools")
-devtools::install_github("rdom")
+devtools::install_github("cpsievert/rdom")
 
 # probably won't need this, but just in case...
 install.packages("RSelenium")
