@@ -15,13 +15,14 @@
 
 <h1>R graphics with ggplot2 </h1>
 
-<p><strong>June 9, 2015, 2272 Gilman</strong><br />
+<p><strong>May 17 2016, 3121 Snedecor</strong><br />
 
 
 <p>
 Eric Hare, <a href="mailto:erichare@iastate.edu">erichare@iastate.edu</a>.<br />
 Andee Kaplan, <a href="mailto:ajkaplan@iastate.edu">ajkaplan@iastate.edu</a>.<br />
-Carson Sievert, <a href="mailto:sievert@iastate.edu">sievert@iastate.edu</a>.<br />
+Samantha Tyner, <a href="mailto:sctyner@iastate.edu">sctyner@iastate.edu</a>.<br />
+<!--Heike Hofmann, <a href="mailto:hofmann@iastate.edu">hofmann@iastate.edu</a>.<br /> -->
 </p>
 
 
@@ -145,31 +146,8 @@ Please contact Heike Hofmann (<a href="mailto:hofmann@iastate.edu">hofmann@iasta
 <h2>Getting Ready on your own machine<a name="yourown"></h2>
 <p> You can bring your own laptop and work on it, if you like to. In order to keep up with everybody else, we're asking that you start installing the following pieces of software ahead of coming to the workshop:
 <ul>
-<li> Install R (version 3.2.0)  (from <a href="http://www.r-project.org">www.r-project.org</a>) </li>
-<li>Once R is installed, start the application by double-clicking the icon. Copy and paste the following commands into the R Console Window:
-<pre>
-packages <- c("ggplot2", "productplots", "GGally", 
-              "gridExtra",
-              "maps","ggmap", "mapproj")
-
-install.packages(packages)
-
-library(ggplot2)
-library(productplots)
-library(GGally)
-library(maps)
-library(ggmap)
-library(animation)
-
-# Interesting way to do this all at once:
-# sapply(packages, library, character.only = TRUE)
-
-
-today()
-qplot(rnorm(100), rnorm(100), colour=factor(rbinom(100, 1, 0.5)))
-qplot(rnorm(100), rnorm(100), colour=rbinom(100, 5, 0.2))
-</pre>
-</li>
+<li> Install R (version 3.2.x)  (from <a href="http://www.r-project.org">www.r-project.org</a>) </li>
+<li> It is recommended that you install the latest version of RStudio (from <a href="http://www.rstudio.com/products/rstudio/download/">www.rstudio.org</a>) </li>
 </ul>
 
 
