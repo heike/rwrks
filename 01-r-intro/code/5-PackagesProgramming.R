@@ -1,96 +1,39 @@
-
-install.packages("dplyr")
-
-library(dplyr)
-library(help="dplyr")
-help(package="dplyr")
-
-?vignette
-vignette(package="dplyr")
-vignette()
-vignette(package="xtable")
-
-?summarise
-
-browseURL("http://cran.r-project.org/web/views/")
-
-library(sos)
-findFn("robust regression")
-
-
-### Functions
-
-addtwo <- function(x){
-    return(x + 2)
+foo <- function(arg1, arg2, ...) {
+    # Code goes here
+    return(output)
 }
 
-mydata <- 1:10
-addtwo(mydata)
-
-mymean <- function(dat){
-    ans <- sum(dat)/length(dat)
+mymean <- function(data) {
+    ans <- sum(data) / length(data)
     return(ans)
 }
 
-mymean(mydata)
-mean(mydata)
-ans
-
-mymean <- function(dat){
-    if(!is.numeric(dat)){
-        warning("Numeric input is required")
-        return(NA)
+mymean <- function(data) {
+    if (!is.numeric(data)) {
+        stop("Numeric input is required")
+    } else {
+        ans <- sum(data) / length(data)
+        return(ans)
     }
-    ans <- sum(dat)/length(dat)
-    return(ans)
 }
 
-if(TRUE){
-    print("this is true")
-}else{
-    print("this is false")
-}
-
-for(i in 1:10){
+for (i in 1:3) {
     print(i)
 }
 
-data(tips, package="reshape2")
+tips <- read.csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
 
 id <- c("total_bill", "tip", "size")
 for (colname in id) {
     print(colname)
 }
 
-for (colname in id) {
+for(colname in id) {
     print(paste(colname, mymean(tips[, colname])))
 }
 
 i <- 1
-while(i <= 5){
+while (i <= 5) {
     print(i)
-    i <- i+1
-}
-
-?mtcars
-head(mtcars)
-
-out <- rep(0, ncol(mtcars))
-for (i in seq(ncol(mtcars))) {
-    out[i] <- mean(mtcars[, i])
-}
-out
-
-apply(mtcars, 2, mean)
-
-apply(mtcars, 1, mean)
-
-### Your turn
-
-myfun <- function(dat){
-    mn <- mean(dat)
-    out <- t.test(dat)
-    ci <- out$conf.int
-    ans <- c(ci[1], mn, ci[2])
-    return(ans)
+    i <- i + 1
 }
