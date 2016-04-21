@@ -1,0 +1,38 @@
+---
+title: "Setup"
+author: "Eric Hare, Andee Kaplan, Samantha Tyner"
+date: "May 16, 2016"
+output: revealjs::revealjs_presentation
+---
+
+## Your Background
+
+What do you know already?
+
+> - Excel, Numbers, Some sort of spreadsheet software
+> - SAS, SPSS, Minitab
+> - Any other programming language
+> - A text editor
+> - R
+
+## Installing R
+
+Hopefully this is done already.  Otherwise for Windows or OS X:
+
+- Go to http://www.r-project.org/
+- Click the CRAN link on the left, and pick a download site (0-Cloud is a good choice)
+- Choose link based on your OS
+- On Windows, choose the "base" subdirectory to install R.
+- On OS X, choose the .pkg file to install R.
+
+## Installing RStudio
+
+This should also be done already, but if not...
+
+- Browse to https://www.rstudio.com/
+- Mouse over Products and click RStudio
+- Choose RStudio Desktop
+- Click Download RStudio Desktop
+- Choose the installer appropriate for your platform
+
+# Let's take a look at RStudio together...
