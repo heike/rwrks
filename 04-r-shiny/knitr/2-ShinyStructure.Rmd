@@ -1,0 +1,74 @@
+---
+title: "Structure of a Shiny Applet"
+author: "Eric Hare, Andee Kaplan, Samantha Tyner"
+date: "May 19, 2016"
+output: revealjs::revealjs_presentation
+---
+
+## A Tale of Two Files
+
+The quickest/easiest way to create a shiny app is to define the user interface in a file named **ui.R** and the server side functionality in **server.R**.
+
+- **ui.R** defines the page layout and user interface
+- **server.R** contains the R code to create any output
+
+## ui.R
+
+```{r, eval=FALSE}
+library(shiny)
+
+# A simple/common user interface template
+shinyUI(fluidPage(
+
+  # Application title
+  titlePanel("Title"),
+  
+  sidebarPanel(
+    # Define some inputs here
+  ),
+  
+  mainPanel(
+    # output (from the server) go here
+  )
+
+))
+```
+
+## server.R
+
+```{r, eval=FALSE}
+library(shiny)
+
+# Server side logic 
+shinyServer(function(input, output) {
+  # do something
+})
+```
+
+## Reactivity
+
+shiny is built on the idea of **reactive programming**. The idea that outputs should be automatically updated whenever an input value changes.
+
+```
+input values => R code => output values
+```
+
+**Reactive expressions** keep track of what values they read and what values they change. If those values become "out of date", they know their return value is out of date and will automatically recalculate.
+
+## An example
+
+```{r, eval=FALSE}
+runApp("code/02_Reactivity", display.mode = "showcase")
+```
+
+## Your Turn
+
+- Consider extending the hello world example:
+
+```{r, eval=FALSE}
+runApp("code/01_Hello", display.mode = "showcase")
+```
+
+- **Challenge 1:** add an input to change the mean and standard deviation (Hint: see `?numericInput`).
+- **Challenge 2:** add an input to simulate from a gamma as well as a normal (Hint: you can simulate from gamma distribution with `rgamma`).
+- **Challenge 3:** Extend **Challenge 2** so that there are dynamic inputs according to the desired distribution. That is, display mean and std dev inputs for normal distribution and a shape input for gamma (Hint: see `conditionalPanel`).
