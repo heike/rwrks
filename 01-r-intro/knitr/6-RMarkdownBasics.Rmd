@@ -1,6 +1,6 @@
 ---
 title: "RMarkdown Basics"
-author: "Eric Hare, Andee Kaplan, Samantha Tyner"
+author: "Eric Hare, Andee Kaplan, Samantha Tyner, Slides by Carson Sievert"
 date: "May 16, 2016"
 output: revealjs::revealjs_presentation
 ---
