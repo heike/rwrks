@@ -120,7 +120,7 @@ head(states.map)
 
 Average number of days in the last 30 days of insufficient sleep by state
 
-```{r, fig.height=4, fig.width=7}
+```{r, fig.height=3, fig.width=7}
 qplot(long, lat, geom = "polygon", data = states.map, 
       group = group, fill = avg.qlrest2) + coord_map()
 ```
@@ -143,8 +143,46 @@ head(states.sex.map)
 
 Average number of alcoholic drinks per day by state and gender
 
-```{r, fig.height=4, fig.width=7}
+```{r, fig.height=3, fig.width=7}
 qplot(long, lat, geom = "polygon", data = states.sex.map, 
       group = group, fill = avg.drnk) + coord_map() + 
     facet_grid(sex ~ .)
 ```
+
+## Your Turn
+
+- Use `left_join` to combine child healthcare data with maps information. You can load in the child healthcare data with:
+
+```{r}
+states.health.stats <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/states.health.stats.csv")
+```
+
+- Use `qplot` to create a map of child healthcare undercoverage rate by state
+
+## Cleaning Up Your Maps
+
+Use ggplot2 options to clean up your map!
+
+- Adding Titles `+ ggtitle(...)`
+- Might want a plain white background `+ theme_bw()`
+- Extremely familiar geography may eliminate need for latitude and longitude axes `+ theme(...)`
+- Want to customize color gradient `+ scale_fill_gradient2(...)`
+- Keep aspect ratios correct `+ coord_map()`
+
+## Cleaned Up Map
+
+```{r, fig.height=3, fig.width=7}
+qplot(long, lat, geom="polygon", data = states.map, group = group, fill = avg.drnk) + 
+  coord_map() +  theme_bw() +
+  scale_fill_gradient2(limits = c(1.5, 3),low = "lightgray", high = "red") + 
+  theme(axis.ticks = element_blank(),
+       axis.text.x = element_blank(),
+       axis.title.x = element_blank(),
+       axis.text.y = element_blank(),
+       axis.title.y = element_blank()) +
+  ggtitle("Map of Average Number of Alcoholic Beverages Consumed Per Day by State")
+```
+
+## Your Turn
+
+Use options to polish the look of your map of child healthcare undercoverage rate by state!
