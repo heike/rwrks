@@ -1,7 +1,7 @@
 ---
 title: "Web Scraping in R"
 author: "Eric Hare, Andee Kaplan, Samantha Tyner, Slides by Carson Sievert"
-date: "May 18, 2016"
+date: "May 19, 2016"
 output: revealjs::revealjs_presentation
 ---
 
@@ -47,7 +47,7 @@ output: revealjs::revealjs_presentation
 
 ```{r, warning=FALSE}
 library(rvest)
-src <- html("http://en.wikipedia.org/wiki/Table_(information)")
+src <- read_html("http://en.wikipedia.org/wiki/Table_(information)")
 node <- html_node(src, css = ".wikitable")
 ```
 
@@ -61,7 +61,7 @@ html_table(node)
 ## Pipeable! {.build}
 
 ```{r}
-html("http://en.wikipedia.org/wiki/Table_(information)") %>%
+read_html("http://en.wikipedia.org/wiki/Table_(information)") %>%
   html_node(".wikitable") %>% html_table()
 ```
 
@@ -79,7 +79,7 @@ Navigate [this page](http://www.wunderground.com/history/airport/KVAY/2015/2/17/
 
 [See here](https://gist.github.com/cpsievert/57be009120bb5298affa) for a solution (thanks Hadley Wickham for the example)
 
-# What about non-`<table>` data?
+## What about non-`<table>` data?
 
 ## (selectorgadget + rvest) to the rescue!
 
@@ -92,7 +92,7 @@ Navigate [this page](http://www.wunderground.com/history/airport/KVAY/2015/2/17/
 ```{r}
 domain <- "http://www.sec.gov"
 susp <- paste0(domain, "/litigation/suspensions.shtml")
-hrefs <- html(susp) %>% html_nodes("p+ table a") %>% html_attr(name = "href")
+hrefs <- read_html(susp) %>% html_nodes("p+ table a") %>% html_attr(name = "href")
 tail(hrefs)
 ```
 
@@ -111,7 +111,7 @@ Nativigate to Wikipedia's [list of data structures](http://en.wikipedia.org/wiki
 
 [See here](https://gist.github.com/cpsievert/c1b851ff5e1bd846de46) for a solution.
 
-# Scraping *dynamic* web pages
+## Scraping *dynamic* web pages
 
 ```{r}
 # returns the HTML page source, which is _static_ (no table!)
@@ -121,12 +121,12 @@ rvest::html("http://bl.ocks.org/cpsievert/raw/2a9fb8f504cd56e9e8e3/")
 ## Browser <-> Web Server
 
 <div align = "center">
- <img src = "dom.png" width = "750" height = "500">
+ <img src = "images/dom.png" width = "750" height = "500">
 </div>
 
 [rdom](https://github.com/cpsievert/rdom) can construct the DOM:
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 library(rdom)
 rdom("http://bl.ocks.org/cpsievert/raw/2a9fb8f504cd56e9e8e3/") %>%
   html_node("table") %>% html_table()
@@ -141,7 +141,7 @@ rdom("http://bl.ocks.org/cpsievert/raw/2a9fb8f504cd56e9e8e3/") %>%
 
 You can give `rdom()` CSS Selectors directly to avoid sending the _entire_ DOM from phantomjs to R
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 rdom("http://www.techstars.com/companies/stats/", "table") %>%
   html_table()
 ```
@@ -209,13 +209,13 @@ XML is a markup language that looks very similar to HTML.
 
 [XML2R](https://github.com/cpsievert/XML2R) is a framework to simplify acquistion of tabular/relational XML.
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 library(XML2R)
 obs <- XML2Obs("http://bit.ly/mario-xml")
 table(names(obs))
 ```
 
-```{r, echo = FALSE}
+```{r, echo=FALSE}
 # hopefully no one is watching
 library(XML2R)
 obs <- XML2Obs("http://bit.ly/mario-xml", quiet = TRUE)
@@ -270,7 +270,7 @@ merge(tabs[[1]], tabs[[2]], by = "name")
 ## Package downloads from RStudio's CRAN mirror
 
 <div align="center">
-  <img src = "cran.png" width = "1000" height = "500">
+  <img src = "images/cran.png" width = "1000" height = "500">
 </div>
 
 ## Back to Mariokart {.smaller}
