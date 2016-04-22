@@ -58,7 +58,7 @@ Lets look at the top few rows of the diamond data frame to find out!
 head(diamonds)
 ```
 
-## Scatterplot
+## Basic Scatterplot
 
 Basic scatter plot of diamond price vs carat weight
 
@@ -80,9 +80,23 @@ qplot(carat, log(price), geom = "point", data = diamonds,
 
 All of the your turns for this section will use the tips data set:
 
+```{r}
+tips <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/tips.csv")
+```
 
+1. Use qplot to build a scatterplot of variables tips and total bill
+2. Use options within qplot to color points by smokers
+3. Clean up axis labels and add main plot title
 
-## Histogram
+## Basic Histogram
+
+Basic histogram of carat weight
+
+```{r, fig.height=4, fig.width=7}
+qplot(carat, geom = "histogram", data = diamonds)
+```
+
+## Another Histogram
 
 Carat weight histograms faceted by cut
 
@@ -96,3 +110,58 @@ qplot(carat, geom = "histogram", data = diamonds, binwidth = 0.2, facets = .~cut
 2. Use qplot to create a histogram of rate
 3. Change the bin width on that histogram to 0.05
 4. Facet this histogram by size of the group
+
+## Basic Boxplot
+
+Side by side boxplot of diamond prices within cut groupings
+
+```{r, fig.height=4, fig.width=7}
+qplot(cut, price, geom = "boxplot", data = diamonds)
+```
+
+## Another Boxplot
+
+Side by side boxplot of log prices within cut groupings with jittered values overlay
+
+```{r, fig.height=3, fig.width=7}
+qplot(cut, log(price), geom = "boxplot", data = diamonds, 
+	main = "Boxplots of log Diamond Prices Grouped by Cut Quality") +
+	geom_jitter(alpha = I(.025))
+```
+
+## Your Turn
+
+1. Make side by side boxplots of tipping rate for males and females
+2. Overlay jittered points for observed values onto this boxplot
+
+## Bar Plots
+
+To investigate bar plots we will switch over to the Titanic data set:
+
+```{r}
+titanic <- as.data.frame(Titanic)
+```
+
+Data includes passenger characteristics and survival outcomes for those aboard the RMS Titanic's ill fated maiden voyage
+
+## Basic Bar Plot
+
+Basic bar plot of survival outcomes
+
+```{r, fig.height=4, fig.width=7}
+qplot(Survived, geom = "bar", data = titanic, weight = Freq)
+```
+
+## Another Bar Plot
+
+Bar plot faceted by gender and class
+
+```{r, fig.height=4, fig.width=7}
+qplot(Survived, geom = "bar", data = titanic, weight = Freq, 
+      facets = Sex~Class)
+```
+
+## Your Turn
+
+1. Use the tips data to make a barplot for counts of smoking and non smoking customers
+2. Facet using day of week and time of day to view how smoking status changes for different meal times
