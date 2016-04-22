@@ -156,7 +156,7 @@ summarise(subset(baseball, id == "sosasa01"),
 
 - A powerful combination to create summary statistics
 
-```{r ddply-summarize-example}
+```{r}
 careers <- summarise(group_by(baseball, id),
                  ba = mean(h / ab, na.rm = TRUE),
                  games = sum(g, na.rm = TRUE),
@@ -167,6 +167,7 @@ head(careers)
 ```
 
 ## Your Turn
+
 - Find some summary statistics for each of the teams (variable `team`)
     - How many different (`unique`) players has the team had?
     - What was the team's first/last season?
