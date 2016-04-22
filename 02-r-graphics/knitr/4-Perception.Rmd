@@ -1,0 +1,117 @@
+---
+title: "Perception"
+author: "Eric Hare, Andee Kaplan, Samantha Tyner"
+date: "May 17, 2016"
+output: revealjs::revealjs_presentation
+---
+
+## Cost of an Education
+
+![](images/junkcharts.png)
+
+## Motivation
+
+- Why are some plots easier to read than others?
+
+![](images/dotplot.png)
+
+## Good Graphics
+
+Graphics consist of:
+
+- Structure (boxplot, scatterplot, etc.)
+- Aesthetics: features such as color, shape, and size that map other characteristics to structural features
+
+Both the structure and aesthetics should help viewers interpret the information.
+
+## Pre-Attentive Features
+
+- Things that "jump out" in less than 250 ms
+- Color, form, movement, spatial localization
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=7}
+library(scales)
+library(ggplot2)
+
+data <- data.frame(expand.grid(x = 1:6, y = 1:6), color = sample(c(1, 2), 36, replace = TRUE))
+data$x <- data$x + rnorm(36, 0, .25)
+data$y <- data$y + rnorm(36, 0, .25)
+data$shape <- c(rep(2, 15), 1, rep(2,20))
+
+new_theme_empty <- theme_bw()
+new_theme_empty$line <- element_blank()
+new_theme_empty$rect <- element_blank()
+new_theme_empty$strip.text <- element_blank()
+new_theme_empty$axis.text <- element_blank()
+new_theme_empty$plot.title <- element_blank()
+new_theme_empty$axis.title <- element_blank()
+new_theme_empty$plot.margin <- structure(c(0, 0, -1, -1), unit = "lines", valid.unit = 3L, class = "unit")
+
+qplot(x, y, data = data, color = factor(1, levels = 1:2), shape = factor(shape), size = I(5)) +
+    scale_shape_manual(guide = "none", values = c(19, 15)) + 
+    scale_color_discrete(guide = "none") + 
+    new_theme_empty
+```
+
+## Pre-attentive
+
+```{r, fig.height=4, fig.width=7, echo=FALSE}
+data$shape <- c(rep(2, 25), 1, rep(2, 10))
+qplot(x, y, data = data, color = factor(shape), shape = I(19), size = I(5)) +
+    scale_shape_manual(guide = "none", values = c(19, 15)) + 
+    scale_color_discrete(guide = "none") + 
+    new_theme_empty
+```
+
+## Hierarchy of Features
+
+- Color is stronger than shape
+- Combinations of pre-attentive features are usually not pre-attentive due to **interference**
+
+## Another One
+
+```{r, fig.height=4, fig.width=7, echo=FALSE}
+data$shape <- data$color
+qplot(x, y, data = data, color = factor(color), shape = factor(shape), size = I(5)) +
+    scale_shape_manual(guide = "none", values = c(19, 15)) + 
+    scale_color_discrete(guide = "none") + 
+    new_theme_empty
+```
+
+## One More
+
+```{r, fig.height=4, fig.width=7, echo=FALSE}
+data$shape[1] <- if(data$shape[1]==2) 1 else 2
+qplot(x, y, data = data, color = factor(shape), shape = I(19), size = I(5)) +
+    scale_shape_manual(guide = "none", values = c(19, 15)) + 
+    scale_color_discrete(guide = "none") + 
+    new_theme_empty
+```
+
+## Color
+
+- Hue: shade of color (red, orange, yellow...)
+- Intensity: amount of color
+- Both color and hue are pre-attentive. Bigger contrast corresponds to faster detection.
+
+## More Color
+
+Color is context-sensitive: A and B are the same intensity and hue, but appear to be different.
+
+![](images/shadowillusion.png)
+
+## Aesthetics in `ggplot2`
+
+Main parameters: alpha, shape, color, size
+
+![](images/ggplot2aesthetics.png)
+
+## Your Turn
+
+Find ways to improve the following graphic:
+
+```{r}
+frame <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/frame.csv")
+qplot(x, y, data = frame, shape = g1, colour = g2, size = I(4))
+```
+
