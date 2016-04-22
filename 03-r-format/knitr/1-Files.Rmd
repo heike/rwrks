@@ -55,8 +55,9 @@ midwest_data <- read.table("http://heike.github.io/rwrks/03-r-format/data/midwes
 
 ## Quick Lesson in Data Cleaning
 
-```{r}
-values <- c(midwest_data$V3, midwest_data$V5, midwest_data$V7, midwest_data$V9, midwest_data$V11)
+```{r, warning=FALSE, message=FALSE}
+values <- c(midwest_data$V3, midwest_data$V5, midwest_data$V7, 
+            midwest_data$V9, midwest_data$V11)
 dates <- c(paste(midwest_data$V1, midwest_data$V2, sep = "-"), 
            paste(midwest_data$V1, midwest_data$V4, sep = "-"),
            paste(midwest_data$V1, midwest_data$V6, sep = "-"),
@@ -75,16 +76,44 @@ midwest_gas <- midwest_gas[with(midwest_gas, order(date)), ]
 
 ## Now we can make a plot!
 
-```{r}
+```{r, warning=FALSE, message=FALSE, fig.width=7, fig.height=4}
 library(ggplot2)
 qplot(date, price, data = midwest_gas, geom = "line")
 ```
 
 ## Reading Excel Data
 
-```{r}
+Download the midwest.xls file to your current working directory (`getwd()`)
+
+```{r, eval=FALSE}
 library(readxl)
 
-midwest2 <- read_excel("http://heike.github.io/rwrks/03-r-format/data/midwest.xls")
+midwest2 <- read_excel("midwest.xls")
+
+head(midwest2)
 ```
 
+```{r, echo=FALSE}
+library(readxl)
+
+midwest2 <- read_excel("../data/midwest.xls")
+
+head(midwest2)
+```
+
+## `foreign` Package
+
+- Other file formats can be read using the functions from package \texttt{foreign}
+- SPSS: `read.spss`
+- SAS: `read.xport`
+- Minitab: `read.mtp`
+- Systat: `read.systat`
+
+## Your Turn
+
+The NHANES (National Health and Nutrition Survey) publishes data in the SAS xport format:
+
+http://wwwn.cdc.gov/Nchs/Nhanes/Search/nhanes13_14.aspx
+
+1. Scroll to the bottom, choose one of the datasets (Demographics, Examination, etc.). Download the Data file (XPT)
+2. Use `read.xport()` to load the file into R
