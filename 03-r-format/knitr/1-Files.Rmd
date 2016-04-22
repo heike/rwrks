@@ -1,0 +1,17 @@
+---
+title: "Reading Files"
+author: "Eric Hare, Andee Kaplan, Samantha Tyner"
+date: "May 18, 2016"
+output: revealjs::revealjs_presentation
+---
+
+## Data in Excel
+
+- Formats xls and csv - what's the difference?
+- File extensions xls and xlsx are proprietary Excel formats, binary files
+- csv is an extension for Comma Separated Value files. They are text files - directly readable.
+- Example: Gas prices in midwest since 1994
+
+```{r}
+midwest <- read.csv("http://heike.github.io/rwrks/03-r-format/data/midwest.csv")
+```
