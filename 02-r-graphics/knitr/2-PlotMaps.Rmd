@@ -5,8 +5,9 @@ date: "May 16, 2016"
 output: revealjs::revealjs_presentation
 ---
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 library(ggplot2)
+library(dplyr)
 ```
 
 ## States Data
@@ -71,9 +72,79 @@ If a categorical variable is assigned as the fill color then `qplot` will assign
 
 ```{r}
 statereg <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/statereg.csv")
+
+head(statereg)
 ```
 
+## Joining Data
+
+We need to `join` or `merge` our original states data with this new information on the regions. We can use the `left_join` function to do so (more about this later):
+
+```{r}
+states.class.map <- left_join(states, statereg, by = c("region" = "State"))
+head(states.class.map)
+```
+
+## Plotting the Result
 
 ```{r, fig.height=4, fig.width=7}
-qplot(long, lat, geom="polygon", data=states.class.map, group=group, fill=StateGroups, colour=I("black")) + coord_map() 
+qplot(long, lat, geom = "polygon", data = states.class.map, 
+      group = group, fill = StateGroups, colour = I("black")) + 
+    coord_map() 
+```
+
+## Numerical Information Using Shade and Intensity
+
+To show how was can add numerical information to map plots we will use the BRFSS data
+
+- Behavioral Risk Factor Surveillance System
+- 2008 telephone survey run by the Center for Disease Control (CDC)
+- Ask a variety of questions related to health and wellness
+- Cleaned data with state aggregated values posted on website
+
+## BRFSS Data Aggregated by State
+
+```{r}
+states.stats <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/states.stats.csv")
+head(states.stats)
+```
+
+## We must join this data again
+
+```{r}
+states.map <- left_join(states, states.stats, by = c("region" = "state.name"))
+head(states.map)
+```
+
+## Numerical Information Using Shade and Intensity
+
+Average number of days in the last 30 days of insufficient sleep by state
+
+```{r, fig.height=4, fig.width=7}
+qplot(long, lat, geom = "polygon", data = states.map, 
+      group = group, fill = avg.qlrest2) + coord_map()
+```
+
+## BRFSS Data Aggregated by State
+
+```{r}
+states.sex.stats <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/states.sex.stats.csv")
+head(states.sex.stats)
+```
+
+## One More Join
+
+```{r}
+states.sex.map <- left_join(states, states.sex.stats, by = c("region" = "state.name"))
+head(states.sex.map)
+```
+
+## Adding Numerical Information
+
+Average number of alcoholic drinks per day by state and gender
+
+```{r, fig.height=4, fig.width=7}
+qplot(long, lat, geom = "polygon", data = states.sex.map, 
+      group = group, fill = avg.drnk) + coord_map() + 
+    facet_grid(sex ~ .)
 ```
