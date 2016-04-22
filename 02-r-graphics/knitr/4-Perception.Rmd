@@ -114,4 +114,3 @@ Find ways to improve the following graphic:
 frame <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/frame.csv")
 qplot(x, y, data = frame, shape = g1, colour = g2, size = I(4))
 ```
-
