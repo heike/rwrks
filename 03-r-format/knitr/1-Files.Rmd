@@ -12,6 +12,79 @@ output: revealjs::revealjs_presentation
 - csv is an extension for Comma Separated Value files. They are text files - directly readable.
 - Example: Gas prices in midwest since 1994
 
+## Gas Prices in the Midwest
+
 ```{r}
 midwest <- read.csv("http://heike.github.io/rwrks/03-r-format/data/midwest.csv")
+head(midwest)
 ```
+
+## Gas Prices
+
+```{r}
+str(midwest)
+```
+
+There is clearly some work to be done...
+
+## `read.csv` vs. `read.table`
+
+`read.csv` is really just a wrapper for `read.table` with certain parameters set:
+
+```{r}
+read.csv
+```
+
+So to properly read in this data, it's probably best to use `read.table` directly
+
+```{r, eval=FALSE}
+?read.table
+```
+
+## Your Turn
+
+Have a look at the parameters of read.table (?read.table) to solve the following problems:
+
+1. Read the first two lines of the file into an object called `midwest_names`
+2. Read everything EXCEPT the first two lines into an object called `midwest_data`
+
+```{r, echo=FALSE}
+midwest_names <- read.table("http://heike.github.io/rwrks/03-r-format/data/midwest.csv", nrows = 2, sep = ",", stringsAsFactors = FALSE)
+midwest_data <- read.table("http://heike.github.io/rwrks/03-r-format/data/midwest.csv", skip = 2, sep = ",", stringsAsFactors = FALSE)
+```
+
+## Quick Lesson in Data Cleaning
+
+```{r}
+values <- c(midwest_data$V3, midwest_data$V5, midwest_data$V7, midwest_data$V9, midwest_data$V11)
+dates <- c(paste(midwest_data$V1, midwest_data$V2, sep = "-"), 
+           paste(midwest_data$V1, midwest_data$V4, sep = "-"),
+           paste(midwest_data$V1, midwest_data$V6, sep = "-"),
+           paste(midwest_data$V1, midwest_data$V8, sep = "-"),
+           paste(midwest_data$V1, midwest_data$V10, sep = "-"))
+
+dates <- dates[!is.na(values)]
+values <- values[!is.na(values)]
+
+library(lubridate)
+dates <- ymd(dates)
+
+midwest_gas <- data.frame(date = dates, price = values)
+midwest_gas <- midwest_gas[with(midwest_gas, order(date)), ]
+```
+
+## Now we can make a plot!
+
+```{r}
+library(ggplot2)
+qplot(date, price, data = midwest_gas, geom = "line")
+```
+
+## Reading Excel Data
+
+```{r}
+library(readxl)
+
+midwest2 <- read_excel("http://heike.github.io/rwrks/03-r-format/data/midwest.xls")
+```
+
