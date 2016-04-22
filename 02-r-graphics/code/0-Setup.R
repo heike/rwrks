@@ -1,7 +1,7 @@
 packages <- c("ggplot2", "gridExtra", "lubridate",
               "maps","ggmap", "mapproj")
 
-install.packages(packages, dep=TRUE)
+#install.packages(packages, dep=TRUE)
 
 library(ggplot2)
 library(lubridate)
