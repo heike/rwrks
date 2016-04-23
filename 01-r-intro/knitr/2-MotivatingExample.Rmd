@@ -2,7 +2,12 @@
 title: "Motivating Example"
 author: "Eric Hare, Andee Kaplan, Samantha Tyner"
 date: "May 16, 2016"
-output: revealjs::revealjs_presentation
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: league
+        highlight: zenburn
+        css: ../../css/slides.css
 ---
 
 ## Motivating Example
@@ -137,7 +142,7 @@ Perhaps we are interested in if smokers tip at a different rate than non-smokers
 qplot(smoker, rate, geom = "boxplot", data = tips)
 ```
 
-## Your Turn
+## Your Turn {#yourturn}
 
 Try playing with chunks of code from this session to further investigate the tips data:
 
