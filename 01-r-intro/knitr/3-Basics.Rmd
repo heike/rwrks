@@ -2,7 +2,12 @@
 title: "Basics"
 author: "Eric Hare, Andee Kaplan, Samantha Tyner"
 date: "May 16, 2016"
-output: revealjs::revealjs_presentation
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: league
+        highlight: zenburn
+        css: ../../css/slides.css
 ---
 
 ```{r, echo=FALSE}
@@ -111,15 +116,15 @@ http://cran.r-project.org/doc/contrib/Short-refcard.pdf
 
 Having this open or printed off and near you while working is helpful.
 
-## Your Turn
+## Your Turn {#yourturn}
 
 Using the R Reference Card (and the Help pages, if needed), do the following:
 
-- Find out how many rows and columns the `iris' data set has.  Figure out at least 2 ways to do this.
+1. Find out how many rows and columns the `iris' data set has.  Figure out at least 2 ways to do this.
 *Hint: "Variable Information" section on the first page of the reference card!*
-- Use the `rep` function to construct the following vector:  1 1 2 2 3 3 4 4 5 5
+2. Use the `rep` function to construct the following vector:  1 1 2 2 3 3 4 4 5 5
 *Hint: "Data Creation" section of the reference card*
-- Use `rep` to construct this vector: 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
+3. Use `rep` to construct this vector: 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
 
 ## Data Frames Introduction
 
@@ -192,14 +197,14 @@ sad_tip <- rate < 0.10
 rate[sad_tip]
 ```
 
-## Your Turn
+## Your Turn {#yourturn}
 
-- Find out how many people tipped over 20%.
+1. Find out how many people tipped over 20%.
 *Hint: if you use the `sum` function on a logical vector, it'll return how many TRUEs are in the vector:*
 ```{r}
 sum(c(TRUE, TRUE, FALSE, TRUE, FALSE))
 ```
-- **More Challenging**: Calculate the sum of the total bills of anyone who tipped over 20%
+2. **More Challenging**: Calculate the sum of the total bills of anyone who tipped over 20%
 
 ## Modifying Vectors
 
@@ -289,10 +294,10 @@ id <- (bill > 40 & rate < .10)
 tips[id,]
 ```
 
-## Your Turn
+## Your Turn {#yourturn}
 
-- Read up on the dataset (`?diamonds`)
-- Plot price by carat (use qplot - go back to the motivating example for help with the syntax)
-- Create a variable `ppc` for price/carat. Store this variable as a column in the diamonds data
-- Make a histogram of all ppc values that exceed $10000 per carat.
-- Explore any other interesting relationships you find
+1. Read up on the dataset (`?diamonds`)
+2. Plot price by carat (use qplot - go back to the motivating example for help with the syntax)
+3. Create a variable `ppc` for price/carat. Store this variable as a column in the diamonds data
+4. Make a histogram of all ppc values that exceed $10000 per carat.
+5. Explore any other interesting relationships you find

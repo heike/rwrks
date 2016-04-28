@@ -2,7 +2,12 @@
 title: "Data Structures"
 author: "Eric Hare, Andee Kaplan, Samantha Tyner"
 date: "May 16, 2016"
-output: revealjs::revealjs_presentation
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: league
+        highlight: zenburn
+        css: ../../css/slides.css
 ---
 
 ## Data Frames
@@ -82,11 +87,11 @@ names(mydf)[1] <- "nums"
 mydf
 ```
 
-## Your Turn
+## Your Turn {#yourturn}
 
-- Make a data frame with column 1: 1,2,3,4,5,6 and column 2: a,b,a,b,a,b
-- Select only rows with value "a" in column 2 using logical vector
-- `mtcars` is a built in data set like `iris`: Extract the 4th row of the `mtcars` data.
+1. Make a data frame with column 1: 1,2,3,4,5,6 and column 2: a,b,a,b,a,b
+2. Select only rows with value "a" in column 2 using logical vector
+3. `mtcars` is a built in data set like `iris`: Extract the 4th row of the `mtcars` data.
 
 ## Lists
 
@@ -111,11 +116,11 @@ Use indexing to select the second list element:
 mylist[[2]]
 ```
 
-## Your Turn
+## Your Turn {#yourturn}
 
-- Create a list containing a vector and a 2x3 data frame
-- Use indexing to select the data frame from your list
-- Use further indexing to select the first row from the data frame in your list
+1. Create a list containing a vector and a 2x3 data frame
+2. Use indexing to select the data frame from your list
+3. Use further indexing to select the first row from the data frame in your list
 
 ## Examining Objects
 
@@ -140,12 +145,12 @@ What's its structure?
 str(iris)
 ```
 
-## Your Turn
+## Your Turn {#yourturn}
 
-- View the top 8 rows of mtcars data
-- What type of object is the mtcars data set?
-- How many rows are in iris data set? (try finding this using dim or indexing + length)
-- Summarize the values in each column in iris data set
+1. View the top 8 rows of mtcars data
+2. What type of object is the mtcars data set?
+3. How many rows are in iris data set? (try finding this using dim or indexing + length)
+4. Summarize the values in each column in iris data set
 
 ## Working with Output from a Function
 
@@ -204,7 +209,7 @@ We first create a csv file. We can use a text editor, excel... Then we load it i
 littledata <- read.csv("PretendData.csv")
 ```
 
-## Your Turn
+## Your Turn {#yourturn}
 
 - Make 5 rows of data in an excel spreadsheet and save it as a .txt file. This time, do not separate different values with commas. **Use a semi-colon instead**.
 - Import this new .txt file into R with `read.table`. You may need to look at the help page for `read.table` in order to properly do this
