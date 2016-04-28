@@ -1,7 +1,7 @@
 ---
 title: "Your Turn Solutions"
 author: "Eric Hare, Andee Kaplan, Samantha Tyner"
-date: "April 28, 2016"
+date: "May 16, 2016"
 output: html_document
 ---
 
@@ -194,3 +194,22 @@ for (i in 1:ncol(diamonds)) {
 }
 ```
 
+## RMarkdown Basics
+
+Study the second page of the [R Markdown Reference Guide](rmarkdown-reference.pdf) and go back to the [Hello R Markdown example](hello_rmarkdown.Rmd)
+
+**Easy**: Modify the figure sizing and alignment.
+
+```{r, fig.width=5, fig.height=3, fig.align='center'}
+plot(cars)
+```
+
+**Medium**: Add a figure caption.
+
+```{r, fig.cap='This is a caption'}
+plot(cars)
+```
+
+**Hard**: Can you create an animation? (Hint: look at the `fig.show` chunk option -- you might need to the **animation** package for this)
+
+See Eric, Andee or Sam for an explanation of this.
