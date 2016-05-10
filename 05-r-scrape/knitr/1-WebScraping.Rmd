@@ -2,7 +2,12 @@
 title: "Web Scraping in R"
 author: "Eric Hare, Andee Kaplan, Samantha Tyner, Slides by Carson Sievert"
 date: "May 19, 2016"
-output: revealjs::revealjs_presentation
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: white
+        highlight: zenburn
+        css: ../../css/slides.css
 ---
 
 ## A web of data
@@ -218,7 +223,7 @@ table(names(obs))
 ```{r, echo=FALSE}
 # hopefully no one is watching
 library(XML2R)
-obs <- XML2Obs("http://bit.ly/mario-xml", quiet = TRUE)
+obs <- XML2Obs("https://gist.githubusercontent.com/cpsievert/85e340814cb855a60dc4/raw/651b7626e34751c7485cff2d7ea3ea66413609b8/mariokart.xml", quiet = TRUE)
 table(names(obs))
 ```
 

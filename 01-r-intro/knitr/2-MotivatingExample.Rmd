@@ -5,7 +5,7 @@ date: "May 16, 2016"
 output: 
     revealjs::revealjs_presentation:
         transition: fade
-        theme: league
+        theme: white
         highlight: zenburn
         css: ../../css/slides.css
 ---

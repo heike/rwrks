@@ -2,7 +2,12 @@
 title: "Polishing your Plots"
 author: "Eric Hare, Andee Kaplan, Samantha Tyner"
 date: "May 17, 2016"
-output: revealjs::revealjs_presentation
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: white
+        highlight: zenburn
+        css: ../../css/slides.css
 ---
 
 ```{r, echo=FALSE, message=FALSE}

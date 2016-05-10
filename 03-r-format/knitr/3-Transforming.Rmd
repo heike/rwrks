@@ -2,7 +2,12 @@
 title: "Transforming and Analyzing"
 author: "Eric Hare, Andee Kaplan, Samantha Tyner"
 date: "May 18, 2016"
-output: revealjs::revealjs_presentation
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: white
+        highlight: zenburn
+        css: ../../css/slides.css
 ---
 
 ## Using the packages tidyr, dplyr
@@ -32,11 +37,11 @@ qplot("1_buttery", buttery, data = french_fries, fill = I("red"), geom = "boxplo
 ## What we have and what we want
 We want to change this **wide format**:
 
-![Wide Format](figures/tableoverview.png)
+![Wide Format](images/tableoverview.png)
 
 to this **long format**:
 
-![Long Format](figures/tablelong.png)
+![Long Format](images/tablelong.png)
 
 ## Gathering
 
@@ -113,7 +118,7 @@ qplot(week, rank, data = long_billboard, geom = "line", colour = artist, group =
 - *Apply* some function to each sub-dataset to compute a result
 - *Combine* the results of the function calls into a one dataset
 
-<img src="figures/sac.png" width=500></img>
+<img src="images/sac.png" width=500></img>
 
 ## Split-Apply-Combine in dplyr
 
