@@ -34,34 +34,62 @@ mean(tips$tip[tips$smoker=="Yes"])
  # Use rep to construct this vector: 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
   
   rep(c(1:5), times=3)
+  
+## Your Turn 2 - Indexing with Logicals
+	# Find out how many people tipped over 20%
+	
+	sum(tips$rate > .2)
 
-## Your turn 2
-  library(ggplot2)
-  data(diamonds)
+	# Calculate the sum of the total bills of anyone who tipped over 20%
+	
+	sum(tips$total_bill[tips$rate > .2])  
 
- # Read up on the dataset (?diamonds)
-  ?diamonds
+## Your Turn 3 - Diamonds data
+  	library(ggplot2)
+  	data(diamonds)
 
- # Create a variable for price/carat
-  price.per.carat <- diamonds$price/diamonds$carat
+ 	# Read up on the dataset (?diamonds)
+  	?diamonds
+  
+ 	# Plot price by carat (use qplot - go back to the motivating 
+ 	# example for help with the syntax)
 
- # Compare the price of "Fair" diamonds and "Ideal" diamonds
- # using summary. If you want to try to do a t-test to test for a
- # difference in the mean of the prices.
+	qplot(x = carat, y = price, data=diamonds)
 
- fair.diamond.price <- diamonds$price[diamonds$cut=="Fair"]
- ideal.diamond.price <- diamonds$price[diamonds$cut=="Ideal"]
+ 	# Create a variable ppc for price/carat. Store this variable as a column
+ 	# in the diamonds data
+  	
+  	diamonds$ppc <- diamonds$price/diamonds$carat
+  
+ 	# Make a histogram of all ppc values that exceed $10000 per carat
+ 
+	 qplot(data = diamonds[diamonds$ppc > 10000,], x = ppc)
+  
+ 	# Explore any other interesting relationships you find:
 
- summary(fair.diamond.price)
- summary(ideal.diamond.price)
+	# price by depth
+	
+	qplot(x = depth, y = price, data = diamonds)
+	
+	# ppc histogram colored by cut
+	
+	qplot(x = ppc, data = diamonds, fill = cut)
 
- t.test(fair.diamond.price, ideal.diamond.price)
- # Conclusion: the price of a fair diamond is between $719.91 and $1082.53 greater, on average, than the price of an ideal diamond.
+	# Compare the price of "Fair" diamonds and "Ideal" diamonds
+ 	# using summary. If you want to try to do a t-test to test for a
+ 	# difference in the mean of the prices.
 
- # Plot price by carat (use qplot - go back to the motivating 
- # example for help with the syntax)
+ 	fair.diamond.price <- diamonds$price[diamonds$cut=="Fair"]
+ 	ideal.diamond.price <- diamonds$price[diamonds$cut=="Ideal"]
 
-  qplot(price, carat, data=diamonds)
+	summary(fair.diamond.price)
+ 	summary(ideal.diamond.price)
+
+ 	t.test(fair.diamond.price, ideal.diamond.price)
+ 	# Conclusion: the price of a fair diamond is between $719.91 and $1082.53
+ 	# greater, on average, than the price of an ideal diamond.
+
+
 
 
 ### Data Structures
@@ -78,7 +106,7 @@ mean(tips$tip[tips$smoker=="Yes"])
 
   # mtcars is a built in data set like iris: read the values from row 4 by indexing
 
-    head(mtcars)
+   head(mtcars)
     #4th row
     mtcars[4,]
 
@@ -86,7 +114,7 @@ mean(tips$tip[tips$smoker=="Yes"])
 ## Your Turn 2 - Lists
   # Create a list containing a vector and a 2x3 data frame
 
-    mylist <- list(1:5, newdf)
+    mylist <- list(1:5, newdf2 = data.frame(nums=1:2, lets=letters[1:2], LETS = LETTERS[1:2]))
     mylist
 
   # Use indexing to select the data frame from your list
@@ -100,9 +128,9 @@ mean(tips$tip[tips$smoker=="Yes"])
 
 ## Your Turn 3 - Examining Objects
 
-  # View the top 6 rows of mtcars data
+  # View the top 8 rows of mtcars data
 
-    head(mtcars)
+    head(mtcars, 8)
 
   # What type of object is the mtcars data set?
 
@@ -118,7 +146,11 @@ mean(tips$tip[tips$smoker=="Yes"])
 
     summary(iris)
 
-
+## Your Turn 4 - Reading in a text file
+  yourturndata <- read.table("yourturndata.txt",header=T)
+  yourturndata
+  
+# -------------- Below your turn removed in this version ------------ #
 ## Your Turn 4 - Saving output as an object
 
   # Pull the p-value from the t-test of a difference between Sepal Lengths 
@@ -137,11 +169,9 @@ mean(tips$tip[tips$smoker=="Yes"])
   # pull off the pvalue
 
   tout2$p.value
+# -------------------------------------------------------------------- #
 
-
-## Your Turn 5 - Reading in a text file
-  yourturndata <- read.table("yourturndata.txt",header=T)
-  yourturndata
+ 
 
 
 ### Programming and Packages

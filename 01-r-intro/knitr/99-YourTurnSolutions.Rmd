@@ -1,6 +1,6 @@
 ---
 title: "Your Turn Solutions"
-author: "Eric Hare, Andee Kaplan, Samantha Tyner"
+author: "Eric Hare, Andee Kaplan, Sam Tyner"
 date: "May 16, 2016"
 output: html_document
 ---
