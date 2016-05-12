@@ -98,7 +98,6 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 
     <style type="text/css">code{white-space: pre;}</style>
 
-    <link href="data:text/css;charset=utf-8,%23yourturn%20%7B%0Acolor%3A%20white%3B%0A%7D%0A" rel="stylesheet" />
     <!-- Printing and PDF exports -->
     <script>
       var link = document.createElement( 'link' );
@@ -218,7 +217,7 @@ french_fries_long &lt;-<span class="st"> </span><span class="kw">gather</span>(f
 ## 5    1         1      15   1     0.1    0.0    5.1    1.2    1.1
 ## 6    1         1      15   2     3.0    3.6    2.3    8.8    1.5</code></pre>
 </section>
-<section id="your-turn" class="slide level2">
+<section id="your-turn" class="slide level2" data-background="#527a7a">
 <h1>Your Turn</h1>
 <ol type="1">
 <li>Read in the billboard top 100 music data:</li>
@@ -361,7 +360,7 @@ french_fries_apply</code></pre></div>
 ## 10     4         1    2.079167  2.394737
 ## ..   ...       ...         ...       ...</code></pre>
 </section>
-<section id="your-turn-1" class="slide level2">
+<section id="your-turn-1" class="slide level2" data-background="#527a7a">
 <h1>Your Turn</h1>
 <p>Read in the flights data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;http://heike.github.io/rwrks/03-r-format/data/flights.csv&quot;</span>)</code></pre></div>
@@ -390,10 +389,10 @@ french_fries_apply</code></pre></div>
 <span class="kw">today</span>()
 <span class="kw">now</span>() +<span class="st"> </span><span class="kw">hours</span>(<span class="dv">4</span>)
 <span class="kw">today</span>() -<span class="st"> </span><span class="kw">days</span>(<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] &quot;2016-05-10 13:18:10 CDT&quot;
-## [1] &quot;2016-05-10&quot;
-## [1] &quot;2016-05-10 17:18:10 CDT&quot;
-## [1] &quot;2016-05-08&quot;</code></pre>
+<pre><code>## [1] &quot;2016-05-12 14:13:07 CDT&quot;
+## [1] &quot;2016-05-12&quot;
+## [1] &quot;2016-05-12 18:13:07 CDT&quot;
+## [1] &quot;2016-05-10&quot;</code></pre>
 </section>
 <section id="parsing-dates" class="slide level2">
 <h1>Parsing Dates</h1>
@@ -406,7 +405,7 @@ french_fries_apply</code></pre></div>
 ## [1] &quot;2013-05-14&quot;
 ## [1] &quot;2013-05-14 14:50:30 CDT&quot;</code></pre>
 </section>
-<section id="your-turn-2" class="slide level2">
+<section id="your-turn-2" class="slide level2" data-background="#527a7a">
 <h1>Your Turn</h1>
 <ol type="1">
 <li>Using the <code>flights</code> data, create a new column Date using lubridate. You will need to paste together the columns year, month, and day in order to do this. See the <code>paste</code> function.</li>

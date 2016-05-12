@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ```{r, echo=FALSE}
@@ -81,7 +80,7 @@ qplot(carat, log(price), geom = "point", data = diamonds,
 	main="Log price by carat weight, grouped by color")
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 All of the your turns for this section will use the tips data set:
 
@@ -109,7 +108,7 @@ Carat weight histograms faceted by cut
 qplot(carat, geom = "histogram", data = diamonds, binwidth = 0.2, facets = .~cut)
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 1. Create a new variable in tips data frame rate = tip / total bill
 2. Use qplot to create a histogram of rate
@@ -134,7 +133,7 @@ qplot(cut, log(price), geom = "boxplot", data = diamonds,
 	geom_jitter(alpha = I(.025))
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 1. Make side by side boxplots of tipping rate for males and females
 2. Overlay jittered points for observed values onto this boxplot
@@ -166,7 +165,7 @@ qplot(Survived, geom = "bar", data = titanic, weight = Freq,
       facets = Sex~Class)
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 1. Use the tips data to make a barplot for counts of smoking and non smoking customers
 2. Facet using day of week and time of day to view how smoking status changes for different meal times

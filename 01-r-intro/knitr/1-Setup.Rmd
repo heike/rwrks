@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ## Your Background

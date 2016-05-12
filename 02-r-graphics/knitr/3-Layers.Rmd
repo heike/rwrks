@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ```{r, echo=FALSE, message=FALSE}
@@ -182,7 +181,7 @@ ggplot(data = floats,
   geom_point()
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 Find the `ggplot()` statement that creates this plot:
 
@@ -236,7 +235,7 @@ ggplot() +
     ylim(c(22, 32)) + coord_map()
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 1. Read in the animal.csv data:
 

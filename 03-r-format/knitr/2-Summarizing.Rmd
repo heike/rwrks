@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ## Baseball Data
@@ -119,7 +118,7 @@ for(i in 1:2) {
 head(ba)
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 - MLB rules for the greatest all-time hitters are that players have to have played at least 1000 games with at least as many at-bats in order to be considered
 - Extend the for loop above to collect the additional information
@@ -171,7 +170,7 @@ careers <- summarise(group_by(baseball, id),
 head(careers)
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 - Find some summary statistics for each of the teams (variable `team`)
     - How many different (`unique`) players has the team had?

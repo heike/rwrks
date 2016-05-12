@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ## Using the packages tidyr, dplyr
@@ -92,7 +91,7 @@ french_fries_wide <- spread(french_fries_long, key = variable, value = rating)
 head(french_fries_wide)
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 1. Read in the billboard top 100 music data:
 
@@ -192,7 +191,7 @@ french_fries %>%
     summarise(mean_rancid = mean(rancid), sd_rancid = sd(rancid))
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 Read in the flights data:
 
@@ -238,7 +237,7 @@ dmy("14052013")
 ymd_hms("2013:05:14 14:50:30", tz = "America/Chicago")
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 1. Using the `flights` data, create a new column Date using lubridate. You will need to paste together the columns year, month, and day in order to do this. See the `paste` function.
 2. Use `dplyr` to calculate the average departure delay for each date.

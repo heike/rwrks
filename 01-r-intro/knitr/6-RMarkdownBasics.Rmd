@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ## Hello R Markdown!
@@ -52,7 +51,7 @@ output:
 
 > R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of **markdown** (an easy-to-write plain text format) **with embedded R code chunks** that are run so their output can be included in the final document. R Markdown documents are fully reproducible (they can be automatically regenerated whenever underlying R code or data changes).
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 Study the first page of the [R Markdown Reference Guide](rmarkdown-reference.pdf). 
 
@@ -75,7 +74,7 @@ Can you think of anything that is missing from the syntax (that you might want w
 
 - Awesome people tend to create awesome templates.
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 Have a look at R Markdown presentations and templates.
 
@@ -124,7 +123,7 @@ There are a plethora of [chunk options](http://yihui.name/knitr/options/) in **k
 * `fig.width` and `fig.height`: Change size of figure output.
 * `cache`: Save the output of this chunk (so we don't have to run it next time)?
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 Study the second page of the [R Markdown Reference Guide](rmarkdown-reference.pdf) and go back to the [Hello R Markdown example](hello_rmarkdown.Rmd)
 
@@ -175,6 +174,6 @@ pander(a)
 methods(pander)
 ```
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 * Look through the list of pander methods. Can you apply any of the methods that we haven't discussed? We just saw `pander.lm` and `pander.anova`.

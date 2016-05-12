@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ## Data Frames
@@ -87,7 +86,7 @@ names(mydf)[1] <- "nums"
 mydf
 ```
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 1. Make a data frame with column 1: 1,2,3,4,5,6 and column 2: a,b,a,b,a,b
 2. Select only rows with value "a" in column 2 using logical vector
@@ -116,7 +115,7 @@ Use indexing to select the second list element:
 mylist[[2]]
 ```
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 1. Create a list containing a vector and a 2x3 data frame
 2. Use indexing to select the data frame from your list
@@ -145,7 +144,7 @@ What's its structure?
 str(iris)
 ```
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 1. View the top 8 rows of mtcars data
 2. What type of object is the mtcars data set?
@@ -209,7 +208,7 @@ We first create a csv file. We can use a text editor, excel... Then we load it i
 littledata <- read.csv("PretendData.csv")
 ```
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 - Make 5 rows of data in an excel spreadsheet and save it as a .txt file. This time, do not separate different values with commas. **Use a semi-colon instead**.
 - Import this new .txt file into R with `read.table`. You may need to look at the help page for `read.table` in order to properly do this

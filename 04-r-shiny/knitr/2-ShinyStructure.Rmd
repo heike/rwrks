@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ## A Tale of Two Files
@@ -66,7 +65,7 @@ input values => R code => output values
 runApp("code/02_Reactivity", display.mode = "showcase")
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 - Consider extending the hello world example:
 
