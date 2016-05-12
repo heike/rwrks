@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ## A web of data
@@ -72,7 +71,7 @@ read_html("http://en.wikipedia.org/wiki/Table_(information)") %>%
 
 - Much easier to read/understand!
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 Navigate [this page](http://www.wunderground.com/history/airport/KVAY/2015/2/17/DailyHistory.html?req_city=Cherry+Hill&req_state=NJ&req_statename=New+Jersey&reqdb.zip=08002&reqdb.magic=1&reqdb.wmo=99999&MR=1) and try the following:
 
@@ -107,7 +106,7 @@ pdfs <- paste0(domain, hrefs)
 mapply(download.file, pdfs, basename(pdfs))
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 Nativigate to Wikipedia's [list of data structures](http://en.wikipedia.org/wiki/List_of_data_structures) use SelectorGadget + rvest to do the following:
 

@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ```{r, echo=FALSE}
@@ -116,7 +115,7 @@ http://cran.r-project.org/doc/contrib/Short-refcard.pdf
 
 Having this open or printed off and near you while working is helpful.
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 Using the R Reference Card (and the Help pages, if needed), do the following:
 
@@ -197,7 +196,7 @@ sad_tip <- rate < 0.10
 rate[sad_tip]
 ```
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 1. Find out how many people tipped over 20%.
 *Hint: if you use the `sum` function on a logical vector, it'll return how many TRUEs are in the vector:*
@@ -294,7 +293,7 @@ id <- (bill > 40 & rate < .10)
 tips[id,]
 ```
 
-## Your Turn {#yourturn}
+## Your Turn {data-background=#527a7a}
 
 1. Read up on the dataset (`?diamonds`)
 2. Plot price by carat (use qplot - go back to the motivating example for help with the syntax)

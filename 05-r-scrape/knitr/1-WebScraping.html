@@ -98,7 +98,6 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 
     <style type="text/css">code{white-space: pre;}</style>
 
-    <link href="data:text/css;charset=utf-8,%23yourturn%20%7B%0Acolor%3A%20white%3B%0A%7D%0A" rel="stylesheet" />
     <!-- Printing and PDF exports -->
     <script>
       var link = document.createElement( 'link' );
@@ -208,7 +207,7 @@ node &lt;-<span class="st"> </span><span class="kw">html_node</span>(src, <span 
 <li>Much easier to read/understand!</li>
 </ul>
 </section>
-<section id="your-turn" class="slide level2">
+<section id="your-turn" class="slide level2" data-background="#527a7a">
 <h1>Your Turn</h1>
 <p>Navigate <a href="http://www.wunderground.com/history/airport/KVAY/2015/2/17/DailyHistory.html?req_city=Cherry+Hill&amp;req_state=NJ&amp;req_statename=New+Jersey&amp;reqdb.zip=08002&amp;reqdb.magic=1&amp;reqdb.wmo=99999&amp;MR=1">this page</a> and try the following:</p>
 <p><strong>Easy</strong>: Grab the table at the bottom of the page (hint: instead of grabbing a node by class with <code>html_node(&quot;.class&quot;)</code>, you can grab by id with <code>html_node(&quot;#id&quot;)</code>)</p>
@@ -243,7 +242,7 @@ hrefs &lt;-<span class="st"> </span><span class="kw">read_html</span>(susp) %&gt
 pdfs &lt;-<span class="st"> </span><span class="kw">paste0</span>(domain, hrefs)
 <span class="kw">mapply</span>(download.file, pdfs, <span class="kw">basename</span>(pdfs))</code></pre></div>
 </section>
-<section id="your-turn-1" class="slide level2">
+<section id="your-turn-1" class="slide level2" data-background="#527a7a">
 <h1>Your Turn</h1>
 <p>Nativigate to Wikipedia’s <a href="http://en.wikipedia.org/wiki/List_of_data_structures">list of data structures</a> use SelectorGadget + rvest to do the following:</p>
 <ol type="1">
@@ -324,7 +323,7 @@ hadley$header[<span class="dv">1</span>:<span class="dv">3</span>]</code></pre><
 ## [1] &quot;GitHub.com&quot;
 ## 
 ## $date
-## [1] &quot;Tue, 10 May 2016 18:38:19 GMT&quot;
+## [1] &quot;Thu, 12 May 2016 19:15:40 GMT&quot;
 ## 
 ## $`content-type`
 ## [1] &quot;application/json; charset=utf-8&quot;</code></pre>

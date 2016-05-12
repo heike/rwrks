@@ -7,7 +7,6 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
-        css: ../../css/slides.css
 ---
 
 ## Data in Excel
@@ -46,7 +45,7 @@ So to properly read in this data, it's probably best to use `read.table` directl
 ?read.table
 ```
 
-## Your Turn
+## Your Turn {data-background=#527a7a}
 
 Have a look at the parameters of read.table (?read.table) to solve the following problems:
 
@@ -113,8 +112,8 @@ head(midwest2)
 - SAS: `read.xport`
 - Minitab: `read.mtp`
 - Systat: `read.systat`
-
-## Your Turn
+ 
+## Your Turn {data-background=#527a7a}
 
 The NHANES (National Health and Nutrition Survey) publishes data in the SAS xport format:
 
