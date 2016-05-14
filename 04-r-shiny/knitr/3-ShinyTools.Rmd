@@ -45,11 +45,11 @@ Shiny also has many output options:
 
 ## Your Turn {data-background=#527a7a}
 
-Using your own data or the OkCupid data provided, create a simple Shiny app. 
-Use the OKCupid app as a starting point.
+Using your own data or the NYC crime data provided, create a simple Shiny app. 
+Use the NYC_Emergency app as a starting point.
 
 ```{r, eval=FALSE}
-runApp("code/03_OKCupid")
+runApp("code/03_NYC_Emergency")
 ```
 
 - Ideas: 
