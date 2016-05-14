@@ -56,5 +56,4 @@ runApp("code/03_NYC_Emergency")
     - Plot some aspect of the data with color based on another aspect of the data
     - Use `subset()` and `checkboxInput()` to plot user-selected subsets
     - Use `tabsetPanel()` to display different tables/plots
-    - Allow multiple input variables
-    - Use if statements to output different plot types and let the user choose which plot type to output
+    - **Extra Challenging:** Can you make a map of NYC crime by location?
