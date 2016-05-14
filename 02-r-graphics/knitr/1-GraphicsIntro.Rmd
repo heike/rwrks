@@ -1,6 +1,6 @@
 ---
 title: "Basic Plots"
-author: "Eric Hare, Andee Kaplan, Samantha Tyner"
+author: "Eric Hare, Andee Kaplan, Sam Tyner"
 date: "May 17, 2016"
 output: 
     revealjs::revealjs_presentation:
