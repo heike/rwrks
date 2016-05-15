@@ -53,7 +53,7 @@ output:
 
 ## Your Turn {data-background=#527a7a}
 
-Study the first page of the [R Markdown Reference Guide](rmarkdown-reference.pdf). 
+Study the first page of the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf). 
 
 Yes, the *entire* markdown syntax can be described in one page!
 
@@ -125,7 +125,7 @@ There are a plethora of [chunk options](http://yihui.name/knitr/options/) in **k
 
 ## Your Turn {data-background=#527a7a}
 
-Study the second page of the [R Markdown Reference Guide](rmarkdown-reference.pdf) and go back to the [Hello R Markdown example](hello_rmarkdown.Rmd)
+Study the second page of the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) and go back to the Hello R Markdown example we created.
 
 **Easy**: Modify the figure sizing and alignment.
 
