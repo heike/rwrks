@@ -62,17 +62,16 @@ Can you think of anything that is missing from the syntax (that you might want w
 ## Markdown doesn't natively support...
 
 - Stuff you'd find in academic publications:
-    * Figure/table referencing
-    * Table of contents
+    * Figure/table referencing (Well, sort of... you can use it for pdfs)
+    * ~~Table of contents~~ (Support added recently!)
 - Many, many appearance related things (image/figure alignment, coloring, font families, etc.) 
 
 ## There is hope...
 
 - You don't *have to* restrict yourself to markdown. You can always include HTML/`LaTeX` markup, but don't expect it to convert between output formats.
-
 - There are many efforts to extend Markdown (but, then again, keeping it simple is the point!)
-
-- Awesome people tend to create awesome templates.
+- More features are being daily
+- Templates are being created
 
 ## Your Turn {data-background=#527a7a}
 
