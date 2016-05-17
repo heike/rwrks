@@ -2,7 +2,7 @@
 title: "Polishing your Plots"
 author: "Eric Hare, Andee Kaplan, Sam Tyner"
 date: "May 17, 2016"
-output: pdf_document
+output: html_document
 ---
 
 ```{r, echo=FALSE, message=FALSE}
@@ -117,4 +117,3 @@ ggsave("diamonds.png", plot = dplot, dpi = 72)
 1. Save a pdf of a scatterplot of price vs carat
 2. Open up the pdf in Adobe Acrobat (or another PDF Reader)
 3. Save a png of the same scatterplot
-4. Embed the png into Microsoft Word (Or another editor)
