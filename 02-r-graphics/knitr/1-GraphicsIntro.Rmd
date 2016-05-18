@@ -2,11 +2,7 @@
 title: "Basic Plots"
 author: "Eric Hare, Andee Kaplan, Sam Tyner"
 date: "May 17, 2016"
-output: 
-    revealjs::revealjs_presentation:
-        transition: fade
-        theme: white
-        highlight: zenburn
+output: pdf_document
 ---
 
 ```{r, echo=FALSE}
@@ -77,7 +73,8 @@ Scatter plot of diamond price vs carat weight showing versitility of options in 
 ```{r, fig.height=3, fig.width=7}
 qplot(carat, log(price), geom = "point", data = diamonds, 
 	alpha = I(0.2), colour = color, 
-	main="Log price by carat weight, grouped by color")
+	main = "Log price by carat weight, grouped by color") + 
+    xlab("Carat Weight") + ylab("Log Price")
 ```
 
 ## Your Turn {data-background=#527a7a}

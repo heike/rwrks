@@ -53,7 +53,7 @@ output:
 
 ## Your Turn {data-background=#527a7a}
 
-Study the first page of the [R Markdown Reference Guide](rmarkdown-reference.pdf). 
+Study the first page of the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf). 
 
 Yes, the *entire* markdown syntax can be described in one page!
 
@@ -62,17 +62,16 @@ Can you think of anything that is missing from the syntax (that you might want w
 ## Markdown doesn't natively support...
 
 - Stuff you'd find in academic publications:
-    * Figure/table referencing
-    * Table of contents
+    * Figure/table referencing (Well, sort of... you can use it for pdfs)
+    * ~~Table of contents~~ (Support added recently!)
 - Many, many appearance related things (image/figure alignment, coloring, font families, etc.) 
 
 ## There is hope...
 
 - You don't *have to* restrict yourself to markdown. You can always include HTML/`LaTeX` markup, but don't expect it to convert between output formats.
-
 - There are many efforts to extend Markdown (but, then again, keeping it simple is the point!)
-
-- Awesome people tend to create awesome templates.
+- More features are being daily
+- Templates are being created
 
 ## Your Turn {data-background=#527a7a}
 
@@ -125,7 +124,7 @@ There are a plethora of [chunk options](http://yihui.name/knitr/options/) in **k
 
 ## Your Turn {data-background=#527a7a}
 
-Study the second page of the [R Markdown Reference Guide](rmarkdown-reference.pdf) and go back to the [Hello R Markdown example](hello_rmarkdown.Rmd)
+Study the second page of the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) and go back to the Hello R Markdown example we created.
 
 **Easy**: Modify the figure sizing and alignment.
 

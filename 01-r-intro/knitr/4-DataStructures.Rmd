@@ -210,5 +210,5 @@ littledata <- read.csv("PretendData.csv")
 
 ## Your Turn {data-background=#527a7a}
 
-- Make 5 rows of data in an excel spreadsheet and save it as a .txt file. This time, do not separate different values with commas. **Use a semi-colon instead**.
-- Import this new .txt file into R with `read.table`. You may need to look at the help page for `read.table` in order to properly do this
+- Make 5 rows of data in an excel spreadsheet and save it as a *tab-delimited txt file*.
+- Import this new .txt file into R with `read.table`. You may need to look at the help page for `read.table` in order to properly do this.

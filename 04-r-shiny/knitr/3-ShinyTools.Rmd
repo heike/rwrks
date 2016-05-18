@@ -45,16 +45,15 @@ Shiny also has many output options:
 
 ## Your Turn {data-background=#527a7a}
 
-Using your own data or the OkCupid data provided, create a simple Shiny app. 
-Use the OKCupid app as a starting point.
+Using your own data or the NYC crime data provided, create a simple Shiny app. 
+Use the NYC_Emergency app as a starting point.
 
 ```{r, eval=FALSE}
-runApp("code/03_OKCupid")
+runApp("code/03_NYC_Emergency")
 ```
 
 - Ideas: 
     - Plot some aspect of the data with color based on another aspect of the data
     - Use `subset()` and `checkboxInput()` to plot user-selected subsets
     - Use `tabsetPanel()` to display different tables/plots
-    - Allow multiple input variables
-    - Use if statements to output different plot types and let the user choose which plot type to output
+    - **Extra Challenging:** Can you make a map of NYC crime by location?

@@ -2,11 +2,7 @@
 title: "Plotting Map Data"
 author: "Eric Hare, Andee Kaplan, Sam Tyner"
 date: "May 17, 2016"
-output: 
-    revealjs::revealjs_presentation:
-        transition: fade
-        theme: white
-        highlight: zenburn
+output: pdf_document
 ---
 
 ```{r, echo=FALSE, message=FALSE}
@@ -120,7 +116,7 @@ states.map <- left_join(states, states.stats, by = c("region" = "state.name"))
 head(states.map)
 ```
 
-## Numerical Information Using Shade and Intensity
+## Shade and Intensity
 
 Average number of days in the last 30 days of insufficient sleep by state
 
@@ -143,7 +139,7 @@ states.sex.map <- left_join(states, states.sex.stats, by = c("region" = "state.n
 head(states.sex.map)
 ```
 
-## Adding Numerical Information
+## Adding Information
 
 Average number of alcoholic drinks per day by state and gender
 

@@ -74,7 +74,7 @@ qplot(x, y, data = data, color = factor(shape), shape = I(19), size = I(5)) +
 
 ## Another One
 
-```{r, fig.height=4, fig.width=7, echo=FALSE}
+```{r, fig.height=5, fig.width=7, echo=FALSE}
 data$shape <- data$color
 qplot(x, y, data = data, color = factor(color), shape = factor(shape), size = I(5)) +
     scale_shape_manual(guide = "none", values = c(19, 15)) + 
@@ -84,7 +84,7 @@ qplot(x, y, data = data, color = factor(color), shape = factor(shape), size = I(
 
 ## One More
 
-```{r, fig.height=4, fig.width=7, echo=FALSE}
+```{r, fig.height=5, fig.width=7, echo=FALSE}
 data$shape[1] <- if(data$shape[1]==2) 1 else 2
 qplot(x, y, data = data, color = factor(shape), shape = I(19), size = I(5)) +
     scale_shape_manual(guide = "none", values = c(19, 15)) + 

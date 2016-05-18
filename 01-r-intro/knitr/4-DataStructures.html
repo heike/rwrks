@@ -103,11 +103,11 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
       link.type = 'text/css';
-      link.href = window.location.search.match( /print-pdf/gi ) ? '/usr/local/lib/R/3.2/site-library/revealjs/reveal.js-3.2.0/css/print/pdf.css' : '/usr/local/lib/R/3.2/site-library/revealjs/reveal.js-3.2.0/css/print/paper.css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '/Users/erichare/Library/R/3.3/library/revealjs/reveal.js-3.2.0/css/print/pdf.css' : '/Users/erichare/Library/R/3.3/library/revealjs/reveal.js-3.2.0/css/print/paper.css';
       document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
     <!--[if lt IE 9]>
-    <script src="/usr/local/lib/R/3.2/site-library/revealjs/reveal.js-3.2.0/lib/js/html5shiv.js"></script>
+    <script src="/Users/erichare/Library/R/3.3/library/revealjs/reveal.js-3.2.0/lib/js/html5shiv.js"></script>
     <![endif]-->
 
 </head>
@@ -473,8 +473,8 @@ mylist</code></pre></div>
 <section id="your-turn-3" class="slide level2" data-background="#527a7a">
 <h1>Your Turn</h1>
 <ul>
-<li>Make 5 rows of data in an excel spreadsheet and save it as a .txt file. This time, do not separate different values with commas. <strong>Use a semi-colon instead</strong>.</li>
-<li>Import this new .txt file into R with <code>read.table</code>. You may need to look at the help page for <code>read.table</code> in order to properly do this</li>
+<li>Make 5 rows of data in an excel spreadsheet and save it as a <em>tab-delimited txt file</em>.</li>
+<li>Import this new .txt file into R with <code>read.table</code>. You may need to look at the help page for <code>read.table</code> in order to properly do this.</li>
 </ul>
 </section>
     </div>

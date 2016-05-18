@@ -62,7 +62,7 @@ x <- 5
 MyAge <- 26
 ```
 
-We can then perform any of the functions on the variabes:
+We can then perform any of the functions on the variables:
 
 ```{r}
 log(x)
