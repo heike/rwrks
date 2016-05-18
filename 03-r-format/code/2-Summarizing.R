@@ -16,7 +16,20 @@ for(i in 1:n) {
   ba[i] <- with(career, mean(h / ab, na.rm = TRUE))
 }
 
-summary(ba)
+# do the same thing in a different way! (just for fun, because there's usually more than 1 way to do everything in R)
+
+ba2 <- NULL
+
+# check out the players object to see what's going on here
+for(name in players) {
+  career <- subset(baseball, id == name)
+  ba1 <- with(career, mean(h / ab, na.rm = TRUE))
+  ba2 <- c(ba2, ba1)
+}
+
+summary(ba2)
+
+summary(ba) == summary(ba2)
 
 players <- unique(baseball$id)
 n <- length(players)
