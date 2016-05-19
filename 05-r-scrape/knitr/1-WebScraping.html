@@ -103,11 +103,11 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
       link.type = 'text/css';
-      link.href = window.location.search.match( /print-pdf/gi ) ? '/Users/erichare/Library/R/3.3/library/revealjs/reveal.js-3.2.0/css/print/pdf.css' : '/Users/erichare/Library/R/3.3/library/revealjs/reveal.js-3.2.0/css/print/paper.css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '/usr/local/lib/R/3.3/site-library/revealjs/reveal.js-3.2.0/css/print/pdf.css' : '/usr/local/lib/R/3.3/site-library/revealjs/reveal.js-3.2.0/css/print/paper.css';
       document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
     <!--[if lt IE 9]>
-    <script src="/Users/erichare/Library/R/3.3/library/revealjs/reveal.js-3.2.0/lib/js/html5shiv.js"></script>
+    <script src="/usr/local/lib/R/3.3/site-library/revealjs/reveal.js-3.2.0/lib/js/html5shiv.js"></script>
     <![endif]-->
 
 </head>
@@ -292,7 +292,7 @@ andee &lt;-<span class="st"> </span><span class="kw">GET</span>(<span class="st"
 ## [1] &quot;GitHub.com&quot;
 ## 
 ## $date
-## [1] &quot;Thu, 19 May 2016 00:58:29 GMT&quot;
+## [1] &quot;Thu, 19 May 2016 01:01:11 GMT&quot;
 ## 
 ## $`content-type`
 ## [1] &quot;application/json; charset=utf-8&quot;</code></pre>
@@ -537,9 +537,6 @@ mario &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(<span class
 ## 1 Royal Racer    54     29
 ## 2   Wild Wing    50     34</code></pre>
 <p>How do we get two tables (with a common id) like the XML example?</p>
-</section>
-<section class="slide level2">
-
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vehicles &lt;-<span class="st"> </span><span class="kw">rbind</span>(mario$vehicles[[<span class="dv">1</span>]], mario$vehicles[[<span class="dv">2</span>]])
 vehicles &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dt">driver =</span> mario$driver, vehicles)</code></pre></div>
 </section>
@@ -565,6 +562,8 @@ vehicles &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class
       // Full list of configuration options available at:
       // https://github.com/hakimel/reveal.js#configuration
       Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
         // Vertical centering of slides
         center: false,
         // Transition style

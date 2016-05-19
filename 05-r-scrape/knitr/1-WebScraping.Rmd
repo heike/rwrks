@@ -283,8 +283,6 @@ mario$vehicles
 
 How do we get two tables (with a common id) like the XML example?
 
----
-
 ```{r}
 vehicles <- rbind(mario$vehicles[[1]], mario$vehicles[[2]])
 vehicles <- cbind(driver = mario$driver, vehicles)
