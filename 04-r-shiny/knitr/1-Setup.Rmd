@@ -38,9 +38,14 @@ install.packages("shiny")
 
 ## A Simple Example
 
-```{r example1,eval=F}
+1. Download **apps.zip** from the website
+2. Unzip the directory
+3. Set your R working directory to this the folder containing the apps
+4. Run the following code:
+
+```{r, eval=FALSE}
 library(shiny)
-runApp("data/01_Hello")
+runApp("01_Hello")
 ```
 <center>
 <img src="images/HelloShinyScreenshot.png" alt="Picture of Hello Shiny! Applet">

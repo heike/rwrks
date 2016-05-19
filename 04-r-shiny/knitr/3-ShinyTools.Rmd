@@ -49,7 +49,7 @@ Using your own data or the NYC crime data provided, create a simple Shiny app.
 Use the NYC_Emergency app as a starting point.
 
 ```{r, eval=FALSE}
-runApp("code/03_NYC_Emergency")
+runApp("03_NYC_Emergency")
 ```
 
 - Ideas: 

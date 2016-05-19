@@ -62,7 +62,7 @@ input values => R code => output values
 ## An example
 
 ```{r, eval=FALSE}
-runApp("code/02_Reactivity", display.mode = "showcase")
+runApp("02_Reactivity", display.mode = "showcase")
 ```
 
 ## Your Turn {data-background=#527a7a}
@@ -70,7 +70,7 @@ runApp("code/02_Reactivity", display.mode = "showcase")
 - Consider extending the hello world example:
 
 ```{r, eval=FALSE}
-runApp("code/01_Hello", display.mode = "showcase")
+runApp("01_Hello", display.mode = "showcase")
 ```
 
 - **Challenge 1:** add an input to change the mean and standard deviation (Hint: see `?numericInput`).

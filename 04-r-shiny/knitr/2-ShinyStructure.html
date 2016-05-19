@@ -103,11 +103,11 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
       link.type = 'text/css';
-      link.href = window.location.search.match( /print-pdf/gi ) ? '/usr/local/lib/R/3.2/site-library/revealjs/reveal.js-3.2.0/css/print/pdf.css' : '/usr/local/lib/R/3.2/site-library/revealjs/reveal.js-3.2.0/css/print/paper.css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '/Users/erichare/Library/R/3.3/library/revealjs/reveal.js-3.2.0/css/print/pdf.css' : '/Users/erichare/Library/R/3.3/library/revealjs/reveal.js-3.2.0/css/print/paper.css';
       document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
     <!--[if lt IE 9]>
-    <script src="/usr/local/lib/R/3.2/site-library/revealjs/reveal.js-3.2.0/lib/js/html5shiv.js"></script>
+    <script src="/Users/erichare/Library/R/3.3/library/revealjs/reveal.js-3.2.0/lib/js/html5shiv.js"></script>
     <![endif]-->
 
 </head>
@@ -166,14 +166,14 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 </section>
 <section id="an-example" class="slide level2">
 <h1>An example</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">runApp</span>(<span class="st">&quot;code/02_Reactivity&quot;</span>, <span class="dt">display.mode =</span> <span class="st">&quot;showcase&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">runApp</span>(<span class="st">&quot;02_Reactivity&quot;</span>, <span class="dt">display.mode =</span> <span class="st">&quot;showcase&quot;</span>)</code></pre></div>
 </section>
 <section id="your-turn" class="slide level2" data-background="#527a7a">
 <h1>Your Turn</h1>
 <ul>
 <li>Consider extending the hello world example:</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">runApp</span>(<span class="st">&quot;code/01_Hello&quot;</span>, <span class="dt">display.mode =</span> <span class="st">&quot;showcase&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">runApp</span>(<span class="st">&quot;01_Hello&quot;</span>, <span class="dt">display.mode =</span> <span class="st">&quot;showcase&quot;</span>)</code></pre></div>
 <ul>
 <li><strong>Challenge 1:</strong> add an input to change the mean and standard deviation (Hint: see <code>?numericInput</code>).</li>
 <li><strong>Challenge 2:</strong> add an input to simulate from a gamma as well as a normal (Hint: you can simulate from gamma distribution with <code>rgamma</code>).</li>
