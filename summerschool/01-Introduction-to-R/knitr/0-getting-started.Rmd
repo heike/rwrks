@@ -7,8 +7,6 @@ output:
   ioslides_presentation:
     transition: default
     widescreen: true
-css:
-  styles.css
 ---
 
 ```{r setup, include = FALSE}
@@ -154,7 +152,7 @@ curl::curl_download(
 file.edit("0-getting-started.R")
 ```
 
-# Error message?
+## Error message?
 
 If R is complaining about not having the package `curl`, run
 
