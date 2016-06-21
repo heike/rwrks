@@ -154,3 +154,12 @@ curl::curl_download(
 file.edit("0-getting-started.R")
 ```
 
+# Error message?
+
+If R is complaining about not having the package `curl`, run
+
+```{r, eval= FALSE}
+install.packages("curl")
+```
+
+and try again
