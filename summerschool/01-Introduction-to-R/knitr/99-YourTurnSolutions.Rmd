@@ -1,6 +1,6 @@
 ---
 title: "Your Turn Solutions"
-author: "Heike Hofmann"
+author: "Heike Hofmann, Eric Hare"
 date: "June 21, 2016"
 output: html_document
 ---
