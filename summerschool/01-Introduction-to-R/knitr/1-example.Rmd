@@ -30,7 +30,7 @@ css:
 - Follow along (copy & paste the code into the console):
 ```{r, eval = FALSE}
 curl::curl_download(
-  "https://raw.githubusercontent.com/hofmann/rwrks/gh-pages/01-Introduction-to-R/code/1-example.R",
+  "https://raw.githubusercontent.com/heike/rwrks/gh-pages/summerschool/01-Introduction-to-R/code/1-example.R",
   "1-example.R"
 )
 file.edit("1-example.R")

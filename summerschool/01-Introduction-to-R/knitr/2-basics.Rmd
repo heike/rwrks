@@ -1,5 +1,5 @@
 ---
-title: "Basics"
+title: "R Basics"
 subtitle: "Midwest Big Data Summer School"
 author: "Heike Hofmann (hofmann@iastate.edu, @heike_hh)"
 date: "`r Sys.Date()`"

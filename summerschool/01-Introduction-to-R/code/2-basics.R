@@ -2,6 +2,13 @@
 tips <- read.csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
 tips$rate <- tips$tip / tips$total_bill
 
+## ---- eval = FALSE-------------------------------------------------------
+## curl::curl_download(
+##   "https://raw.githubusercontent.com/hofmann/rwrks/gh-pages/01-Introduction-to-R/code/2-basics.R",
+##   "2-basics.R"
+## )
+## file.edit("2-basics.R")
+
 ## ------------------------------------------------------------------------
 # Addition and Subtraction
 2 + 5 - 1

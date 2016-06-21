@@ -16,14 +16,14 @@ knitr::opts_chunk$set(
 
 ## ---- eval = FALSE-------------------------------------------------------
 ## curl::curl_download(
-##   "https://raw.githubusercontent.com/dicook/Monash-R/gh-pages/hofmann/rwrks/gh-pages/01-Introduction-to-R/knitr/0-getting-started.Rmd",
+##   "https://raw.githubusercontent.com/heike/rwrks/gh-pages/summerschool/01-Introduction-to-R/knitr/0-getting-started.Rmd",
 ##   "0-getting-started.Rmd"
 ## )
 ## file.edit("0-getting-started.Rmd")
 
 ## ---- eval = FALSE-------------------------------------------------------
 ## curl::curl_download(
-##   "https://raw.githubusercontent.com/hofmann/rwrks/gh-pages/01-Introduction-to-R/knitr/0-getting-started.R",
+##   "https://raw.githubusercontent.com/heike/rwrks/gh-pages/summerschool/01-Introduction-to-R/code/0-getting-started.R",
 ##   "0-getting-started.R"
 ## )
 ## file.edit("0-getting-started.R")
