@@ -55,7 +55,7 @@ knitr::opts_chunk$set(
 
 We will touch on all of these aspects.
 Slides and material are available at
- [http://hofmann.github.io/rwrks/summerschool](http://hofmann.github.io/rwrks/summerschool).
+ [http://heike.github.io/rwrks/summerschool](http://heike.github.io/rwrks/summerschool/).
 
 
 ## Installing R
