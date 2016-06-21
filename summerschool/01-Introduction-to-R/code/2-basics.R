@@ -4,7 +4,7 @@ tips$rate <- tips$tip / tips$total_bill
 
 ## ---- eval = FALSE-------------------------------------------------------
 ## curl::curl_download(
-##   "https://raw.githubusercontent.com/hofmann/rwrks/gh-pages/01-Introduction-to-R/code/2-basics.R",
+##   "https://raw.githubusercontent.com/heike/rwrks/gh-pages/summerschool/01-Introduction-to-R/code/2-basics.R",
 ##   "2-basics.R"
 ## )
 ## file.edit("2-basics.R")
