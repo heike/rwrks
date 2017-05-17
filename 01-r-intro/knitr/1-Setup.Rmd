@@ -1,7 +1,7 @@
 ---
 title: "Setup"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 16, 2016"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June XX, 2017"
 output: 
     revealjs::revealjs_presentation:
         transition: fade
@@ -21,7 +21,7 @@ What do you know already?
 
 ## Installing R
 
-Hopefully this is done already.  Otherwise for Windows or OS X:
+Hopefully this is done already.  If not, for Windows or OS X:
 
 - Go to http://www.r-project.org/
 - Click the CRAN link on the left, and pick a download site (0-Cloud is a good choice)
@@ -34,9 +34,8 @@ Hopefully this is done already.  Otherwise for Windows or OS X:
 This should also be done already, but if not...
 
 - Browse to https://www.rstudio.com/
-- Mouse over Products and click RStudio
-- Choose RStudio Desktop
-- Click Download RStudio Desktop
+- Click on the "Download RStudio" 
+- Download RStudio Desktop Free
 - Choose the installer appropriate for your platform
 
 # Let's take a look at RStudio together...
