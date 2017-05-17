@@ -1,4 +1,5 @@
 ### Graphics Intro
+library(ggplot2)
 #---------------------------------------------
 ## Your Turn 1 - qplot
 	tips <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/tips.csv")
@@ -94,8 +95,7 @@
 ## Your turn 1 - Deepwater horizon 
 
 	# recreate the map shown
-	load("../../02-r-graphics/data/noaa.rdata")
-	ls()
+	load("02-r-graphics/data/noaa.rdata")
 	head(floats)
 	ggplot(data = floats, aes(x = Depth, y = Temperature)) + 
 		geom_point(aes(color = callSign))
@@ -118,16 +118,54 @@
 		
 	ggplot() + 
 		geom_path(data = states, aes(x = long, y = lat, group = group)) + 
-		geom_point(data = animal, aes(x = Longitude, y = Latitude, 	
-					color = class)) + 
+		geom_point(data = animal, 
+		           aes(x = Longitude, y = Latitude, 	
+					color = class)) + scale_shape_manual()
 		xlim(c(-91, -80)) + ylim(c(24,32)) + coord_map()		
 		
 	ggplot() + 
 		geom_path(data = states, aes(x = long, y = lat, group = group)) + 
 		geom_point(data = animal, aes(x = Longitude, y = Latitude, 	
-					color = Condition)) + 
-		xlim(c(-91, -80)) + ylim(c(24,32)) + coord_map()			
-		
+					color = Condition, shape = class), size = 2)  + 
+	  scale_shape_manual(values = animale) + 
+		xlim(c(-91, -80)) + ylim(c(24,32)) + coord_map() 
+	  library(emoGG)
+	  library(remoji)
+	x <- rnorm(10)
+	y <- rnorm(10)
+	plot(x,y, cex = 0)
+	text(x,y, labels = emoji("cow"))
+	birdse <- emoji_search("bird")
+	reptilee <- emoji_search("reptile")
+	mammale <- emoji_search("animal")
+	
+	ggplot() +
+	  geom_path(data = states, aes(x = long, y = lat, group = group)) + 
+	  xlim(c(-91, -80)) + ylim(c(24,32)) + coord_map() + 
+	  geom_emoji(data = subset(animal, class == "Aves"), aes(x=Longitude, y = Latitude), emoji = "1f426") + 
+	  geom_emoji(data = subset(animal, class == "Mammalia"), aes(x=Longitude, y = Latitude), emoji = "1f430") + 
+	  geom_emoji(data = subset(animal, class == "Reptilla"), aes(x=Longitude, y = Latitude), emoji = "1f40a")
+	
+	
+	
+	animal$emo[animal$class == "Aves"] <- "1f426"
+	animal$emo[animal$class == "Mammalia"] <- "1f430"
+	animal$emo[animal$class == "Reptilla"] <- "1f40a"
+	
+	ggplot(data = animal, aes(x = Longitude, y = Latitude, 	
+	                          emoji = emo)) + 
+	 # geom_path(data = states, aes(x = long, y = lat, group = group)) + 
+	  geom_emoji() + 
+	  xlim(c(-91, -80)) + ylim(c(24,32)) + coord_map() 
+	
+	animale <- c(emoji("bird"), emoji("crocodile"), emoji("rabbit"))
+	
+	mtcars$am[mtcars$am == 1] <- "1f697"
+	mtcars$am[mtcars$am == 0] <- "1f68c"
+	ggplot(mtcars, aes(wt, mpg)) + geom_emoji(aes(emoji = am))
+	
+	
+	
 	# 4. Advanced: Could we indicate time somehow?
 		
 	library(lubridate)

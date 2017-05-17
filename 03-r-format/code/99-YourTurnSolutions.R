@@ -29,9 +29,17 @@
 	data(baseball, package = "plyr")
 	
 	
-	# MLB rules for the greatest all-time hitters are that players have to have played at least 1000 games with at least as many at-bats in order to be considered.
+	# MLB rules for the greatest all-time hitters are that players have to have played at 
+	# least 1000 games with at least as many at-bats in order to be considered.
 	# Extend the for loop above to collect the additional information 
 	# Introduce and collect data for two new variables: games and atbats
+	
+	baseball %>% group_by(id) %>% 
+	  summarise(games = sum(g, na.rm=T), atbats = sum(ab, na.rm = T),
+	             ba = mean(h/ab, na.rm = T), lastyr = max(year)) %>% 
+	  filter(games >= 1000 & atbats >=1000) %>%
+	  arrange(desc(ba))
+	
 	
 	players <- unique(baseball$id) 
 	ba <- rep(NA, length(players)) 
@@ -43,6 +51,18 @@
 		games[i] <- with(career, sum(g, na.rm = TRUE))
 		atbats[i] <- with(career, sum(ab, na.rm = TRUE))
 	}
+	ba2 <- NULL
+	games2 <- NULL
+	atbats2 <- NULL
+	for(name in players) { 
+	  career <- subset(baseball, id == name) 
+	  ba1 <- with(career, mean(h / ab, na.rm = TRUE)) 
+	  ba2 <- c(ba2, ba1)
+	  g1 <- with(career, sum(g, na.rm = TRUE))
+	  games2 <- c(games2, g1)
+	  ab1 <- with(career, sum(ab, na.rm = TRUE))
+	  atbats2 <- c(atbats2, ab1)
+	}
 	
 	## Your turn 2 - dplyr 
 	
@@ -50,14 +70,22 @@
 		# How many different (unique) players has the team had? 
 		# What was the team’s first/last season? 
 	
-	baseball %>% group_by(team) %>% 
-	summarise(nplayer = length(unique(id)), first = min(year), last = max(year))
+	summarise(group_by(baseball, team),
+	          nplayer = length(unique(id)), 
+	          first = min(year), 
+	          last = max(year))
 	
 	# Challenge: Find the number of players on each team over time. Does the number change?
 	
-	baseball %>% group_by(team, year) %>% 
-	summarize(nplayer = n()) %>% 
-	ggplot() + geom_line(aes(x = year, y = nplayer, group = team, color = team))
+	summarize(group_by(baseball, team, year),
+	          nplayer = length(unique(id))) 
+	
+	summarize(group_by(baseball, team, year),
+	          nplayer = n())
+	
+
+	ggplot(data = 	summarize(group_by(baseball, team, year),
+	                         nplayer = n())) + geom_line(aes(x = year, y = nplayer, group = team, color = team))
 	
 
 ### Transforming 
