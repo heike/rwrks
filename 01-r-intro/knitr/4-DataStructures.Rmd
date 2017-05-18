@@ -150,7 +150,7 @@ str(iris)
 
 1. View the top 8 rows of mtcars data
 2. What type of object is the mtcars data set?
-3. How many rows are in iris data set? (try finding this using dim or indexing + length)
+3. How many rows are in iris data set? (try finding this using `dim` or indexing + length)
 4. Summarize the values in each column in iris data set
 
 ## Working with Output from a Function
@@ -205,7 +205,7 @@ We often need to import in our own data rather than just using built-in datasets
 
 ## Importing Data Demo
 
-We first create a csv file. We can use a text editor, excel... Then we load it in:
+We first create a csv file. We can use a text editor or MS Excel. Then we load it in:
 
 ```{r, eval=FALSE}
 littledata <- read.csv("PretendData.csv")

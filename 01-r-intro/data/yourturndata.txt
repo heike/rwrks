@@ -1,0 +1,1 @@
+column1	column2A	10B	9C	8D	7E	6
