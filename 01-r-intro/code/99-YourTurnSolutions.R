@@ -1,6 +1,4 @@
-### Motivating Example
----------------------------------------------
-head(tips)
+### Motivating Example Your Turn
 
 # summary of total bills
 summary(tips$total_bill)
@@ -12,7 +10,7 @@ qplot(day, rate, geom="boxplot",data=tips)
 mean(tips$tip[tips$smoker=="Yes"])
 
 ### Basics
----------------------------------------------
+#---------------------------------------------
 
 ## Your turn 1
  # Find out how many rows and columns the `iris' data set has.
@@ -27,11 +25,11 @@ mean(tips$tip[tips$smoker=="Yes"])
   # second way: 
   dim(iris)
 
- # Use rep to construct the following vector: 1 1 2 2 3 3 4 4 5 5
+ # Use rep to construct the following vector: `1 1 2 2 3 3 4 4 5 5`
 
   rep(c(1:5), each=2)
 
- # Use rep to construct this vector: 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
+ # Use rep to construct this vector: `1 2 3 4 5 1 2 3 4 5 1 2 3 4 5`
   
   rep(c(1:5), times=3)
   
