@@ -1,7 +1,7 @@
 ---
 title: "Motivating Example"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 16, 2016"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June XX, 2017"
 output: 
     revealjs::revealjs_presentation:
         transition: fade
@@ -140,6 +140,16 @@ Perhaps we are interested in if smokers tip at a different rate than non-smokers
 ```{r, fig.height=3, fig.width=7}
 qplot(smoker, rate, geom = "boxplot", data = tips)
 ```
+
+<!--
+## Boxplots Again
+
+What about the difference between male and female smokers and non-smokers?
+
+```{r, fig.height=3, fig.width=7}
+qplot(smoker, rate, geom = "boxplot", data = tips, color = sex)
+```
+--> 
 
 ## Your Turn {data-background=#527a7a}
 

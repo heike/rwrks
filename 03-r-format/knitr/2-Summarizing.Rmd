@@ -1,6 +1,6 @@
 ---
-title: "Intro to dplyr"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
+title: "Intro to `dplyr`"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
 date: "May 18, 2016"
 output: 
     revealjs::revealjs_presentation:

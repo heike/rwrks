@@ -1,6 +1,4 @@
-### Motivating Example
----------------------------------------------
-head(tips)
+### Motivating Example Your Turn
 
 # summary of total bills
 summary(tips$total_bill)
@@ -12,7 +10,7 @@ qplot(day, rate, geom="boxplot",data=tips)
 mean(tips$tip[tips$smoker=="Yes"])
 
 ### Basics
----------------------------------------------
+#---------------------------------------------
 
 ## Your turn 1
  # Find out how many rows and columns the `iris' data set has.
@@ -27,11 +25,11 @@ mean(tips$tip[tips$smoker=="Yes"])
   # second way: 
   dim(iris)
 
- # Use rep to construct the following vector: 1 1 2 2 3 3 4 4 5 5
+ # Use rep to construct the following vector: `1 1 2 2 3 3 4 4 5 5`
 
   rep(c(1:5), each=2)
 
- # Use rep to construct this vector: 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
+ # Use rep to construct this vector: `1 2 3 4 5 1 2 3 4 5 1 2 3 4 5`
   
   rep(c(1:5), times=3)
   
@@ -110,7 +108,6 @@ mean(tips$tip[tips$smoker=="Yes"])
     #4th row
     mtcars[4,]
 
-
 ## Your Turn 2 - Lists
   # Create a list containing a vector and a 2x3 data frame
 
@@ -125,7 +122,6 @@ mean(tips$tip[tips$smoker=="Yes"])
 
     mylist[[2]][1,]
 
-
 ## Your Turn 3 - Examining Objects
 
   # View the top 8 rows of mtcars data
@@ -134,7 +130,9 @@ mean(tips$tip[tips$smoker=="Yes"])
 
   # What type of object is the mtcars data set?
 
-    str(mtcars)
+    str(mtcars) 
+    # -or- 
+    class(mtcars)
 
   # How many rows are in iris data set? (try finding this using dim or indexing + length)
   
@@ -147,6 +145,7 @@ mean(tips$tip[tips$smoker=="Yes"])
     summary(iris)
 
 ## Your Turn 4 - Reading in a text file
+  #setwd("data")
   yourturndata <- read.table("yourturndata.txt",header=T)
   yourturndata
   
@@ -156,26 +155,26 @@ mean(tips$tip[tips$smoker=="Yes"])
   # Pull the p-value from the t-test of a difference between Sepal Lengths 
   # of setosa and versicolor species from the Iris data
 
-  t.test(Sepal.Length ~ Species, data=iris[iris$Species!="virginica",])
+  # t.test(Sepal.Length ~ Species, data=iris[iris$Species!="virginica",])
 
   # save the output of the t-test to an object
 
-  tout2 <- t.test(Sepal.Length ~ Species, data=iris[iris$Species!="virginica",])
+  # tout2 <- t.test(Sepal.Length ~ Species, data=iris[iris$Species!="virginica",])
 
   # can use the str() function to examine the output type
 
-  str(tout2)
+  # str(tout2)
 
   # pull off the pvalue
 
-  tout2$p.value
+  # tout2$p.value
 # -------------------------------------------------------------------- #
 
  
 
 
 ### Programming and Packages
----------------------------------------------
+# ---------------------------------------------
   
 # Create a function that takes numeric input and provides the mean
 # and a 95% confidence interval for the mean for the data (the t.test

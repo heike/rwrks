@@ -1,7 +1,7 @@
 ---
 title: "Data Structures"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 16, 2016"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June XX, 2017"
 output: 
     revealjs::revealjs_presentation:
         transition: fade
@@ -13,9 +13,9 @@ output:
 
 - Data Frames are the work horse of R objects
 - Structured by rows and columns and can be indexed
-- Each column is a specified variable type
-- Columns names can be used to index a variable
-- Advice for naming variable applys to editing columns names
+- Each column is a variable of one type
+- Column names can be used to index a variable
+- Advice for naming variables applys to naming columns
 - Can be specified by grouping vectors of equal length as columns
 
 ## Data Frame Indexing
@@ -24,7 +24,7 @@ output:
 - `df[i,j]` will select the element in the $i^{th}$ row and $j^{th}$ column
 - `df[ ,j]` will select the entire $j^{th}$ column and treat it as a vector
 - `df[i ,]` will select the entire $i^{th}$ row and treat it as a vector
-- Logical vectors can be used in place of i and j used to subset the row and columns
+- Logical or integer vectors can also be used in place of i and j used to subset the row and columns
 
 ## Adding a new Variable to a Data Frame
 
@@ -34,7 +34,7 @@ output:
 
 ## Data Frame Demo
 
-Use Edgar Anderson's Iris Data:
+Use [Edgar Anderson's Iris Data](https://en.wikipedia.org/wiki/Iris_flower_data_set):
 
 ```{r}
 flower <- iris
@@ -88,9 +88,9 @@ mydf
 
 ## Your Turn {data-background=#527a7a}
 
-1. Make a data frame with column 1: 1,2,3,4,5,6 and column 2: a,b,a,b,a,b
-2. Select only rows with value "a" in column 2 using logical vector
-3. `mtcars` is a built in data set like `iris`: Extract the 4th row of the `mtcars` data.
+1. Make a data frame with column 1: `1,2,3,4,5,6` and column 2: `a,b,a,b,a,b`
+2. Select only rows with value `"a"` in column 2 using logical vector
+3. `mtcars` is a built-in data set like `iris`: Extract the 4th row of the `mtcars` data.
 
 ## Lists
 
@@ -98,6 +98,8 @@ mydf
 - R objects in a list need not be the same type
 - Create lists using the `list` function
 - Lists indexed using double square brackets `[[ ]]` to select an object
+- Use single square brackets to select two or more list elements. e.g. `[c(2,4)]`
+- For named lists, can select a list element with `$` like data frames
 
 ## List Example
 
@@ -148,20 +150,21 @@ str(iris)
 
 1. View the top 8 rows of mtcars data
 2. What type of object is the mtcars data set?
-3. How many rows are in iris data set? (try finding this using dim or indexing + length)
+3. How many rows are in iris data set? (try finding this using `dim` or indexing + length)
 4. Summarize the values in each column in iris data set
 
 ## Working with Output from a Function
 
-- Can save output from a function as an object
-- Object is generally a list of output objects
-- Can pull off items from the output for further computing
-- Examine object using functions like `str(x)`
+- Can save output from a function as an object 
+- Object can be any type (data frame, vector, etc.) but is often a list object <!--
+- Object is generally a list of output objects (not sure this is true enough to generalize in this way)-->
+- Can pull items from the output for further computing
+- Examine output object using functions like `str(x)`
 
 ## Saving Output Demo
 
 - t-test using iris data to see if petal lengths for setosa and versicolor are the same
-- t.test function can only handle two groups, so we subset out the virginica species
+- `t.test` function can only handle two groups, so we subset out the virginica species
 
 ```{r}
 t.test(Petal.Length ~ Species, data = iris[iris$Species != "virginica", ])
@@ -202,7 +205,7 @@ We often need to import in our own data rather than just using built-in datasets
 
 ## Importing Data Demo
 
-We first create a csv file. We can use a text editor, excel... Then we load it in:
+We first create a csv file. We can use a text editor or MS Excel. Then we load it in:
 
 ```{r, eval=FALSE}
 littledata <- read.csv("PretendData.csv")

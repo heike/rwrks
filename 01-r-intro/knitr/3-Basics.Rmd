@@ -1,7 +1,7 @@
 ---
 title: "Basics"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 16, 2016"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June XX, 2017"
 output: 
     revealjs::revealjs_presentation:
         transition: fade
@@ -75,7 +75,7 @@ MyAge^2
 - Variables in R are case-sensitive
 - Some common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)
 - There are reserved words that R won't let you use for variable names. (for, in, while, if, else, repeat, break, next)
-- R will let you use the name of a predefined function.  Try not to overwrite those though!
+- R *will* let you use the name of a predefined function.  Try not to overwrite those though!
 
 ## Vectors
 
@@ -121,9 +121,9 @@ Using the R Reference Card (and the Help pages, if needed), do the following:
 
 1. Find out how many rows and columns the `iris' data set has.  Figure out at least 2 ways to do this.
 *Hint: "Variable Information" section on the first page of the reference card!*
-2. Use the `rep` function to construct the following vector:  1 1 2 2 3 3 4 4 5 5
+2. Use the `rep` function to construct the following vector:  `1 1 2 2 3 3 4 4 5 5`
 *Hint: "Data Creation" section of the reference card*
-3. Use `rep` to construct this vector: 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
+3. Use `rep` to construct this vector: `1 2 3 4 5 1 2 3 4 5 1 2 3 4 5`
 
 ## Data Frames Introduction
 
@@ -169,12 +169,12 @@ tip[1:5]
 - R has built in support for logical values
 - TRUE and FALSE are built in.  T (for TRUE) and F (for FALSE) are supported but can be modified
 - Logicals can result from a comparison using
-    - $<$
-    - $>$
-    - $<=$
-    - $>=$
-    - $==$
-    - $!=$
+    - `<`
+    - `>`
+    - `<=`
+    - `>=`
+    - `==`
+    - `!=`
     
 ## Indexing with Logicals
 
