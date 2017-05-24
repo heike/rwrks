@@ -1,8 +1,12 @@
 ---
 title: "Basic Plots"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 17, 2016"
-output: pdf_document
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June 13, 2017"
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: white
+        highlight: zenburn
 ---
 
 ```{r, echo=FALSE}
@@ -20,7 +24,7 @@ You should see a plot appear if setup is successful.
 - Designed to adhere to good graphical practices
 - Supports a wide variety plot types
 - Constructs plots using the concept of layers\medskip
-- http://had.co.nz/ggplot2/ or Hadley's book *ggplot2: Elegant Graphics for Data Analysis}* for reference material
+- XX REPLACE LINK XX http://had.co.nz/ggplot2/ or Hadley's book *ggplot2: Elegant Graphics for Data Analysis}* for reference material
 
 ## *qplot* Function
 

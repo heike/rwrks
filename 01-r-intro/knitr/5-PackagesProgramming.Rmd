@@ -1,7 +1,7 @@
 ---
 title: "Packages and Basic Programming"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 16, 2016"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June 12, 2017"
 output: 
     revealjs::revealjs_presentation:
         transition: fade

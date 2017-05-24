@@ -1,7 +1,7 @@
 ---
 title: "Perception"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 17, 2016"
+author: "Haley Jeppson, Joe Papio, Sam Tyner"
+date: "June 13, 2017"
 output: 
     revealjs::revealjs_presentation:
         transition: fade

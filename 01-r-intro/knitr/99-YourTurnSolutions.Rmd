@@ -1,7 +1,7 @@
 ---
 title: "Your Turn Solutions"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 16, 2016"
+author: "Haley Jeppson, Joe Papio, Sam Tyner"
+date: "June 12, 2017"
 output: html_document
 ---
 
@@ -12,7 +12,9 @@ Try playing with chunks of code from this session to further investigate the tip
 1. Get a summary of the total bill values
 
 ```{r}
-tips <- read.csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
+#tips <- read.csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
+tips <- read.csv("../data/tips.csv")
+
 
 summary(tips$total_bill)
 ```
@@ -212,4 +214,4 @@ plot(cars)
 
 **Hard**: Can you create an animation? (Hint: look at the `fig.show` chunk option -- you might need to the **animation** package for this)
 
-See Eric, Andee or Sam for an explanation of this.
+See Haley, Joe, or Sam for an explanation of this.

@@ -1,12 +1,13 @@
 ---
 title: "Plotting Using Layers"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 17, 2016"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June 13, 2017"
 output: pdf_document
 ---
 
 ```{r, echo=FALSE, message=FALSE}
 library(ggplot2)
+# XX REPLACE WITH SF AND ALBERS USA IF IT WORKS ON LAB COMPUTERS XX
 
 states <- map_data("state")
 ```

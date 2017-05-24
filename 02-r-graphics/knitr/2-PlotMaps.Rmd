@@ -1,8 +1,12 @@
 ---
 title: "Plotting Map Data"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 17, 2016"
-output: pdf_document
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June 13, 2017"
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: white
+        highlight: zenburn
 ---
 
 ```{r, echo=FALSE, message=FALSE}
@@ -15,6 +19,12 @@ library(dplyr)
 To make a map, let's load up the states data and take a look:
 
 ```{r}
+# XX REPLACE WITH SF AND ALBERS USA IF IT WORKS ON LAB COMPUTERS XX
+install.packages("devtools")
+devtools::install_github("tidyverse/ggplot2")
+library(albersusa)
+library(sf)
+
 states <- map_data("state")
 
 head(states)

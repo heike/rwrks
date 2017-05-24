@@ -1,7 +1,7 @@
 ---
 title: "RMarkdown Basics"
-author: "Eric Hare, Andee Kaplan, Sam Tyner, Slides by Carson Sievert"
-date: "May 16, 2016"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner<br>(Slides by Carson Sievert)"
+date: "June 12, 2017"
 output: 
     revealjs::revealjs_presentation:
         transition: fade

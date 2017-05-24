@@ -1,7 +1,7 @@
 ---
 title: "Polishing your Plots"
-author: "Eric Hare, Andee Kaplan, Sam Tyner"
-date: "May 17, 2016"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June 13, 2017"
 output: 
   revealjs::revealjs_presentation:
         transition: fade
@@ -16,6 +16,8 @@ states <- map_data("state")
 ```
 
 ## Visual Appearance
+
+XX We should add plotly stuff! XX 
 
 So far have mostly discussed how to get the data displayed the way you want, focusing on the
 essence of the plot.
