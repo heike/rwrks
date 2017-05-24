@@ -24,8 +24,8 @@ install.packages("devtools")
 devtools::install_github("tidyverse/ggplot2")
 library(albersusa)
 library(sf)
-
-states <- map_data("state")
+states <- usa_sf("laea")
+# states <- map_data("state")
 
 head(states)
 ```
@@ -64,6 +64,7 @@ qplot(long, lat, geom = "path", data = states, group = group) +
 ```{r, fig.height=4, fig.width=7}
 qplot(long, lat, geom = "polygon", data = states, group = group) + 
     coord_map()
+ggplot(data = states) + geom_sf()
 ```
 
 ## Incorporating Information About States
@@ -91,7 +92,8 @@ head(statereg)
 We need to `join` or `merge` our original states data with this new information on the regions. We can use the `left_join` function to do so (more about this later):
 
 ```{r}
-states.class.map <- left_join(states, statereg, by = c("region" = "State"))
+states$name <- states$name %>% tolower
+states.class.map <- left_join(states, statereg, by = c("name" = "State"))
 head(states.class.map)
 ```
 
@@ -101,6 +103,7 @@ head(states.class.map)
 qplot(long, lat, geom = "polygon", data = states.class.map, 
       group = group, fill = StateGroups, colour = I("black")) + 
     coord_map() 
+ggplot(data = states.class.map) + geom_sf(aes(fill = StateGroups))
 ```
 
 ## Numerical Information Using Shade and Intensity
@@ -122,7 +125,7 @@ head(states.stats)
 ## We must join this data again
 
 ```{r}
-states.map <- left_join(states, states.stats, by = c("region" = "state.name"))
+states.map <- left_join(states, states.stats, by = c("name" = "state.name"))
 head(states.map)
 ```
 
@@ -133,6 +136,8 @@ Average number of days in the last 30 days of insufficient sleep by state
 ```{r, fig.height=3, fig.width=7}
 qplot(long, lat, geom = "polygon", data = states.map, 
       group = group, fill = avg.qlrest2) + coord_map()
+
+ggplot(data = states.map) + geom_sf(aes(fill = avg.qlrest2))
 ```
 
 ## BRFSS Data Aggregated by State
@@ -145,7 +150,7 @@ head(states.sex.stats)
 ## One More Join
 
 ```{r}
-states.sex.map <- left_join(states, states.sex.stats, by = c("region" = "state.name"))
+states.sex.map <- left_join(states, states.sex.stats, by = c("name" = "state.name"))
 head(states.sex.map)
 ```
 
@@ -157,6 +162,8 @@ Average number of alcoholic drinks per day by state and gender
 qplot(long, lat, geom = "polygon", data = states.sex.map, 
       group = group, fill = avg.drnk) + coord_map() + 
     facet_grid(sex ~ .)
+ggplot(data = states.sex.map) + geom_sf(aes(fill = avg.drnk)) +
+  facet_grid(.~sex)
 ```
 
 ## Your Turn {data-background=#527a7a}
