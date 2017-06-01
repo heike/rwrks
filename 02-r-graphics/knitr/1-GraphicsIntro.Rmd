@@ -15,16 +15,20 @@ library(ggplot2)
 
 ## Let's Run the Setup File...
 
-You should see a plot appear if setup is successful.
+Run this line in the R console. You should see a plot appear if setup is successful.
+
+```{r eval = FALSE}
+source("../code/0-Setup.R")
+```
 
 ## ggplot2 In a Nutshell
 
 - Package for statistical graphics
-- Developed by Hadley Wickham (An ISU Alumni)
+- Developed by Hadley Wickham (An ISU Alumnus)
 - Designed to adhere to good graphical practices
 - Supports a wide variety plot types
 - Constructs plots using the concept of layers\medskip
-- XX REPLACE LINK XX http://had.co.nz/ggplot2/ or Hadley's book *ggplot2: Elegant Graphics for Data Analysis}* for reference material
+- http://ggplot2.tidyverse.org/ or Hadley's book *ggplot2: Elegant Graphics for Data Analysis}* for reference material
 
 ## *qplot* Function
 
@@ -34,6 +38,7 @@ The *qplot()* function is the basic workhorse of ggplot2
 - Allows for plotting options within the function statement
 - Creates an object that can be saved
 - Plot layers can be added to modify plot complexity
+- Resembles *base* plotting more than the rest of ggplot2
 
 ## *qplot* Structure
 
@@ -41,10 +46,10 @@ The *qplot()* function has a basic syntax:
 
 *qplot(variables, plot type, dataset, options)*
 
-- variables: list of variables used for the plot
-- plot type: specified with a *geom =* statement
-- dataset: specified with a *data =* statement
-- options: there are so, so many options!
+- *variables*: list of variables used for the plot
+- *plot type*: specified with a *geom =* statement
+- *dataset*: specified with a *data =* statement
+- *options*: there are so, so many options!
 
 ## Diamonds Data
 

@@ -64,28 +64,35 @@ library(ggplot2)
 #---------------------------------------------
 
 ## Your turn 1 - health stats
-	states.health.stats <- read.csv("https://heike.github.io/rwrks/02-r-graphics/data/states.health.stats.csv")
+	states.health.stats <- read.csv("https://heike.github.io/rwrks/02-r-graphics/data/states.health.stats.csv", stringsAsFactors = FALSE)
 	
 	# Use left_join to combine child healthcare data with maps information. 
 	
 	library(maps)
 	library(dplyr)
-	states <- map_data("state")
+	#states <- map_data("state")
+	#states.health.map <- left_join(states, states.health.stats, 
+	#						by = c("region" = "state.name"))
+	states <- usa_sf("laea")
+  states$name <- tolower(states$name)
 	states.health.map <- left_join(states, states.health.stats, 
-							by = c("region" = "state.name"))
+                               by = c("name" = "state.name"))
 	
+  # Use geom_sf to create a map of child healthcare undercoverage rate by state
+  ggplot(data = states.health.map) + geom_sf(aes(fill = no.coverage))
 	
-	# Use qplot to create a map of child healthcare undercoverage rate by state
+  # Use qplot to create a map of child healthcare undercoverage rate by state
 	
-	qplot(data = states.health.map, x = long, y = lat, geom = 'polygon',
-			group = group, fill = no.coverage) + coord_map()
+	# qplot(data = states.health.map, x = long, y = lat, geom = 'polygon',
+	#		group = group, fill = no.coverage) + coord_map()
 
 ## Your turn 2 - cleaned up map
 
-	qplot(data = states.health.map, x = long, y = lat, geom = 'polygon',
-			group = group, fill = no.coverage) + coord_map() + 
-	scale_fill_gradient2(limits = c(0, .2), low = 'white', high = 'red') + 
-	ggtitle("Health Insurance in the U.S.\nWhich states have the highest rates of undercovered children?")	+ theme_minimal() + 
+	#qplot(data = states.health.map, x = long, y = lat, geom = 'polygon',
+	#		group = group, fill = no.coverage) + coord_map() + 
+  ggplot(data = states.health.map) + geom_sf(aes(fill = no.coverage)) + 
+  scale_fill_gradient2(limits = c(0, .2), low = 'white', high = 'red') + 
+	ggtitle("Health Insurance in the U.S.", subtitle = "Which states have the highest rates of undercovered children?")	+ theme_minimal() + 
 	theme(panel.grid = element_blank(), axis.text = element_blank(),
 	axis.title = element_blank())	
 	

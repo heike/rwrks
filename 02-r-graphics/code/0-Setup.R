@@ -1,8 +1,10 @@
-packages <- c("ggplot2", "gridExtra", "lubridate",
-              "maps","ggmap", "mapproj", "dplyr")
-
-install.packages(packages, dep=TRUE)
-
+#packages <- c("gridExtra", "lubridate",
+#              "maps","ggmap", "mapproj", "dplyr", "devtools")
+packages <- c("gridExtra", "lubridate",
+              "ggmap", "sf", "dplyr", "devtools")
+install.packages(packages)
+devtools::install_github("hrbrmstr/albersusa")
+devtools::install_github("tidyverse/ggplot2")
 library(ggplot2)
 library(lubridate)
 library(maps)
