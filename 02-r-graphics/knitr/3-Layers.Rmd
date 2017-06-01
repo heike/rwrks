@@ -2,14 +2,20 @@
 title: "Plotting Using Layers"
 author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
 date: "June 13, 2017"
-output: pdf_document
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: white
+        highlight: zenburn
 ---
 
 ```{r, echo=FALSE, message=FALSE}
+library(dplyr)
 library(ggplot2)
-# XX REPLACE WITH SF AND ALBERS USA IF IT WORKS ON LAB COMPUTERS XX
-
-states <- map_data("state")
+library(sf)
+library(albersusa)
+#states <- map_data("state")
+states <- usa_sf("longlat")
 ```
 
 ## Deepwater Horizon Oil Spill
@@ -54,9 +60,7 @@ load("../data/noaa.rdata")
 Lets take a peek at the top of the floats NOAA data.
 
 ```{r}
-head(floats, n = 2)[,1:5]
-head(floats, n = 2)[,6:10]
-head(floats, n = 2)[,11:14]
+glimpse(floats)
 ```
 
 ## Floats Plot
@@ -94,12 +98,12 @@ To give you an idea...
 
 ```{r, fig.height=3, fig.width=7, warning=FALSE}
 ggplot() +
-    geom_path(data = states, aes(x = long, y = lat, group = group)) + 
+    geom_sf(data = states) + 
     geom_point(data = floats, aes(x = Longitude, y = Latitude, colour = callSign)) +   
     geom_point(aes(x, y), shape = "x", size = 5, data = rig) + 
     geom_text(aes(x, y), label = "BP Oil Rig", 
               size = 5, data = rig, hjust = -0.1) + 
-    xlim(c(-91, -80)) + ylim(c(22,32)) + coord_map()
+    xlim(c(-91, -80)) + ylim(c(22,32))
 ```
 
 ## More Layering
@@ -116,7 +120,7 @@ ggplot() +
 - A scale for each aesthetic
 - A facetting specification (multiple plots based on subsetting the data)
 
-## Floats Decomposed
+## Floats Decomposed {.smaller}
 
 - **Data**: floats
 - **Mappings**: 
@@ -224,12 +228,12 @@ Want to build a map using NOAA data
 
 ```{r, fig.height=3, fig.width=7, warning=FALSE}
 ggplot() +
-    geom_path(data = states, aes(x = long, y = lat, group = group)) + 
+    geom_sf(data = states) + 
     geom_point(data = floats, aes(x = Longitude, y = Latitude, colour = callSign)) +   
     geom_point(aes(x, y), shape = "x", size = 5, data = rig) + 
     geom_text(aes(x, y), label = "BP Oil Rig", size = 5, data = rig, hjust = -0.1) + 
     xlim(c(-91, -80)) + 
-    ylim(c(22, 32)) + coord_map()
+    ylim(c(22, 32))
 ```
 
 ## Your Turn {data-background=#527a7a}
@@ -237,7 +241,7 @@ ggplot() +
 1. Read in the animal.csv data:
 
 ```{r}
-animal <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/animal.csv")
+animal <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/animal.csv", stringsAsFactors = FALSE)
 ```
 
 2. Plot the location of animal sightings on a map of the region

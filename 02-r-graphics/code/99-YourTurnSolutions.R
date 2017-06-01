@@ -111,33 +111,35 @@ library(ggplot2)
 
 	# 1. Read in the animal.csv data
 	
-	animal <- read.csv("https://heike.github.io/rwrks/02-r-graphics/data/animal.csv")
+	animal <- read.csv("https://heike.github.io/rwrks/02-r-graphics/data/animal.csv", stringsAsFactors = FALSE)
 	
 	# 2. Plot the location of animal sightings on a map of the region
 	
 	ggplot() + 
-		geom_path(data = states, aes(x = long, y = lat, group = group)) + 
+		geom_sf(data = states) + 
 		geom_point(data = animal, aes(x = Longitude, y = Latitude)) + 
-		xlim(c(-91, -80)) + ylim(c(24,32)) + coord_map()
+		xlim(c(-91, -80)) + ylim(c(24,32))
 	
 	# 3. On this plot, try to color points by class of animal and/or 
 		# status of animal
 		
 	ggplot() + 
-		geom_path(data = states, aes(x = long, y = lat, group = group)) + 
+		geom_sf(data = states) + 
 		geom_point(data = animal, 
 		           aes(x = Longitude, y = Latitude, 	
-					color = class)) + scale_shape_manual()
-		xlim(c(-91, -80)) + ylim(c(24,32)) + coord_map()		
+					color = class)) + 
+		xlim(c(-91, -80)) + ylim(c(24,32))  	
 		
 	ggplot() + 
-		geom_path(data = states, aes(x = long, y = lat, group = group)) + 
+		geom_sf(data = states) + 
 		geom_point(data = animal, aes(x = Longitude, y = Latitude, 	
-					color = Condition, shape = class), size = 2)  + 
-	  scale_shape_manual(values = animale) + 
-		xlim(c(-91, -80)) + ylim(c(24,32)) + coord_map() 
-	  library(emoGG)
-	  library(remoji)
+					color = Condition))  + 
+		xlim(c(-91, -80)) + ylim(c(24,32))
+	
+# Super fun bonus example: 
+	devtools::install_github("dill/emoGG")
+	library(emoGG)
+#	  library(remoji)
 	x <- rnorm(10)
 	y <- rnorm(10)
 	plot(x,y, cex = 0)
@@ -147,43 +149,23 @@ library(ggplot2)
 	mammale <- emoji_search("animal")
 	
 	ggplot() +
-	  geom_path(data = states, aes(x = long, y = lat, group = group)) + 
-	  xlim(c(-91, -80)) + ylim(c(24,32)) + coord_map() + 
+	  geom_sf(data = states) + 
+	  xlim(c(-91, -80)) + ylim(c(24,32)) + 
 	  geom_emoji(data = subset(animal, class == "Aves"), aes(x=Longitude, y = Latitude), emoji = "1f426") + 
 	  geom_emoji(data = subset(animal, class == "Mammalia"), aes(x=Longitude, y = Latitude), emoji = "1f430") + 
 	  geom_emoji(data = subset(animal, class == "Reptilla"), aes(x=Longitude, y = Latitude), emoji = "1f40a")
-	
-	
-	
-	animal$emo[animal$class == "Aves"] <- "1f426"
-	animal$emo[animal$class == "Mammalia"] <- "1f430"
-	animal$emo[animal$class == "Reptilla"] <- "1f40a"
-	
-	ggplot(data = animal, aes(x = Longitude, y = Latitude, 	
-	                          emoji = emo)) + 
-	 # geom_path(data = states, aes(x = long, y = lat, group = group)) + 
-	  geom_emoji() + 
-	  xlim(c(-91, -80)) + ylim(c(24,32)) + coord_map() 
-	
-	animale <- c(emoji("bird"), emoji("crocodile"), emoji("rabbit"))
-	
-	mtcars$am[mtcars$am == 1] <- "1f697"
-	mtcars$am[mtcars$am == 0] <- "1f68c"
-	ggplot(mtcars, aes(wt, mpg)) + geom_emoji(aes(emoji = am))
-	
-	
-	
+
 	# 4. Advanced: Could we indicate time somehow?
 		
 	library(lubridate)
 	animal$month <- month(as.Date(animal$Date_))
 		
 	ggplot() + 
-		geom_path(data = states, aes(x = long, y = lat, group = group)) + 
+		geom_sf(data = states) + 
 		geom_point(data = animal, aes(x = Longitude, y = Latitude, 	
 					color = Condition), alpha = .5) +
 		xlim(c(-91, -80)) + ylim(c(24,32)) +
-		facet_wrap(~month) + coord_map() 		
+		facet_wrap(~month) 		
 			
 ### Perception
 #-------------------------------------------------
