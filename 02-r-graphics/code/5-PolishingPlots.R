@@ -1,19 +1,30 @@
+## ---- echo=FALSE, message=FALSE------------------------------------------
 library(ggplot2)
 
 states <- map_data("state")
 
+## ---- fig.height=2, fig.width=7------------------------------------------
 qplot(carat, price, data = diamonds)
+
+## ---- fig.height=2, fig.width=7------------------------------------------
 qplot(carat, price, data = diamonds) + theme_bw()
 
-theme_set(theme_bw())
+## ---- eval=FALSE---------------------------------------------------------
+## theme_set(theme_bw())
 
+## ------------------------------------------------------------------------
+theme_bw()
+
+## ---- fig.height=4, fig.width=7------------------------------------------
 qplot(carat, price, data = diamonds) +
     ggtitle("Price vs Carat for Diamonds")
 
+## ---- fig.height=4, fig.width=7------------------------------------------
 p <- qplot(carat, price, data = diamonds) + 
     ggtitle("Price vs Carat for Diamonds")
 p + theme(plot.title = element_text(colour = "red", angle = 45))
 
+## ---- fig.height=3, fig.width=7------------------------------------------
 p + theme(
     axis.text.x = element_blank(),
     axis.text.y = element_blank(),
@@ -22,12 +33,14 @@ p + theme(
     axis.ticks.length = unit(0, "cm")
 )
 
-qplot(price, carat, data = diamonds)
- 
-ggsave("diamonds.png")
-ggsave("diamonds.pdf")
-ggsave("diamonds.png", width = 6, height = 6)
+## ---- eval=FALSE---------------------------------------------------------
+## qplot(price, carat, data = diamonds)
+## 
+## ggsave("diamonds.png")
+## ggsave("diamonds.pdf")
+## ggsave("diamonds.png", width = 6, height = 6)
 
-dplot <- qplot(carat, price, data = diamonds)
-ggsave("diamonds.png", plot = dplot, dpi = 72)
+## ---- eval=FALSE---------------------------------------------------------
+## dplot <- qplot(carat, price, data = diamonds)
+## ggsave("diamonds.png", plot = dplot, dpi = 72)
 

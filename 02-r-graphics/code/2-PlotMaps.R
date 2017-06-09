@@ -1,7 +1,7 @@
-## ---- eval=FALSE---------------------------------------------------------
-## library(dplyr)
-## library(albersusa)
-## library(sf)
+## ---- eval=TRUE, message = FALSE, warning=FALSE--------------------------
+library(dplyr)
+library(albersusa)
+library(sf)
 
 ## ----alt1, eval = FALSE, echo=FALSE--------------------------------------
 ## library(ggplot2)
@@ -9,19 +9,18 @@
 ## head(states)
 
 ## ------------------------------------------------------------------------
-# XX REPLACE WITH SF AND ALBERS USA IF IT WORKS ON LAB COMPUTERS XX
 library(ggplot2)
 library(albersusa)
 library(sf)
 states <- usa_sf("laea")
-head(states)
+glimpse(states)
 
-## ---- fig.height=4, fig.width=7------------------------------------------
-qplot(long, lat, geom = "point", data = states)
+## ---- eval = FALSE,fig.height=4, fig.width=7-----------------------------
+## qplot(long, lat, geom = "point", data = states)
 
-## ---- fig.height=4, fig.width=7------------------------------------------
-qplot(long, lat, geom = "path", data = states, group = group) + 
-    coord_map()
+## ---- eval = FALSE, fig.height=4, fig.width=7----------------------------
+## qplot(long, lat, geom = "path", data = states, group = group) +
+##     coord_map()
 
 ## ---- fig.height=4, fig.width=7------------------------------------------
 ggplot(data = states) + geom_sf()
@@ -29,7 +28,7 @@ ggplot(data = states) + geom_sf()
 ## ------------------------------------------------------------------------
 statereg <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/statereg.csv", stringsAsFactors = FALSE)
 
-head(statereg)
+glimpse(statereg)
 
 ## ------------------------------------------------------------------------
 states$name <- tolower(states$name)
