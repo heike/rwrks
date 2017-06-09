@@ -1,6 +1,6 @@
 ---
-title: "Stat 585 - numeric summaries with dplyr and tidyr"
-author: "Heike Hofmann"
+title: "week of R - dplyr"
+author: "Haley, Joe, and Sam,"
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
@@ -11,7 +11,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# Numeric Summaries with dplyr and tidyr
+# Numeric Summaries with dplyr
 
 ## The pipe operator `%>%`
 
