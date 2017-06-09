@@ -545,7 +545,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 ##     fill = TRUE, comment.char = &quot;&quot;, ...) 
 ## read.table(file = file, header = header, sep = sep, quote = quote, 
 ##     dec = dec, fill = fill, comment.char = comment.char, ...)
-## &lt;bytecode: 0x7ffe1a3add58&gt;
+## &lt;bytecode: 0x7f8455345c68&gt;
 ## &lt;environment: namespace:utils&gt;</code></pre>
 <p>So to properly read in this data, it’s probably best to use <code>read.table</code> directly</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?read.table</code></pre></div>
@@ -591,7 +591,7 @@ midwest_gas &lt;-<span class="st"> </span>midwest_gas[<span class="kw">with</spa
 midwest2 &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;midwest.xls&quot;</span>)
 
 <span class="kw">head</span>(midwest2)</code></pre></div>
-<pre><code>## # A tibble: 6 × 11
+<pre><code>## # A tibble: 6 x 11
 ##   `Year-Month` `Week 1`  X__1 `Week 2`  X__2 `Week 3`  X__3 `Week 4`  X__4
 ##          &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;
 ## 1         &lt;NA&gt; End Date Value End Date Value End Date Value End Date Value
