@@ -1,7 +1,8 @@
 ---
 title: "Web Scraping in R"
-author: "Eric Hare, Andee Kaplan, Sam Tyner, Slides by Carson Sievert"
-date: "May 19, 2016"
+subtitle: "(Slides by [Carson Sievert](https://cpsievert.github.io))"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June 15, 2017"
 output: 
     revealjs::revealjs_presentation:
         transition: fade
@@ -58,14 +59,14 @@ node <- html_node(src, css = ".wikitable")
 - `html_table()` converts a single `<table>` node to a data frame.
 
 ```{r}
-html_table(node)
+html_table(node, fill = TRUE)
 ```
 
 ## Pipeable! {.build}
 
 ```{r}
 read_html("http://en.wikipedia.org/wiki/Table_(information)") %>%
-  html_node(".wikitable") %>% html_table()
+  html_node(".wikitable") %>% html_table(fill=TRUE)
 ```
 
 - Much easier to read/understand!
@@ -134,8 +135,8 @@ http://www.vox.com/2016/5/12/11666116/70000-okcupid-users-data-release
 
 ```{r}
 library(httr)
-andee <- GET("https://api.github.com/users/andeek")
-content(andee)[c("name", "company")]
+sam <- GET("https://api.github.com/users/sctyner")
+content(sam)[c("name", "company")]
 ```
 
 - Other HTTP verbs -- `POST`, `PUT`, `DELETE`, etc...
@@ -145,7 +146,7 @@ content(andee)[c("name", "company")]
 - When you (the client) _requests_ a resource from the server. The server _responds_ with a bunch of additional information.
 
 ```{r}
-andee$header[1:3]
+sam$header[1:3]
 ```
 
 - Nowadays content-type is usually XML or JSON (HTML is great for _sharing content_ between _people_, but it isn't great for _exchanging data_ between _machines_.)
@@ -177,6 +178,7 @@ XML is a markup language that looks very similar to HTML.
 
 ```{r, echo=FALSE}
 # hopefully no one is watching
+# devtools::install_github("cpsievert/XML2R")
 library(XML2R)
 obs <- XML2Obs("https://gist.githubusercontent.com/cpsievert/85e340814cb855a60dc4/raw/651b7626e34751c7485cff2d7ea3ea66413609b8/mariokart.xml", quiet = TRUE)
 table(names(obs))
@@ -215,7 +217,7 @@ Now (if I want) I can merge the tables into a single table...
 
 ```{r}
 tabs <- collapse_obs(obs)
-left_join(as.data.frame(tabs[[1]]), as.data.frame(tabs[[2]])) %>% select(-url)
+left_join(as.data.frame(tabs[[1]]), as.data.frame(tabs[[2]])) 
 ```
 
 ## What about JSON? {.build}

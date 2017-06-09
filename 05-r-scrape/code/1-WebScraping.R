@@ -4,11 +4,11 @@ src <- read_html("http://en.wikipedia.org/wiki/Table_(information)")
 node <- html_node(src, css = ".wikitable")
 
 ## ------------------------------------------------------------------------
-html_table(node)
+html_table(node, fill = TRUE)
 
 ## ------------------------------------------------------------------------
 read_html("http://en.wikipedia.org/wiki/Table_(information)") %>%
-  html_node(".wikitable") %>% html_table()
+  html_node(".wikitable") %>% html_table(fill=TRUE)
 
 ## ------------------------------------------------------------------------
 domain <- "http://www.sec.gov"
@@ -26,14 +26,15 @@ tail(hrefs)
 
 ## ------------------------------------------------------------------------
 library(httr)
-andee <- GET("https://api.github.com/users/andeek")
-content(andee)[c("name", "company")]
+sam <- GET("https://api.github.com/users/sctyner")
+content(sam)[c("name", "company")]
 
 ## ------------------------------------------------------------------------
-andee$header[1:3]
+sam$header[1:3]
 
 ## ---- echo=FALSE---------------------------------------------------------
 # hopefully no one is watching
+# devtools::install_github("cpsievert/XML2R")
 library(XML2R)
 obs <- XML2Obs("https://gist.githubusercontent.com/cpsievert/85e340814cb855a60dc4/raw/651b7626e34751c7485cff2d7ea3ea66413609b8/mariokart.xml", quiet = TRUE)
 table(names(obs))
@@ -51,7 +52,7 @@ collapse_obs(obs)
 
 ## ------------------------------------------------------------------------
 tabs <- collapse_obs(obs)
-left_join(as.data.frame(tabs[[1]]), as.data.frame(tabs[[2]])) %>% select(-url)
+left_join(as.data.frame(tabs[[1]]), as.data.frame(tabs[[2]])) 
 
 ## ------------------------------------------------------------------------
 library(jsonlite)
