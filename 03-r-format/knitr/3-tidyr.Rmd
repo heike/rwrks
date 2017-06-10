@@ -1,13 +1,14 @@
 ---
-title: "week of R - tidyr"
-author: "Haley, Joe, and Sam,"
+title: "tidyr"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
 ratio: 16x10
-output:
-  rmdshower::shower_presentation:
-    self_contained: false
-    katex: true
-    theme: ribbon
+date: "June 14, 2017"
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        highlight: zenburn
 ---
+
 
 
 ```{r setup, include=FALSE}
@@ -15,7 +16,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 data(french_fries, package="reshape2")
 ```
-# The `tidyr` package
+
+## The `tidyr` package
 
 ## What is tidy data?
 
@@ -34,7 +36,7 @@ Leo Tolstoy
 - `tidyr`: `spread` and `gather`, `separate`
 
 
-## Data is usually in a spreadsheet format, but ...
+## Data is usually in a spreadsheet format, but...
 
 there's different ways of encoding the same information:
 
@@ -107,6 +109,7 @@ separate one column into multiple columns
 - Messy (3): `dplyr` - some combination of the functions discussed previously
 - Messy (4): `dplyr` functionality `join` (and friends) to combine multiple data sets 
 
+
 ## Gather
 
 ```{r}
@@ -137,8 +140,6 @@ df %>% separate(x, into = c("A", "B"))
 
 ## Your Turn (5 min)
 
-<img src="images/beardshear-view.png" width=1100 class="cover">
-
 The Iowa Data Portal is a wealth of information on and about the State of Iowa. 
 
 The website 
@@ -162,8 +163,6 @@ no Messy 1? - problems of type Messy 1 are typically hard to detect and often up
 
 ## Your Turn (10 min)
 
-<img src="images/beardshear-view.png" width=1100 class="cover">
-
 - Check the help for the function `parse_number` in the `readr` package and use it on the campaign expenditure data.
 - Use `separate` to split the date variable into year, month and day.
 - Use `separate` again to extract geographic latitude and longitude (Hint - you might need several steps of `separate`)
@@ -175,8 +174,6 @@ no Messy 1? - problems of type Messy 1 are typically hard to detect and often up
   4. Plot geographic longitude and latitude. Do campaign expenditures stay in the State of IA? Investigate oddities.
 
 ## Another Your-Turn (10 mins)
-
-<img src="images/census-occupation.png" width=1100 class="cover" style="opacity:0.4">
 
 During the 1870 census data on people's occupation was collected. The data [occupation-1870](../data/occupation-1870.csv) contains state-level aggregates of occupation by gender.
 

@@ -11,6 +11,7 @@ output:
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+data(baseball, package = "plyr")
 ```
 # Numeric Summaries with dplyr
 
