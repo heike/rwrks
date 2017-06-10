@@ -616,7 +616,7 @@ french_fries_long &lt;-<span class="st"> </span><span class="kw">gather</span>(f
 french_fries_split &lt;-<span class="st"> </span><span class="kw">group_by</span>(french_fries_long, variable) <span class="co"># SPLIT</span>
 french_fries_apply &lt;-<span class="st"> </span><span class="kw">summarise</span>(french_fries_split, <span class="dt">rating =</span> <span class="kw">mean</span>(rating, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="co"># APPLY + COMBINE</span>
 french_fries_apply</code></pre></div>
-<pre><code>## # A tibble: 5 × 2
+<pre><code>## # A tibble: 5 x 2
 ##   variable    rating
 ##      &lt;chr&gt;     &lt;dbl&gt;
 ## 1  buttery 1.8236994
@@ -636,7 +636,7 @@ french_fries_apply</code></pre></div>
 <span class="st">    </span><span class="kw">gather</span>(<span class="dt">key =</span> variable, <span class="dt">value =</span> rating, potato:painty) %&gt;%
 <span class="st">    </span><span class="kw">group_by</span>(variable) %&gt;%
 <span class="st">    </span><span class="kw">summarise</span>(<span class="dt">rating =</span> <span class="kw">mean</span>(rating, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
-<pre><code>## # A tibble: 5 × 2
+<pre><code>## # A tibble: 5 x 2
 ##   variable    rating
 ##      &lt;chr&gt;     &lt;dbl&gt;
 ## 1  buttery 1.8236994
@@ -715,17 +715,18 @@ french_fries_apply</code></pre></div>
 <pre><code>## Source: local data frame [30 x 4]
 ## Groups: time [?]
 ## 
+## # A tibble: 30 x 4
 ##     time treatment mean_rancid sd_rancid
 ##    &lt;int&gt;     &lt;int&gt;       &lt;dbl&gt;     &lt;dbl&gt;
-## 1      1         1    2.758333  3.212870
-## 2      1         2    1.716667  2.714801
-## 3      1         3    2.600000  3.202037
-## 4      2         1    3.900000  4.374730
-## 5      2         2    2.141667  3.117540
-## 6      2         3    2.495833  3.378767
-## 7      3         1    4.650000  3.933358
-## 8      3         2    2.895833  3.773532
-## 9      3         3    3.600000  3.592867
+##  1     1         1    2.758333  3.212870
+##  2     1         2    1.716667  2.714801
+##  3     1         3    2.600000  3.202037
+##  4     2         1    3.900000  4.374730
+##  5     2         2    2.141667  3.117540
+##  6     2         3    2.495833  3.378767
+##  7     3         1    4.650000  3.933358
+##  8     3         2    2.895833  3.773532
+##  9     3         3    3.600000  3.592867
 ## 10     4         1    2.079167  2.394737
 ## # ... with 20 more rows</code></pre>
 </section>
@@ -758,10 +759,10 @@ french_fries_apply</code></pre></div>
 <span class="kw">today</span>()
 <span class="kw">now</span>() +<span class="st"> </span><span class="kw">hours</span>(<span class="dv">4</span>)
 <span class="kw">today</span>() -<span class="st"> </span><span class="kw">days</span>(<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] &quot;2017-05-19 12:45:03 CDT&quot;
-## [1] &quot;2017-05-19&quot;
-## [1] &quot;2017-05-19 16:45:03 CDT&quot;
-## [1] &quot;2017-05-17&quot;</code></pre>
+<pre><code>## [1] &quot;2017-06-09 17:24:24 CDT&quot;
+## [1] &quot;2017-06-09&quot;
+## [1] &quot;2017-06-09 21:24:24 CDT&quot;
+## [1] &quot;2017-06-07&quot;</code></pre>
 </section>
 <section id="parsing-dates" class="slide level2">
 <h1>Parsing Dates</h1>
