@@ -308,9 +308,8 @@ reps %>%
   geom_point() 
 ```
 
-## Your Turn (10 min) 
+## Your Turn (10 min) {data-background=#527a7a}
 
-<img src="images/stones-faded.png" class="cover">
 
 Try to answer (a part of) the question: are different ratings similar?
 
@@ -364,9 +363,7 @@ From the help file:
 
 ![](http://www.kenaifeed.com/wp-content/uploads/2015/03/chicks.jpg)
 
-## Your Turn (10 min)
-
-<img src="images/chicks-faded.png" class="cover">
+## Your Turn (10 min) {data-background=#527a7a}
 
 
 1. Introduce a variable `gain` into the data that keeps track how much weight each chick has gained since Time 0 (i.e. gain at time 0 should be 0).
