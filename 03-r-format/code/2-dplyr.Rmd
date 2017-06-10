@@ -26,6 +26,31 @@ Consequences:
 `x %>% f(y) %>% g(z) %>% h(u) %>% k(v, w)`
 - read `%>%` as "then do"
 
+# Data Summaries by 'Brute force'
+
+## 
+
+```{r}
+data(baseball, package = "plyr")
+help(baseball, package = "plyr")
+head(baseball)
+
+ss <- subset(baseball, id == "sosasa01")
+head(ss)
+mean(ss$h / ss$ab)
+
+players <- unique(baseball$id)
+n <- length(players)
+
+ba <- rep(NA, n)
+
+for(i in 1:n) {
+  career <- subset(baseball, id == players[i])
+  ba[i] <- with(career, mean(h / ab, na.rm = TRUE))
+}
+```
+
+
 # The `dplyr` package
 
 ## dplyr verbs
