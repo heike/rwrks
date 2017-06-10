@@ -1,17 +1,132 @@
 ---
-title: "week of R - dplyr"
-author: "Haley, Joe, and Sam,"
+title: "dplyr"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
 ratio: 16x10
-output:
-  rmdshower::shower_presentation:
-    self_contained: false
-    katex: true
-    theme: ribbon
+date: "June 14, 2017"
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: white
+        highlight: zenburn
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 # Numeric Summaries with dplyr
+
+## Baseball Data
+
+- We would like to create career summary statistics for each player
+- Plan: subset on a player, and compute statistics
+
+```{r}
+ss <- subset(baseball, id == "sosasa01")
+head(ss)
+mean(ss$h / ss$ab)
+```
+
+We need an **automatic** way to calculate this.
+
+## `for` loops
+
+- Idea: repeat the same (set of) statement(s) for each element of an index set
+- Setup: 
+    - Introduce counter variable (sometimes named `i`)
+    - Reserve space for results
+- Generic Code:
+
+```{r, eval=FALSE}
+result <- rep(NA, length(indexset))
+for(i in indexset){
+  ... some statements ...
+  result[i] <- ...
+}
+```
+    
+## `for` loops for Baseball
+
+- Index set: player id
+- Setup: 
+
+```{r}
+players <- unique(baseball$id)
+n <- length(players)
+
+ba <- rep(NA, n)
+
+for(i in 1:n) {
+  career <- subset(baseball, id == players[i])
+  ba[i] <- with(career, mean(h / ab, na.rm = TRUE))
+}
+
+summary(ba)
+```
+
+## `for` loops for Baseball
+
+- Index set: player id
+- `i = 0`: 
+
+```{r}
+players <- unique(baseball$id)
+n <- length(players)
+
+ba <- rep(NA, n)
+
+head(ba)
+```
+
+## `for` loops for Baseball
+
+- Index set: player id
+- `i = 1`: 
+
+```{r}
+players <- unique(baseball$id)
+
+ba <- rep(NA, length(players))
+
+for(i in 1:1) {
+  career <- subset(baseball, id == players[i])
+  ba[i] <- with(career, mean(h / ab, na.rm = TRUE))
+}
+
+head(ba)
+```
+
+## `for` loops for Baseball
+
+- Index set: player id
+- `i = 2`: 
+
+```{r}
+players <- unique(baseball$id)
+
+ba <- rep(NA, length(players))
+
+for(i in 1:2) {
+  career <- subset(baseball, id == players[i])
+  ba[i] <- with(career, mean(h / ab, na.rm = TRUE))
+}
+
+head(ba)
+```
+
+## Your Turn {data-background=#527a7a}
+
+- MLB rules for the greatest all-time hitters are that players have to have played at least 1000 games with at least as many at-bats in order to be considered
+- Extend the for loop above to collect the additional information
+- Introduce and collect data for two new variables: `games` and `atbats`
+
+## How did it go? What was difficult?
+
+- Household chores (declaring variables, setting values each time) distract from real work
+- Indices are error-prone
+- Loops often result in slow code because R can compute quantities using entire vectors in an optimized way
+
+
+# The `dplyr` package
+
 
 ## The pipe operator `%>%`
 
@@ -26,32 +141,6 @@ Consequences:
 `x %>% f(y) %>% g(z) %>% h(u) %>% k(v, w)`
 - read `%>%` as "then do"
 
-# Data Summaries by 'Brute force'
-
-## 
-
-```{r}
-data(baseball, package = "plyr")
-help(baseball, package = "plyr")
-head(baseball)
-
-ss <- subset(baseball, id == "sosasa01")
-head(ss)
-mean(ss$h / ss$ab)
-
-players <- unique(baseball$id)
-n <- length(players)
-
-ba <- rep(NA, n)
-
-for(i in 1:n) {
-  career <- subset(baseball, id == players[i])
-  ba[i] <- with(career, mean(h / ab, na.rm = TRUE))
-}
-```
-
-
-# The `dplyr` package
 
 ## dplyr verbs
 
