@@ -4,6 +4,7 @@ install.packages("tidyverse")
 install.packages("readxl")
 install.packages("foreign")
 install.packages("lubridate")
+install.packages("Lahman")
 
 # Or if you are working on the terminal servers...
 library(tidyverse)
