@@ -89,7 +89,7 @@ qplot(date, price, data = midwest_gas, geom = "line")
 
 Download the midwest.xls file to your current working directory (`getwd()`)
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=FALSE}
 library(readxl)
 
 midwest2 <- read_excel("midwest.xls")
@@ -97,10 +97,10 @@ midwest2 <- read_excel("midwest.xls")
 head(midwest2)
 ```
 
-```{r, echo=FALSE}
+```{r midwest, echo=FALSE}
 library(readxl)
 
-midwest2 <- read_excel("../data/midwest.xls")
+midwest2 <- read_excel("../data/midwest.xls", col_names = FALSE)
 
 head(midwest2)
 ```
@@ -121,3 +121,7 @@ http://wwwn.cdc.gov/Nchs/Nhanes/Search/nhanes13_14.aspx
 
 1. Scroll to the bottom, choose one of the datasets (Demographics, Examination, etc.). Download the Data file (XPT)
 2. Use `read.xport()` to load the file into R
+
+```{r purl, eval=FALSE, include=FALSE, purl=FALSE}
+#knitr::purl("03-r-format/knitr/1-Files.Rmd", output="03-r-format/code/1-Files.R", documentation = 0)
+```
