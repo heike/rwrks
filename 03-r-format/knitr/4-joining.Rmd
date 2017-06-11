@@ -1,19 +1,18 @@
 ---
 title: "Stat 585 - numeric summaries with tidyr"
-author: "Heike Hofmann"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
 ratio: 16x10
-output:
-  rmdshower::shower_presentation:
-    self_contained: false
-    katex: true
-    theme: ribbon
+date: "June 14, 2017"
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        highlight: zenburn
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
-# Dealing with Messy (3) and (4)
 
 # Keys and Measurements
 
@@ -107,7 +106,7 @@ box <- box %>% mutate(
   Gross = parse_number(Gross),
   Total.Gross = parse_number(Total.Gross),
   Days = parse_number(Days),
-  Thtrs. = parse_number(Thtrs.)
+  Theaters = parse_number(Theaters)
 ) 
 ```
 
@@ -147,7 +146,7 @@ box <- box %>% mutate(
 The movie `The Witness` is actually two different movies, one that came out in October 2015, another one that came out in June 2016. Movie name by itself is not a key. Let's derive the *release date* for each movie:
 
 ```{r}
-box <- box %>% mutate(Release = lubridate::ymd(date)-Days)
+box <- box %>% mutate(Release = lubridate::ymd(Date)-Days)
 ```
 
 ## Splitting into separate datasets - Take 2
@@ -175,7 +174,7 @@ movie %>% filter(Movie =="Hot Water")
 # introduce release date for each movie and distributor separately
 box <- box %>% group_by(Movie, Distributor) %>% 
   mutate(
-    Release = min(lubridate::ymd(date))-Days[which.min(lubridate::ymd(date))]
+    Release = min(lubridate::ymd(Date))-Days[which.min(lubridate::ymd(Date))]
     )
 
 # split again
@@ -196,16 +195,14 @@ Better!
 
 How much of this can you do in 10 mins?
 
-<img src="images/tools.jpeg" width=550>
-
 ## 
 
 
 ```{r}
 # days and per theatre gross:
 box <- box %>% ungroup() %>% mutate(
-  Days_new = lubridate::ymd(date) - lubridate::ymd(Release),
-  Per.Theater = Gross/Thtrs.
+  Days_new = lubridate::ymd(Date) - lubridate::ymd(Release),
+  Per.Theater = Gross/Theaters
 ) 
 box %>% select(Movie, Days, Days_new)
 ```
@@ -214,7 +211,7 @@ box %>% select(Movie, Days, Days_new)
 
 ```{r}
 # introduce change variable and rank-last-week:
-box <- box %>% group_by(Movie, Release) %>% arrange(date) %>% mutate(
+box <- box %>% group_by(Movie, Release) %>% arrange(Date) %>% mutate(
   Change = c(NA, diff(Gross)/Gross[-length(Gross)])*100,
   Rank.Last.Week_new = c(NA, Rank[-length(Rank)]),
   Days_diff = c(NA, diff(Days_new))
@@ -238,7 +235,7 @@ box <- box %>% group_by(Movie, Release) %>%
 box %>% 
   ggplot(aes(Gross, Gross_new, colour = Gross_new < 0)) + geom_point()
 
-box %>% ungroup() %>%  filter(Gross_new <0) %>% select(Movie, date, Gross, Gross_new, Total.Gross) %>% arrange(Gross_new)
+box %>% ungroup() %>%  filter(Gross_new <0) %>% select(Movie, Date, Gross, Gross_new, Total.Gross) %>% arrange(Gross_new)
 ```
 
 ## 
@@ -247,10 +244,8 @@ Now we have finally a clean data set and could get started on an analysis!
 
 Can you predict the Total Gross of a movie based on the opening weekend and the second week?
 
-This is the dataset we used for lab #2.
-
 ```{r echo = FALSE, eval = FALSE}
-movies <- box %>% select(date, Rank, Rank.Last.Week_new, Days_new, Movie, Distributor, Gross, Change, Total.Gross, Release, Thtrs., Per.Theater) 
+movies <- box %>% select(Date, Rank, Rank.Last.Week_new, Days_new, Movie, Distributor, Gross, Change, Total.Gross, Release, Theaters, Per.Theater) 
 names(movies) <- c("Date", "Rank", "Rank.Last.Week", "Days", "Movie", "Distributor", "Gross", "Change", "Total.Gross", "Release", "Theaters", "Per.Theater")
 #write.csv(movies, file="../data/movies.csv", row.names=FALSE)
 ```
@@ -377,8 +372,6 @@ anti_join(df2, df1, by="id") # no values for id in df1
 
 ## Your turn (10 mins) {.white}
 
-<img src="images/baseball.jpeg" width="1200" class="cover">
-
 - <span style="color:white">Load the `Lahman` package into your R session.</span>
 - <span style="color:white">Join (relevant pieces of) the `Master` data set and the `HallOfFame` data.</span>
 - <span style="color:white">For the `ggplot2` chart label all last attempts of individuals with 15 or more attempts. Make sure to deal with missing values appropriately.</span>
@@ -425,4 +418,10 @@ Voted %>% ggplot(aes(x = attempt, y = votes/needed)) +
   geom_line(aes(group = playerID), colour = "grey25", size = 0.2) + 
   geom_point(aes(colour = inducted)) +
   ggrepel::geom_label_repel(aes(label=name), data = labels %>% filter(attempt >=16))
+```
+
+
+```{r purl, eval=FALSE, include=FALSE, purl=FALSE}
+#copy paste this and run in console
+#knitr::purl("03-r-format/knitr/4-joining.Rmd", output="03-r-format/code/4-joining.R", documentation = 0)
 ```
