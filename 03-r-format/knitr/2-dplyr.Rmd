@@ -377,5 +377,6 @@ Plot weight gain over time. Connect the observed weight gain for each chick by a
 - make a conscious effort in applying `dplyr` functions in your regular workflow: that means you have to do things **differently** - the long-term benefits are there, promise!
 
 ```{r purl, eval=FALSE, include=FALSE, purl=FALSE}
+#copy paste this and run in console
 #knitr::purl("03-r-format/knitr/2-dplyr.Rmd", output="03-r-format/code/2-dplyr.R", documentation = 0)
 ```
