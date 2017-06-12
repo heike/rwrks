@@ -71,8 +71,8 @@ Can you think of anything that is missing from the syntax (that you might want w
 
 - You don't *have to* restrict yourself to markdown. You can always include HTML/`LaTeX` markup, but don't expect it to convert between output formats.
 - There are many efforts to extend Markdown (but, then again, keeping it simple is the point!)
-- More features are being daily
-- Templates are being created
+- More features are being added daily
+- Even more templates are being created
 
 ## Your Turn {data-background=#527a7a}
 
