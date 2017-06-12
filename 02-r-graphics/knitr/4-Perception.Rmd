@@ -7,6 +7,7 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
+        css: custom.css
 ---
 
 ## Cost of an Education
@@ -171,7 +172,8 @@ grid.arrange(p1, p2, p3, nrow = 1)
 
 Qualitative schemes: no more than 7 colors
 
-```{r, echo=FALSE, fig.width=7, fig.height=1.5}
+
+```{r, echo=FALSE, fig.width=7, fig.height=1.2}
 data <- data.frame(x = 1:7, 
                    blues = brewer.pal(7, "Blues"), 
                    set1 = brewer.pal(7, "Set1"), 
@@ -188,9 +190,31 @@ qplot(xmin = x-.5, xmax = x+.5, ymin = 0, ymax = 1, data = data, geom = "rect", 
     new_theme_empty
 ```
 
+<small>
+Can use `colorRampPalette()` from the RColorBrewer package to produce larger palettes by interpolating existing ones
+</small>
+
+```{r, echo=FALSE, fig.width=10, fig.height=1.2}
+
+getPalette = colorRampPalette(brewer.pal(9, "Set1"))
+
+data2 <- data.frame(x = 1:20, 
+                   expanded = getPalette(20))
+
+qplot(xmin = x-.5, xmax = x+.5, ymin = 0, ymax = 1, data = data2, geom = "rect", color = I("black"), fill = expanded) + 
+    scale_fill_identity() + 
+    ylab("") + 
+    xlab("") + 
+    theme(axis.text = element_blank(), 
+          axis.ticks = element_blank(), 
+          rect = element_blank()) + 
+    coord_fixed(ratio = 1) + 
+    new_theme_empty
+```
+
 Quantitative schemes: use color gradient with only one hue for positive values
 
-```{r, echo=FALSE, fig.width=7, fig.height=1.5}
+```{r, echo=FALSE, fig.width=7, fig.height=1.2}
 qplot(xmin = x-.5, xmax = x+.5, ymin = 0, ymax = 1, data = data, geom = "rect", color = I("black"), fill = blues) + 
     scale_fill_identity() + 
     ylab("") + 
