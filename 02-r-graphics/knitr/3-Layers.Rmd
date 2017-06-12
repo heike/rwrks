@@ -7,7 +7,9 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
+        css: custom.css
 ---
+
 
 ```{r, echo=FALSE, message=FALSE}
 library(dplyr)

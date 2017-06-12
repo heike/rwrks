@@ -7,22 +7,26 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
+        css: custom.css
 ---
 
 ```{r, echo=FALSE, message=FALSE}
 library(ggplot2)
+library(plotly)
+library(sf)
+library(albersusa)
 
 states <- map_data("state")
 ```
 
 ## Visual Appearance
 
-XX We should add plotly stuff! XX 
-
 So far have mostly discussed how to get the data displayed the way you want, focusing on the
 essence of the plot.
 
 Themes give you a huge amount of control over the appearance of the plot, the choice of background colours, fonts and so on.
+
+Bonus: Can make plots *interactive* with `plotly`
 
 ## Built-In Themes
 
@@ -118,8 +122,16 @@ dplot <- qplot(carat, price, data = diamonds)
 ggsave("diamonds.png", plot = dplot, dpi = 72)
 ```
 
+
 ## Your Turn {data-background=#527a7a}
 
 1. Save a pdf of a scatterplot of price vs carat
 2. Open up the pdf in Adobe Acrobat (or another PDF Reader)
 3. Save a png of the same scatterplot
+
+## Making plots interactive!
+
+```{r }
+dplot <- qplot(carat, price, data = diamonds[sample(53940, 1000),])
+ggplotly(dplot)
+```
