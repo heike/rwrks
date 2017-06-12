@@ -26,7 +26,7 @@ output:
     - Cost of the total bill
     - Several characteristics about the groups being served
 - Primary Question: How do these variable influence the amount being tipped?
-- Follow along using RWorkshop1Tips.R
+- Follow along using [2-MotivatingExample.R](../code/2-MotivatingExample.R)
 
 ## First look at data in R
 
