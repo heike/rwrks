@@ -7,6 +7,8 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
+        css: custom.css
+
 ---
 
 ## Data Frames
