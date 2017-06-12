@@ -72,7 +72,7 @@ library(ggplot2)
 ```
 
 ```{r, fig.height=3, fig.width=7}
-qplot(tip, total_bill, geom = "point", data = tips)
+qplot(total_bill, tip, geom = "point", data = tips)
 ```
 
 ## More Scatterplots
@@ -80,7 +80,7 @@ qplot(tip, total_bill, geom = "point", data = tips)
 Color the points by lunch and dinner groups
 
 ```{r, fig.height=4, fig.width=7}
-qplot(tip, total_bill, geom = "point", data = tips, colour = time)
+qplot(total_bill, tip, geom = "point", data = tips, colour = time)
 ```
 
 ## Even More Scatterplots
@@ -88,7 +88,7 @@ qplot(tip, total_bill, geom = "point", data = tips, colour = time)
 Add linear regression line to the plot
 
 ```{r, fig.height=4, fig.width=7}
-qplot(tip, total_bill, geom = "point", data = tips) + 
+qplot(total_bill, tip, geom = "point", data = tips) + 
     geom_smooth(method = "lm")
 ```
 
