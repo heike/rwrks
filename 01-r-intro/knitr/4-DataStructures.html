@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Haley Jeppson, Joe Papio, Sam Tyner" />
+  <meta name="dcterms.date" content="2017-06-12" />
   <title>Data Structures</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -98,6 +99,7 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 
     <style type="text/css">code{white-space: pre;}</style>
 
+    <link href="data:text/css;charset=utf-8,%0A%0A%2Ereveal%20section%20h2%20%7B%0Afont%2Dsize%3A%2040px%3B%0A%7D%0A%2Ereveal%20section%20h1%20%7B%0Afont%2Dsize%3A%2050px%3B%0A%7D%0A%2Ereveal%20section%20img%20%7B%20margin%3A%200px%3B%20background%3Anone%3B%20border%3Anone%3B%20box%2Dshadow%3Anone%3B%20%7D%0A%2Ereveal%20ol%2C%20%2Ereveal%20dl%2C%20%2Ereveal%20ul%0A%7B%0Adisplay%3A%20inline%2Dblock%3B%0Atext%2Dalign%3A%20left%3B%0Aleft%3A%200px%3B%0Awidth%3A%2090%25%3B%0A%7D%0A%0Ap%2Eminor%20%7B%0Afont%2Dsize%3A%2010pt%3B%0Acolor%3A%20%23AAA%3B%0A%7D%0Ap%2Esmallfnt%20%7B%0Afont%2Dsize%3A%2014pt%3B%0A%7D%0Ap%2Emediumfnt%20%7B%0Afont%2Dsize%3A%2018pt%3B%0A%7D%0Ap%2Elargefnt%20%7B%0Afont%2Dsize%3A%2022pt%3B%0A%7D%0A%2Egreencomment%20%7B%0Aborder%3A1px%20solid%20red%3B%0Adisplay%3Ainline%2Dblock%3B%0Atext%2Dalign%3Aright%3B%0Acolor%3A%20green%3B%0Afont%2Dstyle%3A%20italic%3B%0Awidth%3A49%25%0A%7D%0A%0A%2Ereveal%20table%3Etbody%2Einvis%20%7B%0Aborder%3A%20none%0A%7D%0A%2Ereveal%20table%3Etbody%2Einvis%3Etr%3Etd%20%7B%0Aborder%3A%200px%20solid%3B%0A%7D%0A%0A%2Ereveal%20table%3Ethead%20%7B%0Abackground%2Dcolor%3A%20%23DDD%3B%0Aborder%2Dbottom%3A2px%20double%20black%3B%0A%7D%0A%2Ereveal%20table%3Ethead%3Etr%3Eth%20%7B%0Aborder%2Dleft%3A2px%20double%20black%3B%0A%7D%0A%2Ereveal%20table%3Etbody%3Etr%3Etd%20%7B%0Aborder%2Dleft%3A2px%20double%20black%3B%0Avertical%2Dalign%3A%20middle%3B%0A%7D%0A%2Ereveal%20table%3Etbody%3Etr%3Etd%3Afirst%2Dchild%20%7B%0Aborder%2Dleft%3A0px%3B%0A%7D%0A%2Ereveal%20table%3Ethead%3Etr%3Eth%3Afirst%2Dchild%20%7B%0Aborder%2Dleft%3A0px%3B%0A%7D%0A%0Adiv%2Eleftcol%20%7B%0Aposition%3Aabsolute%3B%0Aleft%3A0%3B%0Atop%3A0px%3B%0Awidth%3A49%25%3B%0Aheight%3A400px%3B%0Aborder%3A0px%20solid%20%23378%3B%0A%7D%0Adiv%2Erightcol%20%7B%0Aposition%3Aabsolute%3B%0Aright%3A0%3B%0Atop%3A0px%3B%0Awidth%3A49%25%3B%0Aheight%3A400px%3B%0Aborder%3A0px%20solid%20%23B3F%3B%20%7D%0A%0Adiv%2Esliderow%20%7B%0Aposition%3A%20absolute%3B%0Atop%3A%20100px%3B%0Awidth%3A%20100%25%3B%0Aborder%3A0px%20solid%20%2300F%3B%20%7D%0A%0Adiv%2Eslideheader%20%7B%0Aposition%3Aabsolute%3B%0Atop%3A0%20px%3B%0Awidth%3A100%25%3B%0Aborder%3A0px%20solid%20%23F00%3B%20%7D%0A%0Adiv%2Eslidefooter%20%7B%0Aposition%3Aabsolute%3B%0Abottom%3A%200px%3B%0Awidth%3A100%25%3B%0Aborder%3A0px%20solid%20%23F00%3B%20%7D%0A%0Adiv%2Ebbox%20%7B%0Amargin%3A0%20auto%3B%0Awidth%3A%20960px%3B%0Aheight%3A%20600px%3B%0Aborder%3A0px%20solid%20%230F0%3B%0Aposition%3A%20relative%3B%0A%7D%0A%0Ahr%2Eshadow%20%7B%0Aheight%3A%2012px%3B%0Aborder%3A%200%3B%0Abox%2Dshadow%3A%20inset%200%2012px%2012px%20%2D12px%20rgba%280%2C%200%2C%200%2C%200%2E5%29%3B%0A%7D" rel="stylesheet" />
 
 <!-- Printing and PDF exports -->
 <script id="paper-css" type="application/dynamic-css">
@@ -489,7 +491,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section>
     <h1 class="title">Data Structures</h1>
     <h2 class="author">Haley Jeppson, Joe Papio,<br>Sam Tyner</h2>
-    <h3 class="date">June XX, 2017</h3>
+    <h3 class="date">June 12, 2017</h3>
 </section>
 
 <section id="data-frames" class="slide level2">
