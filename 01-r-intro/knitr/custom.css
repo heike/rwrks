@@ -8,12 +8,16 @@
   border: 0px solid #222;
   box-shadow: none; }*/
 
+.reveal section h1 {
+  font-size: 50px;
+}
+
 .reveal section h2 {
   font-size: 40px;
 }
 
-.reveal section h1 {
-  font-size: 50px;
+.reveal section h3 {
+  font-size: 30px;
 }
 
 .reveal section img { 
