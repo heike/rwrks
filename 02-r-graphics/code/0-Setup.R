@@ -5,6 +5,7 @@ packages <- c("gridExtra", "lubridate",
 install.packages(packages)
 devtools::install_github("hrbrmstr/albersusa")
 devtools::install_github("tidyverse/ggplot2")
+devtools::install_github("ropensci/plotly")
 library(ggplot2)
 library(lubridate)
 library(maps)
