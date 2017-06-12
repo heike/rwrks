@@ -391,13 +391,37 @@ anti_join(df2, df1, by="id") # no values for id in df1
 
 ## Joining baseball data
 
-How were the 
+Does lifetime batting average make a difference in a player being inducted? 
 
 ```{r}
-head(Batting)
+Batting2 <- Batting %>% group_by(playerID) %>% 
+  mutate(BatAvg = H/AB) %>% 
+  summarise(LifeBA = mean(BatAvg, na.rm=TRUE))
 
-full_join(HallOfFame %>% filter(category == "Player"), Batting, 
-          by = c("playerID", "yearID"))
+hof_bats <- inner_join(HallOfFame %>% filter(category == "Player"), Batting2, 
+          by = c("playerID"))
+
+hof_bats %>% 
+  ggplot(aes(x = yearID, y = LifeBA, group = playerID)) + 
+  geom_point(aes(color = inducted))
+
+```
+
+## Joining Baseball Data (2/2)
+
+What about pitchers? Are pitchers with lower lifetime ERAs more likely to be inducted?
+
+```{r}
+Pitching2 <- Pitching %>% group_by(playerID) %>% 
+  summarise(LifeERA = mean(ERA, na.rm = TRUE))
+
+hof_pitch <- inner_join(HallOfFame %>% filter(category == "Player"), Pitching2, 
+          by = c("playerID"))
+
+hof_pitch %>% 
+  ggplot(aes(x = yearID, y = LifeERA, group = playerID)) + 
+  geom_point(aes(color = inducted))
+
 ```
 
 
