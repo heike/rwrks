@@ -14,6 +14,8 @@ output:
 
 ![](images/junkcharts.png)
 
+[source](http://news.nationalpost.com/news/graphics/how-quebecs-tuition-price-tags-match-up-to-the-rest-of-canada-graphic) 
+
 ## Motivation
 
 - Why are some plots easier to read than others?
@@ -246,9 +248,9 @@ Small objects or thin lines need more contrast than larger areas
 
 ## RColorBrewer
 
-R package based on Cynthia Brewer's color schemes (http://www.colorbrewer2.org)
+R package based on [Cynthia Brewer's color schemes](http://www.colorbrewer2.org)
 
-```{r, fig.width=7, fig.height=4}
+```{r, fig.width=10, fig.height=9, echo = FALSE, fig.caption = "`display.brewer.all()`"}
 display.brewer.all()
 ```
 
