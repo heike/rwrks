@@ -48,9 +48,12 @@ The *qplot()* function has a basic syntax:
 
 *qplot(variables, plot type, dataset, options)*
 
-- *variables*: list of variables used for the plot
+- *variables*: list of variables used for the plot (need this one)
+
 - *plot type*: specified with a *geom =* statement
-- *dataset*: specified with a *data =* statement
+
+- *dataset*: specified with a *data =* statement (need this one)
+
 - *options*: there are so, so many options!
 
 ## Diamonds Data
