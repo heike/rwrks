@@ -31,11 +31,14 @@ Bonus: Can make plots *interactive* with `plotly`
 ## Built-In Themes
 
 ```{r, fig.height=2, fig.width=7}
-qplot(carat, price, data = diamonds)
+ggplot(data = diamonds, aes(x = carat, y = price)) + 
+  geom_point()
+myplot <- ggplot(data = diamonds, aes(x = carat, y = price)) + 
+  geom_point()
 ```
 
 ```{r, fig.height=2, fig.width=7}
-qplot(carat, price, data = diamonds) + theme_bw()
+myplot + theme_bw()
 ```
 
 ## Setting Themes
@@ -57,7 +60,7 @@ theme_bw()
 You can change this for an individual plot
 
 ```{r, fig.height=4, fig.width=7}
-qplot(carat, price, data = diamonds) +
+myplot +
     ggtitle("Price vs Carat for Diamonds")
 ```
 
@@ -84,9 +87,9 @@ This gives you a lot of control over plot appearance.
 ## Modifying a plot
 
 ```{r, fig.height=4, fig.width=7}
-p <- qplot(carat, price, data = diamonds) + 
+my2ndplot <- myplot + 
     ggtitle("Price vs Carat for Diamonds")
-p + theme(plot.title = element_text(colour = "red"), 
+my2ndplot + theme(plot.title = element_text(colour = "red"), 
           axis.text.y = element_text(colour = "purple", angle=45))
 ```
 
@@ -95,11 +98,9 @@ p + theme(plot.title = element_text(colour = "red"),
 We could also choose to remove all axes (helpful for maps):
 
 ```{r, fig.height=3, fig.width=7}
-p + theme(
-    axis.text.x = element_blank(),
-    axis.text.y = element_blank(),
-    axis.title.x = element_blank(),
-    axis.title.y = element_blank(),
+my2ndplot + theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
     axis.ticks.length = unit(0, "cm")
 )
 ```
@@ -109,7 +110,8 @@ p + theme(
 The `ggsave()` function will automatically save the last plot produced:
 
 ```{r, eval=FALSE}
-qplot(price, carat, data = diamonds)
+ggplot(data = diamonds, aes(x = carat, y = price)) + 
+  geom_point()
 
 ggsave("diamonds.png")
 ggsave("diamonds.pdf")
@@ -119,8 +121,7 @@ ggsave("diamonds.png", width = 6, height = 6)
 We can also explicitly tell it which plot to save:
 
 ```{r, eval=FALSE}
-dplot <- qplot(carat, price, data = diamonds)
-ggsave("diamonds.png", plot = dplot, dpi = 72)
+ggsave("diamonds.png", plot = myplot, dpi = 72)
 ```
 
 
@@ -132,8 +133,12 @@ ggsave("diamonds.png", plot = dplot, dpi = 72)
 
 ## Making plots interactive!
 
-```{r }
+```{r eval = FALSE}
 # devtools::install_github("ropensci/plotly")
+library(plotly)
 dplot <- qplot(carat, price, data = diamonds[sample(53940, 1000),])
 ggplotly(dplot)
 ```
+
+<iframe src="images/plotly_ex.html" style="width:500px;height:500px"></iframe>
+
