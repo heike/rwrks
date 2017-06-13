@@ -33,9 +33,10 @@ source("../code/0-Setup.R")
 
 ## *qplot* Function
 
-The *qplot()* function is the basic workhorse of ggplot2
+The *qplot()* function stands for "quick plot"
 
 - Produces all plot types available with ggplot2
+- Most arguments have defaults unless you specify otherwise
 - Allows for plotting options within the function statement
 - Creates an object that can be saved
 - Plot layers can be added to modify plot complexity
