@@ -86,7 +86,8 @@ This gives you a lot of control over plot appearance.
 ```{r, fig.height=4, fig.width=7}
 p <- qplot(carat, price, data = diamonds) + 
     ggtitle("Price vs Carat for Diamonds")
-p + theme(plot.title = element_text(colour = "red", angle = 45))
+p + theme(plot.title = element_text(colour = "red"), 
+          axis.text.y = element_text(colour = "purple", angle=45))
 ```
 
 ## Removing Axes
@@ -132,6 +133,7 @@ ggsave("diamonds.png", plot = dplot, dpi = 72)
 ## Making plots interactive!
 
 ```{r }
+# devtools::install_github("ropensci/plotly")
 dplot <- qplot(carat, price, data = diamonds[sample(53940, 1000),])
 ggplotly(dplot)
 ```
