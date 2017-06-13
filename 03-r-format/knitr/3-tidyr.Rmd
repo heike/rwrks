@@ -125,7 +125,7 @@ ffm %>% spread(key = rep, value = score)
 
 ##
 
-```{r}
+```{r, warning = FALSE}
 ffm %>% spread(key = rep, value = score) %>%
   ggplot(aes(x = `1`, y = `2`)) + geom_point() +
   facet_wrap(~scale) + geom_abline(colour = "grey50")

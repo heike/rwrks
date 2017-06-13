@@ -13,6 +13,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 data(baseball, package = "plyr")
 ```
+<!--
 # Numeric Summaries with dplyr
 
 ## Baseball Data
@@ -125,6 +126,7 @@ head(ba)
 - Indices are error-prone
 - Loops often result in slow code because R can compute quantities using entire vectors in an optimized way
 
+-->
 
 # The `dplyr` package
 
@@ -157,7 +159,7 @@ There are five primary `dplyr` *verbs*, representing distinct data analysis task
  
 ## Filter
 
-```{r message = FALSE}
+```{r message = FALSE, warning=FALSE}
 library(tidyverse)
 data(french_fries, package = "reshape2")
 french_fries %>%
@@ -240,7 +242,7 @@ Differences:
 - `mutate` **adds variables** to the existing data set: the resulting variables must have the **same length** as the original data, e.g. use for transformations, combinations of multiple variables
 - `summarize` **creates aggregates** of the original data. The number of rows of the new dataset is determined by the number of combinations of the grouping structure. The number of columns is determined by the number of grouping variables and the summary statistics.
 
-
+<!--
 ## Let's use these tools
 
 to answer these french fry experiment questions:
@@ -250,6 +252,7 @@ to answer these french fry experiment questions:
 - How do the ratings on the different scales differ?
 - Are raters giving different scores on average?
 - Do ratings change over the weeks?
+
 
 ## Completeness 
 
@@ -281,6 +284,8 @@ Why are all of the `n`s equal to 6?
 # not all subjects come all the time:
 french_fries %>% group_by(subject) %>% summarize(n = n()) %>% arrange(n)
 ```
+
+-->
 
 ## Shortcuts
 
