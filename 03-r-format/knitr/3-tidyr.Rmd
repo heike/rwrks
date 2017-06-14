@@ -7,6 +7,8 @@ output:
     revealjs::revealjs_presentation:
         transition: fade
         highlight: zenburn
+        css: custom.css
+        theme: white
 ---
 
 
@@ -52,6 +54,29 @@ read.csv("../data/preg2.csv")
 
 Neither #1 nor #2 are "clean" versions of the data: observed information is part of the data structure; some implicit information is assumed
 
+## This format is not ideal for data analysis
+
+```{r, fig.width=7, fig.height=2, warning=FALSE}
+library(ggplot2)
+
+ggplot(french_fries) + 
+  geom_boxplot(aes(x="1_buttery", y=buttery), fill = "cyan4") +
+  geom_boxplot(aes(x = "2_grassy", y = grassy), fill = "darkorange2") +
+  geom_boxplot(aes(x = "3_painty", y = painty), fill = "darkorchid1") +
+  geom_boxplot(aes(x = "4_potato", y = potato), fill = "chartreuse3") +
+  geom_boxplot(aes(x = "5_rancid", y = rancid), fill = "deeppink") +
+  xlab("variable") + ylab("rating")
+```
+
+## What we have and what we want
+We want to change this **wide format**:
+
+![Wide Format](images/tableoverview.png)
+
+to this **long format**:
+
+![Long Format](images/tablelong.png)
+
 ## Sources of Messiness
 
 1. Column headers are values, not variable names.<br>
@@ -69,6 +94,8 @@ e.g. *Fall 2015, Spring 2016* or *"1301 8th St SE, Orange City, Iowa 51041
 1. Each variable forms one column.
 2. Each observation forms one row.
 3. Each type of observational unit forms a table.
+
+![Long Format](images/tablelong.png)
 
 ## Clean version of the example
 
@@ -97,46 +124,88 @@ One way of telling whether a data set is tidy is to check that all keys for a va
 | <img src="images/kvp-unhappy.png" width=150> | <img src="images/kvp-happy.png" width=150>     | 
 |Untidy data | Tidy data |
 
+## Key-value pairs (KVP)
+
+Keys/Identifiers:
+
+- Identify a record (must be unique)
+- Example: Indices on an random variable
+- Fixed by design of experiment (known in advance)
+- May be single or composite (may have one or more variables)
+
+Values/Measures:
+
+- Collected during the experiment (not known in advance)
+- Usually numeric quantities
+
 ## Tidying data - Plan of attack
 
 Very few functions are needed for tidying data:
 
-- Messy (1): `tidyr` functions `gather` and `spread`.  
+> 1. Messy (1): `tidyr` functions `gather` and `spread`.  
 `gather (data, key, value, ...)`: take multiple columns and collapse into key-value pairs <br>
 `spread (data, key, value, fill = NA)`: spread a key-value pair across multiple columns.
-- Messy (2): `tidyr` function `separate (data, col, into, sep = "[^[:alnum:]]+")`:
+> 2. Messy (2): `tidyr` function `separate (data, col, into, sep = " ")`:
 separate one column into multiple columns
-- Messy (3): `dplyr` - some combination of the functions discussed previously
-- Messy (4): `dplyr` functionality `join` (and friends) to combine multiple data sets 
+> 3. Messy (3): `dplyr` - some combination of the functions discussed previously
+> 4. Messy (4): `dplyr` functionality `join` (and friends) to combine multiple data sets 
 
 
 ## Gather
 
+- When gathering, you need to specify the **keys** (identifiers) and the **values** (measures).
+
 ```{r}
-ffm <- french_fries %>% gather(key = scale, value = score, 5:9)
-ffm
+french_fries_long <- french_fries %>% gather(key = variable, value = rating, potato:painty)
+french_fries_long
+```
+
+## Let's Reconstruct our Plot
+
+```{r, fig.width=7, fig.height=4, warning=FALSE}
+ggplot(french_fries_long) + geom_boxplot(aes(x=variable, y=rating, fill = variable))
+```
+
+## Long to Wide
+
+In certain applications, we may wish to take a long dataset and convert it to a wide dataset (Perhaps displaying in a table).
+
+```{r}
+head(french_fries_long)
+```
+
+## Spread
+
+We use the **spread** function from `tidyr` to do this:
+
+```{r, warning = FALSE}
+french_fries_wide <- french_fries_long %>% spread(key = variable, value = rating)
+
+head(french_fries_wide)
 ```
 
 ## Spread
 
 ```{r}
-ffm %>% spread(key = rep, value = score)
+french_fries_long %>% spread(key = rep, value = rating)
 ```
 
 ##
 
 ```{r, warning = FALSE}
-ffm %>% spread(key = rep, value = score) %>%
+french_fries_long %>% spread(key = rep, value = rating) %>%
   ggplot(aes(x = `1`, y = `2`)) + geom_point() +
-  facet_wrap(~scale) + geom_abline(colour = "grey50")
+  facet_wrap(~variable) + geom_abline(colour = "grey50")
 ```
 
 ## separate
 
 ```{r}
 df <- data.frame(x = c(NA, "a.b", "a.d", "b.c"))
+df
 df %>% separate(x, into = c("A", "B"))
 ```
+
 
 ## Your Turn (5 min)
 
@@ -161,6 +230,27 @@ Assess the 'messiness' of the data. List issues that prevent us from working wit
 no Messy 1? - problems of type Messy 1 are typically hard to detect and often up to interpretation/dependent on the analysis to be done.
 
 
+## Your Turn {data-background=#527a7a}
+
+1. Read in the billboard top 100 music data:
+
+```{r}
+billboard <- read.csv("http://heike.github.io/rwrks/03-r-format/data/billboard.csv")
+```
+    
+2. Use `tidyr` to convert this data into a long format.
+
+3. Use ``ggplot2`` to create something like this time series plot:
+
+```{r, echo=FALSE, fig.width=7, fig.height=5, warning=FALSE}
+long_billboard <- gather(billboard, key = week, value = rank, X1:X76)
+long_billboard$week <- as.numeric(gsub("X", "", long_billboard$week))
+
+qplot(week, rank, data = long_billboard, geom = "line", colour = artist, group = track) +
+    xlim(c(0, 30))
+```
+
+<!--
 ## Your Turn (10 min)
 
 - Check the help for the function `parse_number` in the `readr` package and use it on the campaign expenditure data.
@@ -172,8 +262,9 @@ no Messy 1? - problems of type Messy 1 are typically hard to detect and often up
   2. What is the single largest cost in the campaign expenditures?
   3. What time frame does the campaign expenditure cover?
   4. Plot geographic longitude and latitude. Do campaign expenditures stay in the State of IA? Investigate oddities.
+-->
 
-## Another Your-Turn (10 mins)
+## Another Your-Turn (10 mins) {data-background=#527a7a}
 
 During the 1870 census data on people's occupation was collected. The data [occupation-1870](../data/occupation-1870.csv) contains state-level aggregates of occupation by gender.
 
@@ -181,6 +272,7 @@ During the 1870 census data on people's occupation was collected. The data [occu
 - Separate the `occupation.gender` type variable into two variables.
 - Spread the data such that you can draw scatterplots of values for men against women facetted by occupation.
 
+<!--
 ## Your Turn - Sample Solution
 
 ```{r}
@@ -216,4 +308,65 @@ occ2
 occ2 %>% 
   ggplot(aes(x = Male, y = Female)) + geom_point() + 
   facet_wrap(~Occupation)
+```
+
+-->
+
+## Dates and Times
+
+Dates are deceptively hard to work with in R.
+
+**Example**: 02/05/2012. Is it February 5th, or May 2nd?
+
+Other things are difficult too:
+
+- Time zones
+- POSIXct format in base R is challenging
+
+The **lubridate** package helps tackle some of these issues.
+
+## Basic Lubridate Use
+
+```{r, results='hold', message=FALSE}
+library(lubridate)
+
+now()
+today()
+now() + hours(4)
+today() - days(2)
+```
+
+## Parsing Dates
+
+```{r, results='hold'}
+ymd("2013-05-14")
+mdy("05/14/2013")
+dmy("14052013")
+ymd_hms("2013:05:14 14:50:30", tz = "America/Chicago")
+```
+
+## Your Turn {data-background=#527a7a}
+
+
+The flights dataset contains information on over 300,000 flights that departed from New York City in the year 2013.
+
+```{r}
+flights <- read.csv("http://heike.github.io/rwrks/03-r-format/data/flights.csv")
+```
+
+
+1. Using the `flights` data, create a new column Date using lubridate. You will need to paste together the columns year, month, and day in order to do this. See the `paste` function.
+2. Use `dplyr` to calculate the average departure delay for each date.
+3. Plot the date versus the average departure delay
+
+```{r, echo=FALSE, fig.width=7, fig.height=3}
+flights <- read.csv("http://heike.github.io/rwrks/03-r-format/data/flights.csv")
+
+flights$date <- ymd(paste(flights$year, flights$month, flights$day, sep = "-"))
+delay.dat <- flights %>% 
+    group_by(date) %>% 
+    summarise(dep_delay = mean(dep_delay, na.rm = TRUE))
+
+qplot(date, dep_delay, geom = "line", data = delay.dat)
+
 ```
