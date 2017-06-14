@@ -242,7 +242,7 @@ billboard <- read.csv("http://heike.github.io/rwrks/03-r-format/data/billboard.c
 
 3. Use ``ggplot2`` to create something like this:
 
-```{r, echo=FALSE, fig.width=7, fig.height=4, warning=FALSE}
+```{r, echo=FALSE, fig.width=7, fig.height=4, warning=FALSE, purl=FALSE}
 long_billboard <- gather(billboard, key = week, value = rank, X1:X76)
 long_billboard$week <- as.numeric(gsub("X", "", long_billboard$week))
 
@@ -362,7 +362,7 @@ flights <- read.csv("http://heike.github.io/rwrks/03-r-format/data/flights.csv")
 2. Use `dplyr` to calculate the average departure delay for each date.
 3. Plot the date versus the average departure delay
 
-```{r, echo=FALSE, fig.width=7, fig.height=3}
+```{r, echo=FALSE, fig.width=7, fig.height=3, purl = FALSE}
 flights$date <- ymd(paste(flights$year, flights$month, flights$day, sep = "-"))
 delay.dat <- flights %>% 
     group_by(date) %>% 
@@ -371,4 +371,10 @@ delay.dat <- flights %>%
 
 ggplot(delay.dat) + geom_line(aes(date, dep_delay))
 
+```
+
+
+```{r purl, eval=FALSE, include=FALSE, purl=FALSE}
+#copy paste this and run in console
+#knitr::purl("03-r-format/knitr/3-tidyr.Rmd", output="03-r-format/code/3-tidyr.R", documentation = 0)
 ```
