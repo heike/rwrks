@@ -1,5 +1,61 @@
 knitr::opts_chunk$set(echo = TRUE)
 data(baseball, package = "plyr")
+library(tidyverse)
+data(french_fries, package = "reshape2")
+french_fries %>% filter(subject == 3, time == 1) %>% head(3)
+french_fries %>% arrange(desc(rancid), potato) %>% head(3)
+french_fries %>% arrange(rancid, potato) %>% head(3)
+french_fries %>%
+    select(time, treatment, subject, rep, potato) %>%
+    head
+french_fries %>%
+    summarise(mean_rancid = mean(rancid, na.rm=TRUE), 
+              sd_rancid = sd(rancid, na.rm = TRUE))
+french_fries %>%
+    group_by(time, treatment) %>%
+    summarise(mean_rancid = mean(rancid), sd_rancid = sd(rancid))
+french_fries %>%
+    mutate( awful = (buttery+potato)/2 - (grassy+painty+rancid)/3,
+            time = as.numeric(time)) %>% 
+  glimpse()
+french_fries$awful
+french_fries %>% 
+  ggplot(aes(x = time)) + geom_bar() + facet_wrap(~subject) 
+dim(french_fries) # too few rows - should be 720 = 12 x 10 x 6
+
+# if subjects come, they give all six evaluations
+french_fries %>% group_by(time, subject) %>% summarize(n = n()) %>% summary()
+# not all subjects come all the time:
+french_fries %>% group_by(subject) %>% summarize(n = n()) %>% arrange(n)
+## 
+## french_fries  %>% tally()
+## french_fries %>% summarize(n=n())
+## 
+## french_fries %>% count(time, subject)
+## french_fries %>% group_by(time, subject) %>% summarize(n=n())
+## 
+reps <- french_fries %>% group_by(time, subject, treatment) %>%
+  summarise(
+    potato_diff = diff(potato),
+    potato = mean(potato)
+  )
+reps
+reps %>% 
+  ggplot(aes(x = potato, y = potato_diff, colour = as.numeric(time))) + 
+  facet_wrap(~subject) +
+  geom_hline(aes(yintercept=0)) +
+  geom_point() 
+# install.packages("GGally")
+GGally::ggpairs(data = french_fries[ ,5:9])
+ChickPlus <- ChickWeight %>% 
+  group_by(Chick) %>% 
+  mutate(gain = weight - weight[Time == 0])
+## ChickPlus %>% filter(Chick == 1)  %>% select(-Diet) %>%  glimpse
+ChickPlus %>% 
+  ggplot(aes(x = Time, y = gain, group = Chick)) + 
+  geom_line(aes(color=Diet)) +
+  facet_wrap(~Diet)
+
 ss <- subset(baseball, id == "sosasa01")
 head(ss)
 mean(ss$h / ss$ab)
@@ -45,57 +101,3 @@ for(i in 1:2) {
 }
 
 head(ba)
-library(tidyverse)
-data(french_fries, package = "reshape2")
-french_fries %>%
-    filter(subject == 3, time == 1)
-french_fries %>%
-    arrange(desc(rancid), potato) %>%
-    head
-french_fries %>%
-    select(time, treatment, subject, rep, potato) %>%
-    head
-french_fries %>%
-    summarise(mean_rancid = mean(rancid, na.rm=TRUE), 
-              sd_rancid = sd(rancid, na.rm = TRUE))
-french_fries %>%
-    group_by(time, treatment) %>%
-    summarise(mean_rancid = mean(rancid), sd_rancid = sd(rancid))
-french_fries %>%
-    mutate(
-      awful = (buttery+potato)/2 - (grassy+painty+rancid)/3
-    ) %>% glimpse()
-french_fries$awful
-french_fries %>% 
-  ggplot(aes(x = time)) + geom_bar() + facet_wrap(~subject) 
-dim(french_fries) # too few rows - should be 720 = 12 x 10 x 6
-
-# if subjects come, they give all six evaluations
-french_fries %>% group_by(time, subject) %>% summarize(n = n()) %>% summary()
-# not all subjects come all the time:
-french_fries %>% group_by(subject) %>% summarize(n = n()) %>% arrange(n)
-reps <- french_fries %>% group_by(time, subject, treatment) %>%
-  summarise(
-    potato_diff = diff(potato),
-    potato = mean(potato)
-  )
-reps
-reps %>% 
-  ggplot(aes(x = potato, y = potato_diff, colour = as.numeric(time))) + 
-  facet_wrap(~subject) +
-  geom_hline(aes(yintercept=0)) +
-  geom_point() 
-french_fries %>% 
-  ggplot(aes(x = potato, y = buttery)) + geom_point() +
-  theme(aspect.ratio=1) + xlim(c(0,15)) + ylim(c(0,15)) +
-  geom_abline(colour = "grey50")
-ffm <- french_fries %>% group_by(time) %>% summarise(
-  potato = mean(potato,  na.rm=TRUE),
-  buttery = mean(buttery,  na.rm=TRUE),
-  painty = mean(painty,  na.rm=TRUE)
-)
-ffm %>%
-  ggplot(aes(x = time, y = potato)) + geom_point(colour = "blue") +
-  geom_point(aes(y = buttery), colour = "forestgreen") +
-  geom_point(aes(y = painty), colour = "red") +
-  ylab("Score")
