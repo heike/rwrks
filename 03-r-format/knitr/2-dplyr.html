@@ -567,11 +567,31 @@ french_fries %&gt;%<span class="st"> </span><span class="kw">filter</span>(subje
 ## 2    6         1       3   1    0.4     1.2      0      0    9.5
 ## 3    7         1      78   2    0.5     1.0      0      0    2.0</code></pre>
 </section>
+<section id="your-turn-2-min" class="slide level2">
+<h1>Your Turn (~2 min)</h1>
+<ol type="1">
+<li>Look up the help file for the function <code>slice</code>.</li>
+<li>Use <code>slice</code> on the arranged <code>french_fries</code> data to select a single row</li>
+<li>use <code>slice</code> to select multiple rows</li>
+</ol>
+</section>
+<section id="solution" class="slide level2">
+<h1>Solution</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">french_fries %&gt;%<span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(rancid), potato) %&gt;%<span class="st"> </span><span class="kw">slice</span>(<span class="dv">10</span>)</code></pre></div>
+<pre><code>##   time treatment subject rep potato buttery grassy rancid painty
+## 1    6         3      19   2    6.1     3.6      0     13      6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">french_fries %&gt;%<span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(rancid), potato) %&gt;%<span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>:<span class="dv">5</span>)</code></pre></div>
+<pre><code>##   time treatment subject rep potato buttery grassy rancid painty
+## 1    9         2      51   1    7.3     2.3      0   14.9    0.1
+## 2   10         1      86   2    0.7     0.0      0   14.3   13.1
+## 3    5         2      63   1    4.4     0.0      0   13.8    0.6
+## 4    9         2      63   1    1.8     0.0      0   13.7   12.3
+## 5    5         2      19   2    5.5     4.7      0   13.4    4.6</code></pre>
+</section>
 <section id="select" class="slide level2">
 <h1>Select</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">french_fries %&gt;%
-<span class="st">    </span><span class="kw">select</span>(time, treatment, subject, rep, potato) %&gt;%
-<span class="st">    </span>head</code></pre></div>
+<span class="st">    </span><span class="kw">select</span>(time, treatment, subject, rep, potato) %&gt;%<span class="st">  </span>head</code></pre></div>
 <pre><code>##    time treatment subject rep potato
 ## 61    1         1       3   1    2.9
 ## 25    1         1       3   2   14.0
@@ -691,7 +711,7 @@ french_fries %>%
   ggplot(aes(x = time)) + geom_bar() + facet_wrap(~subject) 
 ```
 
-<img src="2-dplyr_files/figure-revealjs/unnamed-chunk-9-1.png" width="768" />
+<img src="2-dplyr_files/figure-revealjs/unnamed-chunk-11-1.png" width="768" />
 
 ## Numeric summary of completeness
 

@@ -6,8 +6,7 @@ french_fries %>% filter(subject == 3, time == 1) %>% head(3)
 french_fries %>% arrange(desc(rancid), potato) %>% head(3)
 french_fries %>% arrange(rancid, potato) %>% head(3)
 french_fries %>%
-    select(time, treatment, subject, rep, potato) %>%
-    head
+    select(time, treatment, subject, rep, potato) %>%  head
 french_fries %>%
     summarise(mean_rancid = mean(rancid, na.rm=TRUE), 
               sd_rancid = sd(rancid, na.rm = TRUE))

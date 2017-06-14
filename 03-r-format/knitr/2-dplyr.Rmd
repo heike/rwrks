@@ -88,12 +88,27 @@ Successive variables are used for breaking ties from previous variables.
 french_fries %>% arrange(rancid, potato) %>% head(3)
 ```
 
+## Your Turn (~2 min)
+
+1. Look up the help file for the function `slice`.
+2. Use `slice` on the arranged `french_fries` data to select a single row
+3. use `slice` to select multiple rows
+
+##Solution
+
+```{r purl=FALSE}
+french_fries %>% arrange(desc(rancid), potato) %>% slice(10)
+```
+
+```{r purl=FALSE}
+french_fries %>% arrange(desc(rancid), potato) %>% slice(1:5)
+```
+
 ## Select
 
 ```{r}
 french_fries %>%
-    select(time, treatment, subject, rep, potato) %>%
-    head
+    select(time, treatment, subject, rep, potato) %>%  head
 ```
 
 ## Summarise
