@@ -8,6 +8,7 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
+        css: custom.css
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

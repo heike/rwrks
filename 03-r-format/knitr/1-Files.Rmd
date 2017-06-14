@@ -7,6 +7,7 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
+        css: custom.css
 ---
 
 ## Data in Excel

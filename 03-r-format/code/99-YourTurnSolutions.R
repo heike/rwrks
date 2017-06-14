@@ -43,6 +43,52 @@ Voted %>% ggplot(aes(x = attempt, y = votes/needed)) +
   ggrepel::geom_label_repel(aes(label=name), data = labels %>% filter(attempt >=16))
 
 
+##### tidyr your turn solutions
+
+# billboard your turn solution
+
+long_billboard <- gather(billboard, key = week, value = rank, X1:X76)
+long_billboard$week <- as.numeric(gsub("X", "", long_billboard$week))
+
+ggplot(long_billboard) + geom_line(aes(week, rank, colour = artist))+
+  xlim(c(0, 30))
+
+# occupation your turn solution
+
+occupation <- read.csv("../data/occupation-1870.csv")
+
+# combine all of the variables (except for State) 
+# into a single variable
+occupation <- occupation %>% 
+  gather(key="Occ.gender", value="Number", 2:11)
+occupation %>% glimpse()
+
+# split Occ.gender into two variables
+occupation <- occupation %>% 
+  separate(Occ.gender, into = c("Occupation", "Gender"))
+occupation %>% glimpse()
+
+# now spread the data again
+occ2 <- occupation %>% spread(Gender, Number)
+occ2 %>% glimpse()
+
+occ2 %>% 
+  ggplot(aes(x = Male, y = Female)) + geom_point() + 
+  facet_wrap(~Occupation)
+
+# flights your turn solution
+
+
+flights <- read.csv("http://heike.github.io/rwrks/03-r-format/data/flights.csv")
+
+flights$date <- ymd(paste(flights$year, flights$month, flights$day, sep = "-"))
+delay.dat <- flights %>% 
+  group_by(date) %>% 
+  summarise(dep_delay = mean(dep_delay, na.rm = TRUE))
+
+ggplot(delay.dat) + geom_line(aes(date, dep_delay))
+
+
 ###########################################################################
 ###########################################################################
 ##### LAST YEAR'S YOUR TURN ##########
