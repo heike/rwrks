@@ -240,14 +240,16 @@ billboard <- read.csv("http://heike.github.io/rwrks/03-r-format/data/billboard.c
     
 2. Use `tidyr` to convert this data into a long format.
 
-3. Use ``ggplot2`` to create something like this time series plot:
+3. Use ``ggplot2`` to create something like this:
 
-```{r, echo=FALSE, fig.width=7, fig.height=5, warning=FALSE}
+```{r, echo=FALSE, fig.width=7, fig.height=4, warning=FALSE}
 long_billboard <- gather(billboard, key = week, value = rank, X1:X76)
 long_billboard$week <- as.numeric(gsub("X", "", long_billboard$week))
 
-qplot(week, rank, data = long_billboard, geom = "line", colour = artist, group = track) +
-    xlim(c(0, 30))
+
+ggplot(long_billboard) + geom_line(aes(week, rank, colour = artist))+
+  xlim(c(0, 30))
+
 ```
 
 <!--
@@ -354,19 +356,19 @@ The flights dataset contains information on over 300,000 flights that departed f
 flights <- read.csv("http://heike.github.io/rwrks/03-r-format/data/flights.csv")
 ```
 
+## Your Turn {data-background=#527a7a}
 
 1. Using the `flights` data, create a new column Date using lubridate. You will need to paste together the columns year, month, and day in order to do this. See the `paste` function.
 2. Use `dplyr` to calculate the average departure delay for each date.
 3. Plot the date versus the average departure delay
 
 ```{r, echo=FALSE, fig.width=7, fig.height=3}
-flights <- read.csv("http://heike.github.io/rwrks/03-r-format/data/flights.csv")
-
 flights$date <- ymd(paste(flights$year, flights$month, flights$day, sep = "-"))
 delay.dat <- flights %>% 
     group_by(date) %>% 
     summarise(dep_delay = mean(dep_delay, na.rm = TRUE))
 
-qplot(date, dep_delay, geom = "line", data = delay.dat)
+
+ggplot(delay.dat) + geom_line(aes(date, dep_delay))
 
 ```
