@@ -546,7 +546,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 ##     fill = TRUE, comment.char = &quot;&quot;, ...) 
 ## read.table(file = file, header = header, sep = sep, quote = quote, 
 ##     dec = dec, fill = fill, comment.char = comment.char, ...)
-## &lt;bytecode: 0x00000000124e2288&gt;
+## &lt;bytecode: 0x000000001605d278&gt;
 ## &lt;environment: namespace:utils&gt;</code></pre>
 <p>So to properly read in this data, it’s probably best to use <code>read.table</code> directly</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?read.table</code></pre></div>
@@ -588,7 +588,7 @@ midwest_gas &lt;-<span class="st"> </span>midwest_gas[<span class="kw">with</spa
 <h1>Reading Excel Data</h1>
 <p>Download the midwest.xls file to your current working directory (<code>getwd()</code>)</p>
 <pre><code>## Warning: package 'readxl' was built under R version 3.3.2</code></pre>
-<pre><code>## # A tibble: 6 × 11
+<pre><code>## # A tibble: 6 x 11
 ##           X1           X2       X3           X4       X5           X6
 ##        &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;
 ## 1 Year-Month       Week 1     &lt;NA&gt;       Week 2     &lt;NA&gt;       Week 3
@@ -610,13 +610,14 @@ midwest_gas &lt;-<span class="st"> </span>midwest_gas[<span class="kw">with</spa
 <li>Systat: <code>read.systat</code></li>
 </ul>
 </section>
-<section id="your-turn-1" class="slide level2" data-background="#527a7a">
-<h1>Your Turn</h1>
+<section id="your-turn-2-minutes" class="slide level2" data-background="#527a7a">
+<h1>Your Turn (~2 minutes)</h1>
 <p>The NHANES (National Health and Nutrition Survey) publishes data in the SAS xport format:</p>
 <p><a href="http://wwwn.cdc.gov/Nchs/Nhanes/Search/nhanes13_14.aspx" class="uri">http://wwwn.cdc.gov/Nchs/Nhanes/Search/nhanes13_14.aspx</a></p>
 <ol type="1">
 <li>Scroll to the bottom, choose one of the datasets (Demographics, Examination, etc.). Download the Data file (XPT)</li>
 <li>Use <code>read.xport()</code> to load the file into R</li>
+<li>Briefly examine the dataset you’ve imported (use <code>head</code> or <code>tail</code>, etc)</li>
 </ol>
 </section>
     </div>

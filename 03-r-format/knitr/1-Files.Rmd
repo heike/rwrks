@@ -113,7 +113,7 @@ head(midwest2)
 - Minitab: `read.mtp`
 - Systat: `read.systat`
  
-## Your Turn {data-background=#527a7a}
+## Your Turn (~2 minutes) {data-background=#527a7a}
 
 The NHANES (National Health and Nutrition Survey) publishes data in the SAS xport format:
 
@@ -121,6 +121,7 @@ http://wwwn.cdc.gov/Nchs/Nhanes/Search/nhanes13_14.aspx
 
 1. Scroll to the bottom, choose one of the datasets (Demographics, Examination, etc.). Download the Data file (XPT)
 2. Use `read.xport()` to load the file into R
+3. Briefly examine the dataset you've imported (use `head` or `tail`, etc)
 
 ```{r purl, eval=FALSE, include=FALSE, purl=FALSE}
 #knitr::purl("03-r-format/knitr/1-Files.Rmd", output="03-r-format/code/1-Files.R", documentation = 0)
