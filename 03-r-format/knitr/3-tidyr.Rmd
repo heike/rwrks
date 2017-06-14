@@ -247,7 +247,7 @@ long_billboard <- gather(billboard, key = week, value = rank, X1:X76)
 long_billboard$week <- as.numeric(gsub("X", "", long_billboard$week))
 
 
-ggplot(long_billboard) + geom_line(aes(week, rank, colour = artist))+
+ggplot(long_billboard) + geom_line(aes(week, rank, colour = artist, group = track))+
   xlim(c(0, 30))
 
 ```
