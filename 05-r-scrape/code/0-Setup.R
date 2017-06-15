@@ -1,7 +1,8 @@
 install.packages("rvest")
 install.packages("httr")
 install.packages("XML2R")
-
+install.packages("tidytext")
+install.packages("ggrepel")
 library(rvest)
 library(httr)
 library(XML2R)
