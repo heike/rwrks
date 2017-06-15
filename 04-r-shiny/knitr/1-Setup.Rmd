@@ -7,11 +7,15 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
+        css: custom.css
 ---
 
 ## It's So Shiny!
 
-![Picture of Sample Applet](images/SampleAppImage.png)
+![Picture of Sample Applet](images/shiny_ex.png)
+
+
+## What is `shiny`?
 
 **Shiny** is an R package that allows you to easily create interactive web applets using R. 
 
@@ -38,14 +42,11 @@ install.packages("shiny")
 
 ## A Simple Example
 
-1. Download **apps.zip** from the website
-2. Unzip the directory
-3. Set your R working directory to this the folder containing the apps
-4. Run the following code:
+<small>If your working directory is set appropriately, run the following code: </small>
 
 ```{r, eval=FALSE}
 library(shiny)
-runApp("01_Hello")
+runApp("../code/01_Hello")
 ```
 <center>
 <img src="images/HelloShinyScreenshot.png" alt="Picture of Hello Shiny! Applet">
