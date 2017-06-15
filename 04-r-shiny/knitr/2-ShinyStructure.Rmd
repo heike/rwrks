@@ -7,11 +7,41 @@ output:
         transition: fade
         theme: white
         highlight: zenburn
+        css: custom.css
 ---
+
+
+## Reactivity
+
+- shiny is built on the idea of **reactive programming**. 
+  - i.e. outputs automatically update whenever an input value changes
+
+```
+input values => R code => output values
+```
+
+**Reactive expressions** keep track of what values they read and what values they change. If those values become "out of date", they know their return value is out of date and will automatically recalculate.
+
+
+## A minimal shiny app
+
+```
+library(shiny)
+
+ui <- fluidPage()
+server <- function(input, output) {
+}
+
+shinyServer(ui, server)
+```
+
+- save this code in a separate folder call the file `app.R`
+- run the code: either paste into the console or use `runApp` on folder name
+
 
 ## A Tale of Two Files
 
-The quickest/easiest way to create a shiny app is to define the user interface in a file named **ui.R** and the server side functionality in **server.R**.
+Shiny applications have two components: 
 
 - **ui.R** defines the page layout and user interface
 - **server.R** contains the R code to create any output
@@ -32,11 +62,23 @@ shinyUI(fluidPage(
   ),
   
   mainPanel(
-    # output (from the server) go here
+    # outputs` (from the server) go here
   )
 
 ))
 ```
+
+## User Interface (ui)
+
+- elements of the user interface are called **widgets**
+- we distinguish between `input` and `output`
+- overview of available input widgets in shiny at http://shiny.rstudio.com/gallery/widget-gallery.html
+- input widgets have a similar structure `xxxInput (inputId, label, value)` where `xxx` is the name of the widget
+    - `inputId` is the (unique) name you give to the widget (object name)
+    - `label` is the text that appears with the widget in interface
+    - `value` all widgets have a value - the type of this value is specific to the widget
+    - ... other parameters are widget-specific
+
 
 ## server.R
 
@@ -49,21 +91,43 @@ shinyServer(function(input, output) {
 })
 ```
 
-## Reactivity
 
-shiny is built on the idea of **reactive programming**. The idea that outputs should be automatically updated whenever an input value changes.
+## Shiny Inputs
+
+```{r eval = FALSE}
+textInput("text", label = h3("Text input"), value = "Enter text...")
+```
+
+<br>
+
+`h3()` is just converting html into a header of level 3:
+```{r eval = FALSE}
+h3("Hello")
+```
 
 ```
-input values => R code => output values
+<h3>Hello</h3>
 ```
 
-**Reactive expressions** keep track of what values they read and what values they change. If those values become "out of date", they know their return value is out of date and will automatically recalculate.
-
-## An example
-
-```{r, eval=FALSE}
-runApp("02_Reactivity", display.mode = "showcase")
+```{r eval = FALSE}
+selectInput("select", label = h3("What do you like?"), 
+            choices = c("Pizza", "Ice cream", 
+                        "Donuts", "None of the above"), 
+            selected=2)
 ```
+
+## Shiny Inputs (cont'd)
+
+- `actionButton()` - creates a clickable button
+- `checkboxInput()` and `checkboxGroupInput()`
+- `dateInput()` - calendar to select a date
+- `dateRangeInput()` - select a range of dates
+- `fileInput()` - upload a file
+- `numericInput()` - input a numeric value
+- `radioButtons()` - select one or more items
+- `sliderInput()` - slide along a range of values
+- `textInput()` - input a string
+
 
 ## Your Turn {data-background=#527a7a}
 
@@ -75,4 +139,22 @@ runApp("01_Hello", display.mode = "showcase")
 
 - **Challenge 1:** add an input to change the mean and standard deviation (Hint: see `?numericInput`).
 - **Challenge 2:** add an input to simulate from a gamma as well as a normal (Hint: you can simulate from gamma distribution with `rgamma`).
-- **Challenge 3:** Extend **Challenge 2** so that there are dynamic inputs according to the desired distribution. That is, display mean and std dev inputs for normal distribution and a shape input for gamma (Hint: see `conditionalPanel`).
+- **Challenge 3:** (Tricky) how do we get the shiny app to react to the input?
+
+
+## Shiny Outputs
+
+Shiny also has a set of output functions with general structure:
+
+```
+xxxOutput (outputId, ...)
+```
+where `outputId` is a (unique) object name (and `xxx` is one of the choices below)
+
+- `html`, `image`, `plot`, `table`, `text`,  creates what the names says
+- `uiOutput`	raw HTML
+- `verbatimTextOutput`	text
+
+Outputs have width and height, might be clickable, hoverable, ...
+
+
