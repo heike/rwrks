@@ -315,17 +315,19 @@ myhtml %>%
 
 - `html_children` - list the "children" of the HTML page. Can be chained like `html_nodes`
 - `html_name` - gives the tags of a nodeset. Use in a chain with `html_children`
+
 ```{r childex}
 myhtml %>% 
   html_children() %>% 
   html_name()
 ```
+
 - `html_form` - parses HTML forms (checkboxes, fill-in-the-blanks, etc.)
 - `html_session` - simulate a session in an html browser; use the functions `jump_to`, `back` to navigate through the page
 
 ## Your Turn #2
 
-Find another website you want to scrape (ideas: [all bills in the house so far this year](https://www.congress.gov/search?q={%22congress%22:%22all%22,%22source%22:%22legislation%22,%22search%22:%22actionDateChamber:\%22115|H|2017-02-03\%22+AND+(billIsReserved:\%22N\%22+or+type:\%22AMENDMENT\%22)%22}&pageSort=documentNumber:asc), [video game reviews](http://www.metacritic.com/game), anything Wikipedia) and use *at least* 3 different `rvest` functions in a chain to extract some data.
+Find another website you want to scrape (ideas: [all bills in the house so far this year](https://www.congress.gov/search?q={%22congress%22:%22all%22,%22source%22:%22legislation%22,%22search%22:%22actionDateChamber:\%22115|H|2017-02-03\%22+AND+(billIsReserved:\%22N\%22+or+type:\%22AMENDMENT\%22)), [video game reviews](http://www.metacritic.com/game), anything Wikipedia) and use *at least* 3 different `rvest` functions in a chain to extract some data.
 
 
 
