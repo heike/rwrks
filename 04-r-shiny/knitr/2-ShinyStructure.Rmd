@@ -23,22 +23,6 @@ input values => R code => output values
 **Reactive expressions** keep track of what values they read and what values they change. If those values become "out of date", they know their return value is out of date and will automatically recalculate.
 
 
-## A minimal shiny app
-
-```
-library(shiny)
-
-ui <- fluidPage()
-server <- function(input, output) {
-}
-
-shinyServer(ui, server)
-```
-
-- save this code in a separate folder call the file `app.R`
-- run the code: either paste into the console or use `runApp` on folder name
-
-
 ## A Tale of Two Files
 
 Shiny applications have two components: 
@@ -52,7 +36,7 @@ Shiny applications have two components:
 library(shiny)
 
 # A simple/common user interface template
-shinyUI(fluidPage(
+ui <- fluidPage(
 
   # Application title
   titlePanel("Title"),
@@ -65,7 +49,7 @@ shinyUI(fluidPage(
     # outputs` (from the server) go here
   )
 
-))
+)
 ```
 
 ## User Interface (ui)
@@ -83,14 +67,29 @@ shinyUI(fluidPage(
 ## server.R
 
 ```{r, eval=FALSE}
-library(shiny)
+
 
 # Server side logic 
-shinyServer(function(input, output) {
+server <- function(input, output) {
   # do something
-})
+}
 ```
 
+
+## A minimal shiny app
+
+```
+library(shiny)
+
+ui <- fluidPage()
+server <- function(input, output) {
+}
+
+shinyServer(ui, server)
+```
+
+- save this code in a separate folder call the file `app.R`
+- run the code: either paste into the console or use `runApp` on folder name
 
 ## Shiny Inputs
 
@@ -127,6 +126,8 @@ selectInput("select", label = h3("What do you like?"),
 - `radioButtons()` - select one or more items
 - `sliderInput()` - slide along a range of values
 - `textInput()` - input a string
+
+<small>[resource](http://shiny.rstudio.com/gallery/widget-gallery.html)</small>
 
 
 ## Your Turn {data-background=#527a7a}

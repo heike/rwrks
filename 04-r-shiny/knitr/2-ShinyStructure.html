@@ -503,20 +503,6 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <pre><code>input values =&gt; R code =&gt; output values</code></pre>
 <p><strong>Reactive expressions</strong> keep track of what values they read and what values they change. If those values become “out of date”, they know their return value is out of date and will automatically recalculate.</p>
 </section>
-<section id="a-minimal-shiny-app" class="slide level2">
-<h1>A minimal shiny app</h1>
-<pre><code>library(shiny)
-
-ui &lt;- fluidPage()
-server &lt;- function(input, output) {
-}
-
-shinyServer(ui, server)</code></pre>
-<ul>
-<li>save this code in a separate folder call the file <code>app.R</code></li>
-<li>run the code: either paste into the console or use <code>runApp</code> on folder name</li>
-</ul>
-</section>
 <section id="a-tale-of-two-files" class="slide level2">
 <h1>A Tale of Two Files</h1>
 <p>Shiny applications have two components:</p>
@@ -530,7 +516,7 @@ shinyServer(ui, server)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
 
 <span class="co"># A simple/common user interface template</span>
-<span class="kw">shinyUI</span>(<span class="kw">fluidPage</span>(
+ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(
 
   <span class="co"># Application title</span>
   <span class="kw">titlePanel</span>(<span class="st">&quot;Title&quot;</span>),
@@ -543,7 +529,7 @@ shinyServer(ui, server)</code></pre>
     <span class="co"># outputs` (from the server) go here</span>
   )
 
-))</code></pre></div>
+)</code></pre></div>
 </section>
 <section id="user-interface-ui" class="slide level2">
 <h1>User Interface (ui)</h1>
@@ -562,12 +548,24 @@ shinyServer(ui, server)</code></pre>
 </section>
 <section id="server.r" class="slide level2">
 <h1>server.R</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
-
-<span class="co"># Server side logic </span>
-<span class="kw">shinyServer</span>(function(input, output) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Server side logic </span>
+server &lt;-<span class="st"> </span>function(input, output) {
   <span class="co"># do something</span>
-})</code></pre></div>
+}</code></pre></div>
+</section>
+<section id="a-minimal-shiny-app" class="slide level2">
+<h1>A minimal shiny app</h1>
+<pre><code>library(shiny)
+
+ui &lt;- fluidPage()
+server &lt;- function(input, output) {
+}
+
+shinyServer(ui, server)</code></pre>
+<ul>
+<li>save this code in a separate folder call the file <code>app.R</code></li>
+<li>run the code: either paste into the console or use <code>runApp</code> on folder name</li>
+</ul>
 </section>
 <section id="shiny-inputs" class="slide level2">
 <h1>Shiny Inputs</h1>
@@ -594,6 +592,7 @@ shinyServer(ui, server)</code></pre>
 <li><code>sliderInput()</code> - slide along a range of values</li>
 <li><code>textInput()</code> - input a string</li>
 </ul>
+<p><small><a href="http://shiny.rstudio.com/gallery/widget-gallery.html">resource</a></small></p>
 </section>
 <section id="your-turn" class="slide level2" data-background="#527a7a">
 <h1>Your Turn</h1>
