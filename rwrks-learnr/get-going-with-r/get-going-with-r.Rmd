@@ -1,0 +1,162 @@
+---
+title: "Get Going with R"
+subtitle: "Iowa State University"
+author: Sam Tyner
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+tips <- read.csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
+```
+
+
+## Set Up
+
+### Your background
+
+What do you know already?
+
+- Excel, Numbers, Some sort of spreadsheet software
+- SAS, SPSS, Minitab
+- Any other programming language
+- A text editor
+- R
+
+### Install R 
+
+Hopefully this is done already.  If not, for Windows or OS X:
+
+- Go to http://www.r-project.org/
+- Click the CRAN link on the left, and pick a download site (0-Cloud is a good choice)
+- Choose link based on your OS
+- On Windows, choose the "base" subdirectory to install R.
+- On OS X, choose the .pkg file to install R.
+
+### Installing RStudio
+
+This should also be done already, but if not...
+
+- Browse to https://www.rstudio.com/
+- Click on the "Download RStudio" 
+- Download RStudio Desktop Free
+- Choose the installer appropriate for your platform
+
+### Let's take a look at R together...
+
+<!--### Exercise 
+
+*Here's a simple exercise with an empty code chunk provided for entering the answer.*
+
+Write the R code required to add two plus two:
+
+```{r two-plus-two, exercise=TRUE}
+
+```
+
+### Exercise with Code
+
+*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+
+Now write a function that adds any two numbers and then call it:
+
+```{r add-function, exercise=TRUE, exercise.lines = 5}
+add <- function() {
+  
+}
+```
+--> 
+
+## Motivating Example
+
+- Kick off the workshop by exploring a real data set using R!
+- Goal: get the flavor of using R for data management and exploration
+- Don't worry about understanding all the coding right away
+- We will go back and explain how it all works in detail
+
+### Tips Dataset
+
+- Tips data set recorded by a server in a restaurant over a span of about 10 weeks
+- Server recorded several variables about groups they served:
+    - Amount they were tipped
+    - Cost of the total bill
+    - Several characteristics about the groups being served
+- Primary Question: How do these variable influence the amount being tipped?
+<!--Follow along using [2-MotivatingExample.R](../code/2-MotivatingExample.R) --> 
+
+### Load the tips data
+
+First, we use R to look at the top few rows of the our tip data set. First, we load the data using `read.csv`, then use the `head` function to look at the first 6 rows of the data:
+
+```{r read-tips-ex, exercise=TRUE}
+tips <- read.csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
+head(tips)
+```
+
+### Explore the tips data
+
+How big is this data set and what types of variables are in each column? Let's also get a summary of the values for each variable in tips:
+
+```{r explore-tips, exercise=TRUE}
+glimpse(tips)
+summary(tips)
+```
+
+### Plotting the tips data
+
+Lets look at the relationship between total bill and tip value. First, we need to load the `ggplot2` package (more on this later), then we can use the functions in the `ggplot2` package to make a scatterplot of total bill by tip value. 
+
+```{r scatter-tips, exercise=TRUE, fig.align='center'}
+library(ggplot2)
+ggplot(data = tips, aes(x = total_bill, y = tip)) + 
+  geom_point()
+```
+
+Let's add some color! Change the color of the points according to the time they ate (lunch or dinner groups).
+
+```{r scatter-tips-col, exercise=TRUE, fig.align='center'}
+ggplot(data = tips, aes(x = total_bill, y = tip)) + 
+  geom_point(aes(color = time))
+``` 
+
+We can also draw the best-fit line (also known as a linear regression line) on the plot: 
+
+```{r, scatter-tips-lm, exercise=TRUE, fig.align='center'}
+ggplot(data = tips, aes(x = total_bill, y = tip)) + 
+  geom_point(aes(color = time)) + 
+  geom_smooth(method = "lm", color = 'green', se = FALSE)
+```
+
+### Quiz
+
+*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+
+Some questions to verify that you understand the purposes of various base and recommended R packages:
+
+```{r quiz}
+quiz(
+  question("Which package contains functions for installing other R packages?",
+    answer("base"),
+    answer("tools"),
+    answer("utils", correct = TRUE),
+    answer("codetools")
+  ),
+  question("Which of the R packages listed below are used to create plots?",
+    answer("lattice", correct = TRUE),
+    answer("tools"),
+    answer("stats"),
+    answer("grid", correct = TRUE)
+  )
+)
+```
+
+## Basics
+
+## Data Structures
+
+## Packages & Basic Programming
+
+## R Markdown 
