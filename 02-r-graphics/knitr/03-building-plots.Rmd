@@ -1,0 +1,298 @@
+---
+title: "Data Visualization"
+subtitle: "Using ggplot2"
+author: "Haley Jeppson and Sam Tyner"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE,
+	cache = TRUE
+)
+```
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(ggsci)
+library(ggthemes)
+library(gridExtra)
+library(grid)
+
+grid_arrange_shared_legend <- function(..., ncol = length(list(...)), nrow = 1, position = c("bottom", "right")) {
+
+  plots <- list(...)
+  position <- match.arg(position)
+  g <- ggplotGrob(plots[[1]] + theme(legend.position = position))$grobs
+  legend <- g[[which(sapply(g, function(x) x$name) == "guide-box")]]
+  lheight <- sum(legend$height)
+  lwidth <- sum(legend$width)
+  gl <- lapply(plots, function(x) x + theme(legend.position="none"))
+  gl <- c(gl, ncol = ncol, nrow = nrow)
+
+  combined <- switch(position,
+                     "bottom" = arrangeGrob(do.call(arrangeGrob, gl),
+                                            legend,
+                                            ncol = 1,
+                                            heights = unit.c(unit(1, "npc") - lheight, lheight)),
+                     "right" = arrangeGrob(do.call(arrangeGrob, gl),
+                                           legend,
+                                           ncol = 2,
+                                           widths = unit.c(unit(1, "npc") - lwidth, lwidth)))
+  
+  grid.newpage()
+  grid.draw(combined)
+
+  # return gtable invisibly
+  invisible(combined)
+
+}
+
+```
+
+class: center, middle
+
+# BUILDING PLOTS
+
+---
+class: inverse, center, middle
+
+# Underlying theory
+
+---
+
+# What is a graphic?
+
+ggplot2 uses the idea that you can build every graph from the same components:
+
+  1. a **data** set
+  
+  2. a **coordinate system**
+  
+  3. **geoms** - visual marks that represent data
+  
+- to display values, map variables in the data to visual properties of the geom (**aesthetics**) like **size**, **color**, and **x** and **y** locations
+
+![](images/build1.png)![](images/build2.png)
+
+---
+# How to build a graph
+
+Complete the template below to build a graph
+```{r fig.width=8, echo=FALSE, fig.align = "top"}
+library(png)
+library(grid)
+img <- readPNG("images/ggplot2-notation.png")
+ grid.raster(img)
+```
+
+---
+# How to build a graph
+
+`ggplot(data = mpg, aes(x = cty, y = hwy))`
+
+- This will begin a plot that you can finish by adding layers to.
+
+- You can add one geom per layer
+
+
+```{r plots-4, fig.align='bottom', fig.height=5, fig.width=15}
+p1 <- ggplot(data = mpg, aes(x = class, y = hwy))
+p2 <- ggplot(data = mpg, aes(x = class, y = hwy)) + geom_boxplot()
+p3 <- ggplot(data = mpg, aes(x = class, y = hwy)) + geom_jitter() + geom_boxplot() 
+grid.arrange(p1, p2, p3, ncol = 3, nrow = 1)
+```
+
+---
+
+
+# What is a geom?
+
+In ggplot2, we use a geom function to represent data points, and use the geom's aesthetic properties to represent variables.
+
+
+```{r, fig.align='top', fig.height=4, fig.width=10}
+p1 <- ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_text(aes(label = class))+ scale_color_locuszoom() +labs(x = "city mpg", y = "highway mpg", title = "Geom Text")
+p2 <- ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_point()+ scale_color_locuszoom() + labs(x = "city mpg", y = "highway mpg", title = "Geom Point")
+grid.arrange(p2, p1, ncol = 2, nrow = 1)
+```
+
+Once our data is formatted and we know what type of variables we are working with, we can select the correct geom for our visualization. 
+
+---
+# Available geoms 
+
+```{r, echo=FALSE, fig.align="center"}
+library(png)
+library(grid)
+img <- readPNG("images/geoms.png")
+ grid.raster(img)
+```
+
+
+---
+# What is a layer?
+
+- it determines the physical representation of the data
+
+- Together, the data, mappings, statistical transformation, and geometric object form a layer
+
+- A plot may have multiple layers
+ 
+```{r, fig.align='bottom', fig.height=5, fig.width=15}
+p1 <- ggplot(data = mpg, aes(x = class, y = hwy, colour = class)) + geom_jitter(width = 0.1) + scale_fill_locuszoom() + scale_color_locuszoom()
+p2 <- ggplot(data = mpg, aes(x = class, y = hwy, colour = class)) + geom_violin(aes(fill = class), alpha = 0.4) + scale_fill_locuszoom() + scale_color_locuszoom()
+p3 <- ggplot(data = mpg, aes(x = class, y = hwy, colour = class)) + geom_jitter(width = 0.1) + geom_violin(aes(fill = class), alpha = 0.4) + scale_fill_locuszoom() + scale_color_locuszoom()
+grid.arrange(p1, p2, p3, ncol = 3, nrow = 1)
+```
+
+---
+# Alternative method of building layers: Stats
+
+A stat builds a new variable to plot (e.g., count and proportion)
+.pull-left[
+```{r fig.width=4.5, echo=FALSE, fig.align = "top"}
+img <- readPNG("images/stat1.png")
+ grid.raster(img)
+```
+]
+.pull-right[
+```{r fig.width=4.5, echo=FALSE, fig.align = "top"}
+img2 <- readPNG("images/stat2.png")
+ grid.raster(img2)
+```
+]
+
+
+---
+
+# Faceting
+
+A way to extract subsets of data and place them side-by-side in graphics
+
+```{r, fig.width=10, fig.height=4, echo = TRUE, eval=FALSE}
+ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_point()
+
+ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_point() +facet_grid(.~class)
+```
+
+```{r, fig.width=10, fig.height=4, fig.align = "center", echo=FALSE}
+a <- ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_point()+ scale_color_locuszoom()
+
+b <- ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_point() +theme(legend.position = "none") +facet_grid(.~class)+ scale_color_locuszoom()
+
+
+grid.arrange(a, b, nrow = 1)
+```
+
+---
+# Faceting Options
+
+- `facet_grid(. ~ b)`:facet into columns based on b 
+- `facet_grid(a ~ .)`:facet into columns based on a 
+- `facet_grid(a ~ b)`:facet into both rows and columns
+- `facet_wrap( ~ fl)`:wrap facets into a rectangular layout
+
+You can set scales to let axis limits vary across facets:
+
+- `facet_grid(y ~ x, scales = "free")`: x and y axis limits adjust to individual facets
+- "free_x" - x axis limits adjust
+- "free_y" - y axis limits adjust
+
+You can also set a labeller to adjust facet labels:
+- `facet_grid(. ~ fl, labeller = label_both)`
+- `facet_grid(. ~ fl, labeller = label_bquote(alpha ^ .(x)))`
+- `facet_grid(. ~ fl, labeller = label_parsed)`
+
+
+---
+
+# Position Adjustments
+
+Position adjustments determine how to arrange geoms that would otherwise occupy the same space
+- **Dodge**: Arrange elements side by side 
+- **Fill**: Stack elements on top of one another, normalize height
+- **Stack**: Stack elements on top of one another
+
+`ggplot(mpg, aes(fl, fill = drv)) + geom_bar(position = "")`
+
+```{r, fig.width=10, fig.height=4, fig.align = "center"}
+s <- ggplot(mpg, aes(fl, fill = drv)) +ggtitle("") + scale_fill_locuszoom()
+s1 <- s + geom_bar(position = "dodge") +ggtitle("Dodge")
+s2 <- s + geom_bar(position = "fill") +ggtitle("Fill") + scale_fill_locuszoom()
+s3 <- s + geom_bar(position = "stack") +ggtitle("Stack")
+
+grid.arrange(s1, s2, s3, nrow = 1)
+
+```
+
+---
+# Position Adjustments: Jitter
+
+- **Jitter**: Add random noise to X & Y position of each element to avoid overplotting
+- There is also a jitter geom 
+
+```{r, fig.width=10, fig.height=4, fig.align = "center"}
+p2 <- ggplot(mpg, aes(cyl, hwy, color = factor(cyl))) + geom_point() + ggtitle("geom_point()")+ scale_color_locuszoom()
+p3 <- ggplot(mpg, aes(cyl, hwy, color = factor(cyl))) + geom_point(position = "jitter") + ggtitle('geom_point(position = "jitter")')+ scale_color_locuszoom()
+p4 <- ggplot(mpg, aes(cyl, hwy, color = factor(cyl))) + geom_jitter() + ggtitle("geom_jitter()")+ scale_color_locuszoom()
+grid.arrange(p2, p3, p4, nrow = 1)
+```
+
+
+
+---
+
+## Coordinate Systems
+
+- `coord_cartesian()`: The default cartesian coordinate system
+- `coord_fixed()`: Cartesian with fixed aspect ratio between x & y units
+- `coord_flip()`: Flipped Cartesian coordinates
+- `coord_polar()`: Polar coordinates
+- `coord_trans()`: Transformed cartesian coordinates.
+- `coord_map()`: Map projections from the mapproj package (mercator (default), azequalarea, lagrange, etc.)
+
+```{r, fig.width=10, fig.height=4, fig.align = "center", eval = FALSE}
+r <- ggplot(mpg, aes(fl)) + geom_bar()
+r + coord_cartesian(xlim = c(0, 5))
+r + coord_fixed(ratio = 1/10)
+r + coord_flip()
+r + coord_trans(y = "sqrt")
+r + coord_polar(theta = "x", direction=1 )
+z + coord_map(projection = "ortho")
+z + coord_map(projection = "ortho", orientation = c(-90, 0, 0))
+```
+
+```{r, fig.width=10, fig.height=5, fig.align = "center"}
+r <- ggplot(mpg, aes(fl)) + geom_bar()
+r1 <- r + coord_cartesian(xlim = c(0, 5)) + ggtitle("coord_cartesian")
+r2 <- r + coord_fixed(ratio = 1/10) + ggtitle("coord_fixed")
+r3 <- r + coord_flip() + ggtitle("coord_flip")
+r4 <- r + coord_polar(theta = "x", direction=1 ) + ggtitle("coord_polar")
+r5 <- r + coord_trans(y = "sqrt") + ggtitle("coord_trans")
+world <- map_data("world")
+library(maps)
+worldmap <- ggplot(world, aes(x = long, y = lat, group = group)) +
+  geom_path() +
+  scale_y_continuous(breaks = (-2:2) * 30) +
+  scale_x_continuous(breaks = (-4:4) * 45)
+r7 <- worldmap + coord_map("ortho") + ggtitle("coord_map")
+r8 <- worldmap + coord_map("ortho", orientation = c(-90, 0, 0)) + ggtitle("coord_map")
+
+grid.arrange(r1, r2, r3, r5, r4, r7, r8, nrow = 2)
+```
+
+
+
+---
+
+## ggplot2 extenstions
