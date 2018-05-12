@@ -1,39 +1,77 @@
 ---
 title: "Motivating Example"
-author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
-date: "June 12, 2017"
+author: "Haley Jeppson, Sam Tyner"
 output: 
-    revealjs::revealjs_presentation:
-        transition: fade
-        theme: white
-        highlight: zenburn
-        css: custom.css
-
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
 ---
 
 ## Motivating Example
 
 - Kick off the workshop by exploring a real data set using R!
+--
+
+
 - Goal: get the flavor of using R for data management and exploration
+--
+
+
 - Don't worry about understanding all the coding right away
+
 - We will go back and explain how it all works in detail
+
+---
+## Getting Started
+
+Let's begin by installing and loading `tidyverse`:
+
+```{r, eval=FALSE}
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+This workshop will focus largely on a group of packages that live together under the name `tidyverse`. 
+
+`tidyverse` includes the following well known packages:
+
+- `ggplot2`
+- `dplyr`
+- `tidyr`
+- `readr`
+- and more!
+
+---
 
 ## Tips Dataset
 
 - Tips data set recorded by a server in a restaurant over a span of about 10 weeks
-- Server recorded several variables about groups they served:
+
+- Server recorded several **variables** about groups they served:
+
     - Amount they were tipped
     - Cost of the total bill
     - Several characteristics about the groups being served
-- Primary Question: How do these variable influence the amount being tipped?
-- Follow along using [2-MotivatingExample.R](../code/2-MotivatingExample.R)
+    
+- **Primary Question**: How do these variable influence the amount being tipped?
 
+.footnote[
+Follow along using [2-MotivatingExample.R](../code/2-MotivatingExample.R)
+]
+---
 ## First look at data in R
 
-Lets use R to look at the top few rows of the tips data set. First, we load tip using `read.csv`:
+Lets use R to look at the top few rows of the tips data set. First, we load tip using `read_csv`:
 
-```{r}
-tips <- read.csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
+```{r message=FALSE, warning=FALSE}
+tips <- read_csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
 ```
 
 Now, we use the `head` function to look at the first 6 rows of the data:
@@ -42,7 +80,8 @@ Now, we use the `head` function to look at the first 6 rows of the data:
 head(tips)
 ```
 
-## Tips Data Attributes
+---
+## Tips Data: Attributes
 
 How big is this data set and what types of variables are in each column?
 
@@ -50,7 +89,8 @@ How big is this data set and what types of variables are in each column?
 str(tips)
 ```
 
-## Tips Variables
+---
+## Tips: Variables
 
 Let's get a summary of the values for each variable in tips:
 
@@ -58,58 +98,60 @@ Let's get a summary of the values for each variable in tips:
 summary(tips)
 ```
 
+---
 ## Scatterplots
 
-Lets look at the relationship between total bill and tip value. First, we need to install and load `ggplot2`:
+Lets look at the relationship between total bill and tip value.  
 
-```{r, eval=FALSE}
-install.packages("ggplot2")
-library(ggplot2)
+```{r, fig.height=4, fig.width=7}
+ggplot(tips, aes(x = total_bill, y = tip)) + geom_point()
 ```
 
-```{r, echo=FALSE}
-library(ggplot2)
-```
-
-```{r, fig.height=3, fig.width=7}
-qplot(total_bill, tip, geom = "point", data = tips)
-```
-
+---
 ## More Scatterplots
 
 Color the points by lunch and dinner groups
 
 ```{r, fig.height=4, fig.width=7}
-qplot(total_bill, tip, geom = "point", data = tips, colour = time)
+ggplot(tips, aes(x = total_bill, y = tip, colour = time)) + geom_point()
 ```
 
+---
 ## Even More Scatterplots
 
 Add linear regression line to the plot
 
 ```{r, fig.height=4, fig.width=7}
-qplot(total_bill, tip, geom = "point", data = tips) + 
-    geom_smooth(method = "lm")
+ggplot(tips, aes(x = total_bill, y = tip)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
 ```
 
+---
 ## Rate of Tipping
 
-Tipping is generally done using a rule of thumb based on a percentage of the total bill. We will make a new variable in the data set for the tipping rate = tip / total bill
+Tipping is generally based on a percentage of the total bill. 
+
+We will make a new variable in the data: `tipping rate = tip / total bill`
 
 ```{r}
-tips$rate <- tips$tip / tips$total_bill
+tips <- tips %>% 
+  mutate(rate = tip / total_bill)
 
 summary(tips$rate)
 ```
 
+---
 ## Tipping Rate Histogram
 
 Lets look distribution of tipping rate values with a histogram
 
 ```{r, fig.height=4, fig.width=7}
-qplot(rate, data = tips, binwidth = .01)
+ggplot(tips) + geom_histogram(aes(x = rate), binwidth = .01)
 ```
 
+---
 ## Someone is an AMAZING tipper...
 
 One person tipped over 70%, who are they?
@@ -118,15 +160,29 @@ One person tipped over 70%, who are they?
 tips[which.max(tips$rate),]
 ```
 
+---
 ## Rates by Gender
 
 Look at the average tipping rate for men and women seperately
 
-```{r}
-mean(tips$rate[tips$sex == "Male"])
-mean(tips$rate[tips$sex == "Female"])
-```
+.pull-left[
+Using base `R`:
 
+```{r}
+mean(tips$rate[tips$sex == "Female"])
+mean(tips$rate[tips$sex == "Male"])
+```
+]
+.pull-right[
+Using `tidyverse`:
+
+```{r}
+tips %>% 
+  group_by(sex) %>% 
+  summarize(mean_rate = mean(rate))
+```
+]
+---
 ## Statistical Significance
 
 There is a difference but is it statistically significant?
@@ -135,12 +191,14 @@ There is a difference but is it statistically significant?
 t.test(rate ~ sex, data = tips)
 ```
 
+---
 ## Boxplots
 
 Perhaps we are interested in if smokers tip at a different rate than non-smokers.  We could compare the rate values of each group with a side by side boxplot!
 
 ```{r, fig.height=3, fig.width=7}
-qplot(smoker, rate, geom = "boxplot", data = tips)
+ggplot(tips) + geom_boxplot(aes(smoker, rate))
+
 ```
 
 <!--
@@ -153,10 +211,15 @@ qplot(smoker, rate, geom = "boxplot", data = tips, color = sex)
 ```
 --> 
 
-## Your Turn {data-background=#527a7a}
+---
+class: inverse
+
+## Your Turn 
 
 Try playing with chunks of code from this session to further investigate the tips data:
 
 1. Get a summary of the total bill values
+
 2. Make side by side boxplots of tip rates for different days of the week
+
 3. Find the average tip value for smokers

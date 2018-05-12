@@ -1,7 +1,6 @@
 ---
 title: "Your Turn Solutions"
-author: "Haley Jeppson, Joe Papio, Sam Tyner"
-date: "June 12, 2017"
+author: "Haley Jeppson, Sam Tyner"
 output: html_document
 ---
 

@@ -1,13 +1,13 @@
 ---
 title: "Setup"
-author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
-date: "June 12, 2017"
+author: "Haley Jeppson, Sam Tyner"
 output: 
-    revealjs::revealjs_presentation:
-        transition: fade
-        theme: white
-        highlight: zenburn
-        css: custom.css
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
 ---
 
 ## Your Background
@@ -20,6 +20,8 @@ What do you know already?
 > - A text editor
 > - R
 
+---
+
 ## Installing R
 
 Hopefully this is done already.  If not, for Windows or OS X:
@@ -30,6 +32,8 @@ Hopefully this is done already.  If not, for Windows or OS X:
 - On Windows, choose the "base" subdirectory to install R.
 - On OS X, choose the .pkg file to install R.
 
+---
+
 ## Installing RStudio
 
 This should also be done already, but if not...
@@ -38,5 +42,7 @@ This should also be done already, but if not...
 - Click on the "Download RStudio" 
 - Download RStudio Desktop Free
 - Choose the installer appropriate for your platform
+
+---
 
 # Let's take a look at RStudio together...
