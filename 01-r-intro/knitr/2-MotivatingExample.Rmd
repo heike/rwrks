@@ -1,6 +1,6 @@
 ---
 title: "Motivating Example"
-author: "Haley Jeppson, Sam Tyner"
+author: "Haley Jeppson and Sam Tyner"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -23,6 +23,9 @@ output:
 - Don't worry about understanding all the coding right away
 
 - We will go back and explain how it all works in detail
+
+- Follow along using [2-MotivatingExample.R](../code/2-MotivatingExample.R)
+
 
 ---
 ## Getting Started
@@ -62,9 +65,7 @@ This workshop will focus largely on a group of packages that live together under
     
 - **Primary Question**: How do these variable influence the amount being tipped?
 
-.footnote[
-Follow along using [2-MotivatingExample.R](../code/2-MotivatingExample.R)
-]
+
 ---
 ## First look at data in R
 

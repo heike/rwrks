@@ -1,6 +1,6 @@
 ---
 title: "Setup"
-author: "Haley Jeppson, Sam Tyner"
+author: "Haley Jeppson and Sam Tyner"
 output: 
   xaringan::moon_reader:
     lib_dir: libs
@@ -14,11 +14,15 @@ output:
 
 What do you know already?
 
-> - Excel, Numbers, Some sort of spreadsheet software
-> - SAS, SPSS, Minitab
-> - Any other programming language
-> - A text editor
-> - R
+- Excel, Numbers, Some sort of spreadsheet software
+
+- SAS, SPSS, Minitab
+
+- Any other programming language
+
+- A text editor
+
+- R
 
 ---
 
@@ -27,9 +31,13 @@ What do you know already?
 Hopefully this is done already.  If not, for Windows or OS X:
 
 - Go to http://www.r-project.org/
+
 - Click the CRAN link on the left, and pick a download site (0-Cloud is a good choice)
+
 - Choose link based on your OS
+
 - On Windows, choose the "base" subdirectory to install R.
+
 - On OS X, choose the .pkg file to install R.
 
 ---
@@ -39,8 +47,11 @@ Hopefully this is done already.  If not, for Windows or OS X:
 This should also be done already, but if not...
 
 - Browse to https://www.rstudio.com/
+
 - Click on the "Download RStudio" 
+
 - Download RStudio Desktop Free
+
 - Choose the installer appropriate for your platform
 
 ---

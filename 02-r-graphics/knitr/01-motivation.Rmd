@@ -648,13 +648,13 @@ ggplot(data = diamonds, aes(x = carat, y = price)) +
 ```{r, fig.width=10, fig.height=5, eval = FALSE, echo = TRUE}
 ggplot(data = diamonds, aes(x = carat, y = price) +
     geom_point(aes(colour = cut), size = 2, alpha = .5) +
-    geom_smooth((aes(fill = cut)) 
+    geom_smooth((aes(fill = cut), colour = "lightgrey")) 
 ```
 
 ```{r, fig.width=10, fig.height=5, echo = FALSE}
 ggplot(data = diamonds, aes(x = carat, y = price)) +
     geom_point(aes(colour = cut), size = 2, alpha = .5) + scale_color_locuszoom()+ scale_fill_locuszoom()+
-    geom_smooth(aes(fill = cut))
+    geom_smooth(aes(fill = cut), colour = "lightgrey")
 ```
 
 ---
