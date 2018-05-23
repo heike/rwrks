@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Basic Plots</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Haley Jeppson, Sam Tyner" />
+    <link href="libs/remark-css-0.0.1/example.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Basic Plots
+### Haley Jeppson, Sam Tyner
+
+---
+
+
+
+
+## Let's Run the Setup File...
+
+Run this line in the R console. You should see a plot appear if setup is successful.
+
+
+```r
+source("../code/0-Setup.R")
+```
+
+---
+
+## ggplot2 In a Nutshell
+
+- Package for statistical graphics
+- Developed by Hadley Wickham (An ISU Alumnus)
+- Designed to adhere to good graphical practices
+- Supports a wide variety plot types
+- Constructs plots using the concept of layers\medskip
+- http://ggplot2.tidyverse.org/ or Hadley's book *ggplot2: Elegant Graphics for Data Analysis}* for reference material
+
+---
+
+## *qplot* Function
+
+The *qplot()* function stands for "quick plot"
+
+- Produces all plot types available with ggplot2
+- Most arguments have defaults unless you specify otherwise
+- Allows for plotting options within the function statement
+- Creates an object that can be saved
+- Plot layers can be added to modify plot complexity
+- Resembles *base* plotting more than the rest of ggplot2
+
+---
+
+## *qplot* Structure
+
+The *qplot()* function has a basic syntax:
+
+*qplot(variables, plot type, dataset, options)*
+
+- *variables*: list of variables used for the plot (need this one)
+
+- *plot type*: specified with a *geom =* statement
+
+- *dataset*: specified with a *data =* statement (need this one)
+
+- *options*: there are so, so many options!
+
+---
+
+## Diamonds Data
+
+We will explore the diamonds data set (preloaded along with ggplot2) using qplot for basic plotting.
+
+The data set was scraped from a diamond exchange company data base by Hadley.  It contains the prices and attributes of over 50,000 diamonds
+
+---
+
+## Examining the Diamonds Data
+
+What does the data look like?
+
+Lets look at the top few rows of the diamond data frame to find out!
+
+
+```r
+head(diamonds)
+```
+
+```
+## # A tibble: 6 x 10
+##   carat cut       color clarity depth table price     x     y     z
+##   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.230 Ideal     E     SI2      61.5  55.0   326  3.95  3.98  2.43
+## 2 0.210 Premium   E     SI1      59.8  61.0   326  3.89  3.84  2.31
+## 3 0.230 Good      E     VS1      56.9  65.0   327  4.05  4.07  2.31
+## 4 0.290 Premium   I     VS2      62.4  58.0   334  4.20  4.23  2.63
+## 5 0.310 Good      J     SI2      63.3  58.0   335  4.34  4.35  2.75
+## 6 0.240 Very Good J     VVS2     62.8  57.0   336  3.94  3.96  2.48
+```
+
+---
+
+## Basic Scatterplot
+
+Basic scatter plot of diamond price vs carat weight
+
+
+```r
+qplot(carat, price, geom = "point", data = diamonds)
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+---
+
+## Another Scatterplot
+
+Scatter plot of diamond price vs carat weight showing versitility of options in qplot
+
+
+```r
+qplot(carat, log(price), geom = "point", data = diamonds, 
+	alpha = I(0.2), colour = color, 
+	main = "Log price by carat weight, grouped by color") + 
+    xlab("Carat Weight") + ylab("Log Price")
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+
+---
+class: inverse
+
+## Your Turn 
+
+All of the your turns for this section will use the tips data set:
+
+
+```r
+tips &lt;- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/tips.csv")
+```
+
+1. Use qplot to build a scatterplot of variables tips and total bill
+2. Use options within qplot to color points by smokers
+3. Clean up axis labels and add main plot title
+
+---
+
+## Basic Histogram
+
+Basic histogram of carat weight
+
+
+```r
+qplot(carat, geom = "histogram", data = diamonds)
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+---
+
+## Another Histogram
+
+Carat weight histograms faceted by cut
+
+
+```r
+qplot(carat, geom = "histogram", data = diamonds, binwidth = 0.2, facets = .~cut)
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+
+---
+class: inverse
+## Your Turn 
+
+1. Create a new variable in tips data frame rate = tip / total bill
+2. Use qplot to create a histogram of rate
+3. Change the bin width on that histogram to 0.05
+4. Facet this histogram by size of the group
+
+---
+
+## Basic Boxplot
+
+Side by side boxplot of diamond prices within cut groupings
+
+
+```r
+qplot(cut, price, geom = "boxplot", data = diamonds)
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+---
+
+## Another Boxplot
+
+Side by side boxplot of log prices within cut groupings with jittered values overlay
+
+
+```r
+qplot(cut, log(price), geom = "boxplot", data = diamonds, 
+	main = "Boxplots of log Diamond Prices Grouped by Cut Quality") +
+	geom_jitter(alpha = I(.025))
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+---
+class: inverse
+
+## Your Turn 
+
+1. Make side by side boxplots of tipping rate for males and females
+2. Overlay jittered points for observed values onto this boxplot
+
+---
+
+## Bar Plots
+
+To investigate bar plots we will switch over to the Titanic data set:
+
+
+```r
+titanic &lt;- as.data.frame(Titanic)
+```
+
+Data includes passenger characteristics and survival outcomes for those aboard the RMS Titanic's ill fated maiden voyage
+
+---
+
+## Basic Bar Plot
+
+Basic bar plot of survival outcomes
+
+
+```r
+qplot(Survived, geom = "bar", data = titanic, weight = Freq)
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+
+---
+
+## Another Bar Plot
+
+Bar plot faceted by gender and class
+
+
+```r
+qplot(Survived, geom = "bar", data = titanic, weight = Freq, 
+      facets = Sex~Class)
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+---
+class: inverse
+
+## Your Turn 
+
+1. Use the tips data to make a barplot for counts of smoking and non smoking customers
+2. Facet using day of week and time of day to view how smoking status changes for different meal times
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

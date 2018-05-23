@@ -1,0 +1,237 @@
+---
+title: "Plotting Map Data"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June 13, 2017"
+output: 
+    revealjs::revealjs_presentation:
+        transition: fade
+        theme: white
+        highlight: zenburn
+        css: custom.css
+---
+
+## Loading Required Packages
+
+```{r, eval=TRUE, message = FALSE, warning=FALSE}
+library(dplyr)
+library(albersusa)
+library(sf)
+```
+
+## States Data
+
+To make a map, let's load up the states data and take a look:
+
+```{r alt1, eval = FALSE, echo=FALSE}
+library(ggplot2)
+states <- map_data("state")
+head(states)
+```
+
+```{r}
+library(ggplot2)
+library(albersusa)
+library(sf)
+states <- usa_sf("laea")
+glimpse(states)
+```
+
+## Basic Map Data
+
+What needs to be in the data set in order to plot a basic map?
+  
+- Need latitude/longitude points for all map boundaries
+- Need to know which boundary group all lat/long points belong
+- Need to know the order to connect points within each group
+
+## Simple Features
+
+- A *feature* is a real-world object - can consist of other objects.
+    * e.g. a car is an object that consists of tires, engine, etc.
+- Features have *geometry* - where the object is located and description of other properties
+- Map data are MULTIPOLYGON simple feature objects
+- Borders of states, countries, etc. form POLYGON objects
+    * e.g. each US state has a geometry that describes where in the world it is, and various other descriptors like population, land size, etc.
+
+See `vignette("sf1", package = "sf")` for more
+
+<!--
+## Data for Building Basic State Map
+
+Our *states* data has all necessary information
+
+## A Basic (Rather Hideous) Map
+
+A bunch of latitude longitude points...
+
+```{r, eval = FALSE,fig.height=4, fig.width=7}
+qplot(long, lat, geom = "point", data = states)
+```
+
+## A Bit Better of a Map
+
+... that are connected with lines in a very specific order.
+
+```{r, eval = FALSE, fig.height=4, fig.width=7}
+qplot(long, lat, geom = "path", data = states, group = group) + 
+    coord_map()
+```
+-->
+
+## Plotting Simple Features
+
+Very easy with `geom_sf()`
+
+```{r, fig.height=4, fig.width=7}
+ggplot(data = states) + geom_sf()
+```
+
+## Adding State Attributes
+
+We want to incorporate additional information into the plot:
+
+- Add other geographic information by adding geometric layers to the plot
+- Add non-geographic information by altering the fill color for each state
+    - Use `fill` to treat states as solid shapes to add color
+    - Incorporate numeric information using color shade or intensity
+    - Incorporate categorical informaion using color hue
+    
+## Categorical Information Using Hue
+
+If a categorical variable is assigned as the fill color then `ggplot2` will assign different hues for each category. Let's load in a state regions dataset:
+
+```{r}
+statereg <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/statereg.csv", stringsAsFactors = FALSE)
+
+glimpse(statereg)
+```
+
+## Joining Data
+
+We need to `join` or `merge` our original states data with this new state info. We can use the `left_join` function to do so (more on this later):
+
+```{r}
+states$name <- tolower(states$name)
+states.class.map <- left_join(states, statereg, by = c("name" = "State"))
+glimpse(states.class.map)
+```
+
+## Plotting the Result
+
+```{r alt2, eval = FALSE, echo = FALSE, fig.height=4, fig.width=7}
+qplot(long, lat, geom = "polygon", data = states.class.map, 
+      group = group, fill = StateGroups, colour = I("black")) + 
+    coord_map() 
+```
+
+```{r, fig.height=4, fig.width=7}
+ggplot(data = states.class.map) + geom_sf(aes(fill = StateGroups))
+```
+
+## Numerical Information Using Shade and Intensity
+
+To show how was can add numerical information to map plots we will use the BRFSS data
+
+- Behavioral Risk Factor Surveillance System
+- 2008 telephone survey run by the Center for Disease Control (CDC)
+- Ask a variety of questions related to health and wellness
+- Cleaned data with state aggregated values posted on website
+
+## BRFSS Data Aggregated by State
+
+```{r}
+states.stats <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/states.stats.csv", stringsAsFactors = FALSE)
+glimpse(states.stats)
+```
+
+## We must join this data again
+
+```{r}
+states.map <- left_join(states, states.stats, by = c("name" = "state.name"))
+glimpse(states.map)
+```
+
+## Shade and Intensity
+
+Average number of days in the last 30 days of insufficient sleep by state
+
+```{r alt3, echo = FALSE, eval = FALSE, fig.height=3, fig.width=7}
+qplot(long, lat, geom = "polygon", data = states.map, 
+      group = group, fill = avg.qlrest2) + coord_map()
+```
+
+```{r, fig.height=3, fig.width=7}
+ggplot(data = states.map) + geom_sf(aes(fill = avg.qlrest2))
+```
+
+## BRFSS Data Aggregated by State
+
+```{r}
+states.sex.stats <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/states.sex.stats.csv", stringsAsFactors = FALSE)
+glimpse(states.sex.stats)
+```
+
+## One More Join
+
+```{r}
+states.sex.map <- left_join(states, states.sex.stats, by = c("name" = "state.name"))
+glimpse(states.sex.map)
+```
+
+## Adding Information
+
+Average number of alcoholic drinks per day by state and gender
+
+```{r alt4, echo = FALSE, eval = FALSE, fig.height=3, fig.width=7}
+qplot(long, lat, geom = "polygon", data = states.sex.map, 
+      group = group, fill = avg.drnk) + coord_map() + 
+    facet_grid(sex ~ .)
+```
+
+```{r, fig.height=3, fig.width=7}
+ggplot(data = states.sex.map) + geom_sf(aes(fill = avg.drnk)) +
+  facet_grid(.~sex)
+```
+
+## Your Turn {data-background=#527a7a}
+
+- Use `left_join` to combine child healthcare data with maps information. You can load in the child healthcare data with:
+
+```{r}
+states.health.stats <- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/states.health.stats.csv", stringsAsFactors = FALSE)
+```
+
+- Use `geom_sf` to create a map of child healthcare undercoverage rate by state
+
+## Cleaning Up Your Maps
+
+Use ggplot2 options to clean up your map!
+
+- Adding Titles `+ ggtitle(...)`
+- Might want a plain white background `+ theme_bw()`
+- Extremely familiar geography may eliminate need for latitude and longitude axes `+ theme(...)`
+- Want to customize color gradient `+ scale_fill_gradient2(...)`
+- Keep aspect ratios correct `+ coord_map()`
+
+## Cleaned Up Map
+
+```{r alt5, eval = FALSE, echo= FALSE, fig.height=3, fig.width=7}
+qplot(long, lat, geom="polygon", data = states.map, group = group, fill = avg.drnk) + 
+  coord_map()
+```
+
+```{r, fig.height=3, fig.width=7}
+ggplot(data = states.map) + geom_sf(aes(fill = avg.drnk)) +
+  theme_bw() +
+  scale_fill_gradient2(limits = c(1.5, 3),low = "lightgray", high = "red") + 
+  theme(axis.ticks = element_blank(),
+       axis.text.x = element_blank(),
+       axis.title.x = element_blank(),
+       axis.text.y = element_blank(),
+       axis.title.y = element_blank()) +
+  ggtitle("Map of Average Number of Alcoholic Beverages\nConsumed Per Day by State")
+```
+
+## Your Turn {data-background=#527a7a}
+
+Use options to polish the look of your map of child healthcare undercoverage rate by state!

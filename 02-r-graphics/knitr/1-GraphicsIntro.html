@@ -1,272 +1,575 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Basic Plots</title>
+    <title>Data Visualization</title>
     <meta charset="utf-8">
-    <meta name="author" content="Haley Jeppson, Sam Tyner" />
-    <link href="libs/remark-css-0.0.1/example.css" rel="stylesheet" />
+    <meta name="author" content="Haley Jeppson and Sam Tyner" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Basic Plots
-### Haley Jeppson, Sam Tyner
+# Data Visualization
+## Using ggplot2
+### Haley Jeppson and Sam Tyner
 
 ---
 
 
 
 
-## Let's Run the Setup File...
 
-Run this line in the R console. You should see a plot appear if setup is successful.
+
+class: center, middle
+
+# MOTIVATION
+
+---
+
+# Why visualize?
+
+- The sole purpose of visualization is communication
+
+
+- Visualization offers an alternative way of communicating numbers
+
+![](images/Minard.png)
+
+---
+
+# Tables and lists vs. Charts and graphs
+
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Sepal.Length &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Sepal.Width &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Petal.Length &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Petal.Width &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Species &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# Tables and lists vs. Charts and graphs
+
+
+![](images/table-modified.png)
+
+---
+
+# Tables and lists vs. Charts and graphs
+
+
+
+&lt;img src="1-GraphicsIntro_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+Visualizations can aid communication and make the data easier to perceive
+
+
+---
+class: center, middle, inverse
+
+# Survey of types of graphs
+
+---
+
+# Beginner
+
+
+.pull-left[
+**One Variable**
+- Discrete
+  - Bar Chart
+  - Pie Chart
+  
+- Continuous
+  - Stem and Leaf Plots
+  - Histograms
+  
+]
+
+.pull-right[
+**Two variables**
+- Continuous X, Continuous Y
+  - Scatterplots
+  
+- Maps
+]
+
+&lt;br/&gt;
+
+
+![](1-GraphicsIntro_files/figure-html/beg-1.png)&lt;!-- --&gt;
+
+
+---
+
+# Intermediate
+
+- Parallel Coordinate Plots
+- Mosaic Plots
+- Radar Charts
+- Heat Maps
+
+&lt;br/&gt;
+&lt;br/&gt;
+&lt;br/&gt;
+&lt;br/&gt;
+
+
+![](1-GraphicsIntro_files/figure-html/int-1.png)&lt;!-- --&gt;
+
+
+
+---
+
+# Advanced
+
+- Density Plots
+- Violin Plots
+- Social Network Plots
+
+&lt;br/&gt;
+&lt;br/&gt;
+&lt;br/&gt;
+&lt;br/&gt;
+
+![](1-GraphicsIntro_files/figure-html/adv-1.png)&lt;!-- --&gt;
+
+  
+---
+class: center, middle, inverse
+
+# Grammar of Graphics
+
+---
+
+# Grammar of Graphics
+
+
+
+What is the grammar of graphics?
+
+- Developed by Leland Wilkinson, is a set of grammatical rules for creating perceivable graphs
+
+- Rather than thinking about a limited set of graphs, think about graphical forms
+
+- Charts are instances of much more general objects
+  
+- An abstraction which makes thinking, reasoning, and communicating graphics easier
+
+![](images/grammar.png)
+???
+
+
+We often talk about types of graphs – bar plots, pie charts, scatterplots – as though they are unrelated, but most graphs share many aspects of their structure. 
+
+We can think of graphs as visual representations of (possibly transformed) data, along with labels (like axes and legends) that make the meaning clear.
+
+Much like the grammar of a language allows you to combine words into meaningful sentences, a grammar of graphics provides a structure to combine graphical elements into figures that display data in a meaningful way. 
+
+The grammar of graphics was developed in order to produce a flexible system that can create a rich variety of charts as simply as possible, without duplication of methods.
+
+A grammar provides a strong foundation for understanding a diverse range of graphics. A grammar may also help guide us on what a well-formed or correct graphic looks like, but there will still be many grammatically correct but nonsensical graphics
+---
+
+# Grammar of Graphics
+
+Different types of graphs may appear completely distinct, but in actuality share many common elements.
+
+By making different visual choices, you can use graphs to highlight different aspects of the same data. 
+
+For example, here are three ways of displaying the same data:
+
+
+&lt;img src="1-GraphicsIntro_files/figure-html/plots-3-1.png"  /&gt;
+
+
+???
+add in description of how they are different
+
+
+Different types of graphs may, at first glance, appear completely distinct. But in fact, graphs share many common elements, such as coordinate systems and using geometric shapes to represent data. 
+
+By making different visual choices (Cartesian or polar coordinates, points or lines or bars to represent data), you can use graphs to highlight different aspects of the same data. For example, here are three ways of displaying the same data:
+
+---
+
+# Grammar of Graphics
+
+Statistical graphic specifications are expressed in six statements:
+
+1) **DATA**: a set of data operations that create variables from datasets  
+
+2) **TRANS**: variable transformations  
+
+3) **SCALE**: scale transformations  
+
+4) **COORD**: a coordinate system  
+
+5) **ELEMENT**: graphs (points) and their aesthetic attributes (color)  
+
+6) **GUIDE**: one or more guides (axes, legends, etc.)  
+
+
+
+???
+The internal processes that constitute the syntax of the grammar of graphics
+&lt;br/&gt;
+&lt;br/&gt;
+
+![](images/grammar.png)
+
+
+a data flow diagram that shoes what the stages are, how they must be ordered, and waht data are required along the way
+
+provides us the ingredients and the dependencies among them, but it does not tell us how to assemble the ingredients
+
+The Recipe:
+
+1. Create variables – extract data into variables  
+2. apply algebra – 
+3. apply scales – ex. categorical
+4. compute statistics
+5. construct geometry
+6. apply coordinates - ex. for polar: send (x,y) to (r, theta)
+- by postponing the coordinnates operation as late in the pipeline as possible, we have made the system more flexible
+7. compute aesthetics
+- aesthetic functions translate a graph into a graphic, which is a set of drawing instructions for a renderer
+ex. position, color, label
+
+
+
+---
+
+# Limitations to the Grammar
+
+- tells us what words make up our graphical “sentences,” but offers no advice on how to write well
+
+- is not about good taste, practice, or graphic design
+
+- while very useful, the grammar is not all encompassing
+
+- does not include interactive graphics
+
+- does not include a few interesting and useful charts
+
+
+---
+class: center, middle, inverse
+
+# ggplot2
+## A layered grammar of graphics
+
+---
+
+## A layered grammar vs The Grammar of Graphics
+
+ggplot2 is based on The Grammar of Graphics
+
+
+![](images/layered-grammar.png)
+
+In both grammars, the components are independent, meaning that we can generally change a single component in isolation
+
+---
+
+# What is a graphic?
+
+ggplot2 uses the idea that you can build every graph with graphical components from three sources
+
+  1. the **data** , represented by **geoms** 
+  
+  2. the **scales** and **coordinate system**
+  
+  3. the **plot annotations**
+  
+- to display values, map variables in the data to visual properties of the geom (**aesthetics**) like **size**, **color**, and **x** and **y** locations
+
+
+
+![](images/build1.png)![](images/build2.png)
+---
+# ggplot2: A layered grammar
+
+The layered grammar defines the components of a plot as:
+
+1. a default dataset and set of mappings from variables to aesthetics 
+
+2. one or more layers, each layer having one geometric object, one statistical transformation, one position adjustment, and optionally, one dataset and set of aesthetic mappings  
+
+3. one scale for each aesthetic mapping used  
+
+4. a coordinate system 
+
+5. the facet specification 
+.pull-right[
+![](images/l.png)
+
+]
+
+???
+
+---
+
+# What is a Layer?
+
+
+- it determines the physical representation of the data
+  
+- a plot may have multiple layers
+  - usually all the layers on a plot have something in common, i.e. different views of the same data
+    
+- a layer is composed of four parts:
+    1. data and aesthetic mapping
+    2.  a statistical transformation (stat)
+    3. a geometric object (geom)
+    4. a position adjustment
+
+
+???
+
+
+---
+
+# ggplot2: A layered grammar
+
+&lt;img src="1-GraphicsIntro_files/figure-html/plots-4-1.png"  /&gt;
+
+
+&lt;style&gt;
+.column-left{
+  float: left;
+  width: 32%;
+  text-align: left;
+}
+.column-center{
+  display: inline-block;
+  width: 34%;
+  text-align: left;
+}
+.column-right{
+  float: right;
+  width: 32%;
+  text-align: left;
+}
+&lt;/style&gt;
+
+&lt;div class="column-left"&gt;
+
+data: diamonds  &lt;/br&gt;
+layer:  &lt;/br&gt;
+  mapping: x = cut, y = count, fill = cut  &lt;/br&gt;  
+  geom: bar    &lt;/br&gt;
+coordinates: Cartesian
+
+&lt;/div&gt;
+&lt;div class="column-center"&gt;
+
+data: diamonds  &lt;/br&gt;
+layer:  &lt;/br&gt;
+  - mapping: x = 1, y = count, fill = cut  &lt;/br&gt;
+  - geom: fill-bar  &lt;/br&gt;
+coordinates: Cartesian  &lt;/br&gt;
+
+&lt;/div&gt;
+&lt;div class="column-right"&gt;
+
+data: diamonds  &lt;/br&gt;
+layer:  &lt;/br&gt;
+  - mapping: x = 1, y = count, fill = cut  &lt;/br&gt;
+  - geom: fill-bar  &lt;/br&gt;
+coordinates: Polar  &lt;/br&gt;
+&lt;/div&gt;
+
+
+---
+
+class: center, middle, inverse
+
+# Make your first figure
+
+---
+
+
+
+
+
+
+# We begin with the data
 
 
 ```r
-source("../code/0-Setup.R")
-```
-
----
-
-## ggplot2 In a Nutshell
-
-- Package for statistical graphics
-- Developed by Hadley Wickham (An ISU Alumnus)
-- Designed to adhere to good graphical practices
-- Supports a wide variety plot types
-- Constructs plots using the concept of layers\medskip
-- http://ggplot2.tidyverse.org/ or Hadley's book *ggplot2: Elegant Graphics for Data Analysis}* for reference material
-
----
-
-## *qplot* Function
-
-The *qplot()* function stands for "quick plot"
-
-- Produces all plot types available with ggplot2
-- Most arguments have defaults unless you specify otherwise
-- Allows for plotting options within the function statement
-- Creates an object that can be saved
-- Plot layers can be added to modify plot complexity
-- Resembles *base* plotting more than the rest of ggplot2
-
----
-
-## *qplot* Structure
-
-The *qplot()* function has a basic syntax:
-
-*qplot(variables, plot type, dataset, options)*
-
-- *variables*: list of variables used for the plot (need this one)
-
-- *plot type*: specified with a *geom =* statement
-
-- *dataset*: specified with a *data =* statement (need this one)
-
-- *options*: there are so, so many options!
-
----
-
-## Diamonds Data
-
-We will explore the diamonds data set (preloaded along with ggplot2) using qplot for basic plotting.
-
-The data set was scraped from a diamond exchange company data base by Hadley.  It contains the prices and attributes of over 50,000 diamonds
-
----
-
-## Examining the Diamonds Data
-
-What does the data look like?
-
-Lets look at the top few rows of the diamond data frame to find out!
-
-
-```r
-head(diamonds)
-```
-
-```
-## # A tibble: 6 x 10
-##   carat cut       color clarity depth table price     x     y     z
-##   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 0.230 Ideal     E     SI2      61.5  55.0   326  3.95  3.98  2.43
-## 2 0.210 Premium   E     SI1      59.8  61.0   326  3.89  3.84  2.31
-## 3 0.230 Good      E     VS1      56.9  65.0   327  4.05  4.07  2.31
-## 4 0.290 Premium   I     VS2      62.4  58.0   334  4.20  4.23  2.63
-## 5 0.310 Good      J     SI2      63.3  58.0   335  4.34  4.35  2.75
-## 6 0.240 Very Good J     VVS2     62.8  57.0   336  3.94  3.96  2.48
-```
-
----
-
-## Basic Scatterplot
-
-Basic scatter plot of diamond price vs carat weight
-
-
-```r
-qplot(carat, price, geom = "point", data = diamonds)
-```
-
-![](1-GraphicsIntro_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
-
----
-
-## Another Scatterplot
-
-Scatter plot of diamond price vs carat weight showing versitility of options in qplot
-
-
-```r
-qplot(carat, log(price), geom = "point", data = diamonds, 
-	alpha = I(0.2), colour = color, 
-	main = "Log price by carat weight, grouped by color") + 
-    xlab("Carat Weight") + ylab("Log Price")
-```
-
-![](1-GraphicsIntro_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
-
----
-class: inverse
-
-## Your Turn 
-
-All of the your turns for this section will use the tips data set:
-
-
-```r
-tips &lt;- read.csv("http://heike.github.io/rwrks/02-r-graphics/data/tips.csv")
-```
-
-1. Use qplot to build a scatterplot of variables tips and total bill
-2. Use options within qplot to color points by smokers
-3. Clean up axis labels and add main plot title
-
----
-
-## Basic Histogram
-
-Basic histogram of carat weight
-
-
-```r
-qplot(carat, geom = "histogram", data = diamonds)
-```
-
-```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+ggplot(data = diamonds)
 ```
 
 ![](1-GraphicsIntro_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
 
 ---
 
-## Another Histogram
-
-Carat weight histograms faceted by cut
+# Then we specify the aesthetic mappings
 
 
 ```r
-qplot(carat, geom = "histogram", data = diamonds, binwidth = 0.2, facets = .~cut)
-```
-
-![](1-GraphicsIntro_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
-
----
-class: inverse
-## Your Turn 
-
-1. Create a new variable in tips data frame rate = tip / total bill
-2. Use qplot to create a histogram of rate
-3. Change the bin width on that histogram to 0.05
-4. Facet this histogram by size of the group
-
----
-
-## Basic Boxplot
-
-Side by side boxplot of diamond prices within cut groupings
-
-
-```r
-qplot(cut, price, geom = "boxplot", data = diamonds)
+ggplot(data = diamonds, aes(x = carat, y = price))
 ```
 
 ![](1-GraphicsIntro_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
-
+???
+or what relationships we want to see
 ---
 
-## Another Boxplot
-
-Side by side boxplot of log prices within cut groupings with jittered values overlay
+# Then we choose a geom
 
 
 ```r
-qplot(cut, log(price), geom = "boxplot", data = diamonds, 
-	main = "Boxplots of log Diamond Prices Grouped by Cut Quality") +
-	geom_jitter(alpha = I(.025))
+ggplot(data = diamonds, aes(x = carat, y = price)) +
+    geom_point()
 ```
 
-![](1-GraphicsIntro_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
-
----
-class: inverse
-
-## Your Turn 
-
-1. Make side by side boxplots of tipping rate for males and females
-2. Overlay jittered points for observed values onto this boxplot
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
 
 ---
 
-## Bar Plots
-
-To investigate bar plots we will switch over to the Titanic data set:
+# And add an aesthetic
 
 
 ```r
-titanic &lt;- as.data.frame(Titanic)
-```
-
-Data includes passenger characteristics and survival outcomes for those aboard the RMS Titanic's ill fated maiden voyage
-
----
-
-## Basic Bar Plot
-
-Basic bar plot of survival outcomes
-
-
-```r
-qplot(Survived, geom = "bar", data = titanic, weight = Freq)
-```
-
-![](1-GraphicsIntro_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
-
----
-
-## Another Bar Plot
-
-Bar plot faceted by gender and class
-
-
-```r
-qplot(Survived, geom = "bar", data = titanic, weight = Freq, 
-      facets = Sex~Class)
+ggplot(data = diamonds, aes(x = carat, y = price)) +
+    geom_point(aes(colour = cut))
 ```
 
 ![](1-GraphicsIntro_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
 
 ---
+# And add another layer...
+
+
+```r
+ggplot(data = diamonds, aes(x = carat, y = price)) +
+    geom_point(aes(colour = cut)) +
+   geom_smooth()
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+---
+
+# Mapping aesthetics vs setting aesthetics
+
+
+```r
+ggplot(data = diamonds, aes(x = carat, y = price) +
+    geom_point(aes(colour = cut), size = 2, alpha = .5) +
+    geom_smooth((aes(fill = cut), colour = "lightgrey")) 
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+---
+
+# Coordinate transformations can be specified
+
+
+```r
+ggplot(data = diamonds, aes(x = carat, y = price)) +
+    geom_point(aes(colour = cut), size = 2, alpha = .5) +
+    geom_smooth(aes(fill = cut)) +
+    scale_y_log10()
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+
+
+---
+
+# As can facet variables
+
+
+```r
+ggplot(data = diamonds, aes(x = carat, y = price)) +
+    geom_point(aes(colour = cut), size = 2, alpha = .5) +
+    geom_smooth() +
+    scale_y_log10() +
+    facet_wrap(~cut)
+```
+
+![](1-GraphicsIntro_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+
+
+---
+
 class: inverse
 
-## Your Turn 
+# Today's Outline
 
-1. Use the tips data to make a barplot for counts of smoking and non smoking customers
-2. Facet using day of week and time of day to view how smoking status changes for different meal times
+BASICS
+1. Why is data visualization important?
+2. Data Types, Formats, and Structures
+3. Formating your data: A tidy data discussion
+
+BUILDING PLOTS
+1. Geoms, Stats, Coordinates, and Faceting
+
+PERCEPTION
+1. Basics of cognitive visual perception
+2. What makes a good graphic?
+3. Aesthetics and scales in ‘ggplot2‘
+
+POLISHING PLOTS
+1. Setting themes
+2. Modifying elements of a plot  
+3. Making plots interactive!
+4. Saving your work
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({

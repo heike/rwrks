@@ -1,0 +1,144 @@
+---
+title: "Polishing your Plots"
+author: "Haley Jeppson, Joe Papio,<br>Sam Tyner"
+date: "June 13, 2017"
+output: 
+  revealjs::revealjs_presentation:
+        transition: fade
+        theme: white
+        highlight: zenburn
+        css: custom.css
+---
+
+```{r, echo=FALSE, message=FALSE}
+library(ggplot2)
+library(plotly)
+library(sf)
+library(albersusa)
+
+states <- map_data("state")
+```
+
+## Visual Appearance
+
+So far have mostly discussed how to get the data displayed the way you want, focusing on the
+essence of the plot.
+
+Themes give you a huge amount of control over the appearance of the plot, the choice of background colours, fonts and so on.
+
+Bonus: Can make plots *interactive* with `plotly`
+
+## Built-In Themes
+
+```{r, fig.height=2, fig.width=7}
+ggplot(data = diamonds, aes(x = carat, y = price)) + 
+  geom_point()
+myplot <- ggplot(data = diamonds, aes(x = carat, y = price)) + 
+  geom_point()
+```
+
+```{r, fig.height=2, fig.width=7}
+myplot + theme_bw()
+```
+
+## Setting Themes
+
+You can set a theme for all plots:
+
+```{r, eval=FALSE}
+theme_set(theme_bw())
+```
+
+We can also take a look at options for each theme:
+
+```{r}
+theme_bw()
+```
+
+## Plot Title
+
+You can change this for an individual plot
+
+```{r, fig.height=4, fig.width=7}
+myplot +
+    ggtitle("Price vs Carat for Diamonds")
+```
+
+## Elements
+
+You can make your own theme, or modify an existing one.
+
+Themes are made up of elements which can be one of:
+
+- element_line
+- element_text
+- element_rect
+- element_blank
+
+This gives you a lot of control over plot appearance.
+
+## Elements we can set
+
+- **Axis**: axis.line, axis.text.x, axis.text.y, axis.ticks, axis.title.x, axis.title.y
+- **Legend**: legend.background, legend.key, legend.text, legend.title
+- **Panel**: panel.background, panel.border, panel.grid.major, panel.grid.minor
+- **Strip**: strip.background, strip.text.x, strip.text.y
+
+## Modifying a plot
+
+```{r, fig.height=4, fig.width=7}
+my2ndplot <- myplot + 
+    ggtitle("Price vs Carat for Diamonds")
+my2ndplot + theme(plot.title = element_text(colour = "red"), 
+          axis.text.y = element_text(colour = "purple", angle=45))
+```
+
+## Removing Axes
+
+We could also choose to remove all axes (helpful for maps):
+
+```{r, fig.height=3, fig.width=7}
+my2ndplot + theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    axis.ticks.length = unit(0, "cm")
+)
+```
+
+## Saving your Work
+
+The `ggsave()` function will automatically save the last plot produced:
+
+```{r, eval=FALSE}
+ggplot(data = diamonds, aes(x = carat, y = price)) + 
+  geom_point()
+
+ggsave("diamonds.png")
+ggsave("diamonds.pdf")
+ggsave("diamonds.png", width = 6, height = 6)
+```
+
+We can also explicitly tell it which plot to save:
+
+```{r, eval=FALSE}
+ggsave("diamonds.png", plot = myplot, dpi = 72)
+```
+
+
+## Your Turn {data-background=#527a7a}
+
+1. Save a pdf of a scatterplot of price vs carat
+2. Open up the pdf in Adobe Acrobat (or another PDF Reader)
+3. Save a png of the same scatterplot
+
+## Making plots interactive!
+
+```{r eval = FALSE}
+# devtools::install_github("ropensci/plotly")
+library(plotly)
+dplot <- qplot(carat, price, data = diamonds[sample(53940, 1000),])
+ggplotly(dplot)
+```
+
+<iframe src="images/plotly_ex.html" style="width:500px;height:500px"></iframe>
+
