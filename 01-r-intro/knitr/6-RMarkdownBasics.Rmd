@@ -10,6 +10,23 @@ output:
       countIncrementalSlides: false
 ---
 
+---
+## What do you use to write? 
+
+- Microsoft Word 
+- LaTeX / Overleaf
+- Pages 
+- Google Docs 
+- Others? 
+
+>- How do you get your results from `R` into those documents? 
+
+## Another way...
+
+- RMarkdown documents (.Rmd)
+- Put results from `R` directly into your writing
+- Fosters reproducibility and transparency
+
 ## Hello R Markdown!
 
 <div align="center">
@@ -43,7 +60,7 @@ output:
 
 - Markup languages are designed produce documents from plain text.
 
-- Some of you may be familiar with *LaTeX*. This is another (less human friendly) markup language for creating pdf documents.
+- *LaTeX* is another (less human friendly) markup language for creating pdf documents.
 
 - *LaTeX* gives you much greater control, but it is restricted to pdf and has a **much** greater learning curve.
 
@@ -56,25 +73,25 @@ output:
 
 * The [new edition of the ggplot2 book](https://github.com/hadley/ggplot2-book/) uses it.
 
-* R package vignettes (for example, [I made this for plotly](http://cpsievert.github.io/plotly/pipe-dsl/)).
+* R package vignettes (for example, [this one for `plotly`](http://cpsievert.github.io/plotly/pipe-dsl/)).
 
-* [Many](http://lincolnmullen.com/projects/dh-r/index.html) great [tutorials](http://renkun.me/learnR/) use R markdown add-ons such as [Rgitbook](http://jason.bryer.org/Rgitbook/).
+* [Many](http://lincolnmullen.com/projects/dh-r/index.html) great [books](https://bookdown.org/yihui/blogdown/) use R markdown! You can write a whole book in RMarkdown with [`bookdown`](https://bookdown.org/)
 
-* People are [blogging with it](http://cpsievert.github.io/knitr-jekyll//2015/04/jekyll-tufte-servr.html).
+* People are [blogging with it](https://juliasilge.com/).
 
 ---
 ## What is *R* Markdown?
 
 * Straight from the [R Markdown home page](http://rmarkdown.rstudio.com/):
 
-> R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of **markdown** (an easy-to-write plain text format) **with embedded R code chunks** that are run so their output can be included in the final document. R Markdown documents are fully reproducible (they can be automatically regenerated whenever underlying R code or data changes).
+> R Markdown documents are fully reproducible. Use a productive *notebook interface* to weave together narrative text and code to produce elegantly formatted output. Use multiple languages including `R`, Python, and SQL.
 
 ---
 class: inverse
 
 ## Your Turn
 
-Study the first page of the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf). 
+Study the first page of the [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf). 
 
 Yes, the *entire* markdown syntax can be described in one page!
 
@@ -84,11 +101,7 @@ Can you think of anything that is missing from the syntax (that you might want w
 
 ## Markdown doesn't natively support...
 
-- Stuff you'd find in academic publications:
-
-    * Figure/table referencing (Well, sort of... you can use it for pdfs)
-
-- Many, many appearance related things (image/figure alignment, coloring, font families, etc.) 
+- Some appearance related things e.g. image/figure alignment and text coloring require HTML or LaTeX. 
 
 ---
 
@@ -98,9 +111,9 @@ Can you think of anything that is missing from the syntax (that you might want w
 
 - There are many efforts to extend Markdown (often requires a little css or html knowledge)
 
-- More features are being added daily
+- More features are added and more templates created all the time! 
 
-- Even more templates are being created
+- Example: see the `rticles` package for PLOS, PNAS, Elselvier, and many, many other journal templates.  
 
 ---
 
@@ -138,15 +151,6 @@ A code chunk is a concept borrowed from the [knitr](http://yihui.name/knitr/) pa
 
 ```{r chunk1, verbatim = TRUE}
 1 + 1
-```
-
-Want to run a command in another language?
-
-
-```{python, verbatim = TRUE}
-
-print( "a" + "b")
-
 ```
 
 ---
