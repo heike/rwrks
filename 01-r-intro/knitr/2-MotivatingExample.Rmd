@@ -208,7 +208,7 @@ We could compare the cumulative shedding values of each treatment group with a s
 
 ```{r, fig.height=5, fig.width=9}
 ggplot(final_shed) + 
-  geom_boxplot( aes(treatment, gain, fill = treatment))
+  geom_boxplot( aes(treatment, shedding, fill = treatment))
 ```
 
 ---
