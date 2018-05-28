@@ -17,21 +17,6 @@ data(baseball, package = "plyr")
 ```
 
 
-## Split-Apply-Combine
-
-- **Split** a dataset into many smaller sub-datasets
-- **Apply** some function to each sub-dataset to compute a result
-- **Combine** the results of the function calls into a one dataset
-
-<img src="images/sac.png" width=500></img>
-
----
-class: inverse, center, middle
-
-## The `dplyr` package
-
-
----
 ## The pipe operator `%>%`
 
 `f(x) %>% g(y)` is equivalent to `g(f(x), y)`
