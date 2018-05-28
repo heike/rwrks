@@ -40,11 +40,6 @@ library(tidyverse)
 
 ## Example: 
 
-
----
-
-## Example
-
 ---
 
 ## Basics of regular expressions

@@ -10,7 +10,6 @@ output:
       countIncrementalSlides: false
 ---
 
----
 ## What do you use to write? 
 
 - Microsoft Word 
@@ -21,11 +20,15 @@ output:
 
 >- How do you get your results from `R` into those documents? 
 
+---
+
 ## Another way...
 
 - RMarkdown documents (.Rmd)
 - Put results from `R` directly into your writing
 - Fosters reproducibility and transparency
+
+---
 
 ## Hello R Markdown!
 
@@ -34,6 +37,7 @@ output:
 </div>
 
 ---
+
 ## Choose your output format!
 
 <div align="center">
@@ -41,6 +45,7 @@ output:
 </div>
 
 ---
+
 ## *Why* R Markdown?
 
 - It's **simple**. Focus on writing, rather than debugging silly errors (I'm looking at you *LaTeX*).
@@ -129,19 +134,38 @@ Have a look at R Markdown presentations and templates.
 
 ---
 
-## Yaml Front Matter
+## Contents of a .Rmd
 
-The stuff at the top of the .Rmd file (called yaml front matter) tells **rmarkdown** what output format you want. 
+1. The YAML front matter
+2. The markdown
+3. Code chunks
+
+---
+
+## YAML Front Matter
+
+The stuff at the top of the .Rmd file (called YAML front matter) tells **rmarkdown** what output format you want. 
 
 ```
 ---
 title: "Untitled"
+author: "Sam Tyner"
 date: "May 16, 2016"
 output: html_document
 ---
 ```
 
-In this case, when you click "Knit HTML", RStudio calls `rmarkdown::render("file.Rmd", html_document())`. You can certainly change these default values (see the [source of this presentation](https://raw.githubusercontent.com/cpsievert/slides/gh-pages/rmd/index.Rmd)).
+In this case, when you click "Knit HTML", RStudio calls `rmarkdown::render("file.Rmd", html_document())`. You can certainly change these default values (see the [source of this presentation](https://raw.githubusercontent.com/cpsievert/slides/gh-pages/rmd/index.Rmd)). <- FIX  THIS LINK! 
+
+---
+
+## Markdown
+
+Any writing, written using the Markup syntax 
+
+```
+This is a really smart sentence you wrote. You also cite your work [@ref1]. You also emphasize *important* words. 
+```
 
 ---
 
@@ -194,6 +218,8 @@ summary(m) # output isn't very attractive
 ```
 
 ---
+
+## Formatting R output
 
 [pander](http://rapporter.github.io/pander/) is one great option.
 
