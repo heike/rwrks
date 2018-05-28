@@ -894,5 +894,5 @@ head(french_fries_long)
   </tr>
 </table>
 
-
+More on tidy data later! 
 
