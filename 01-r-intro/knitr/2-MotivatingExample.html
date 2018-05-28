@@ -58,123 +58,151 @@ This workshop will focus largely on a group of packages that live together under
 
 ---
 
-## Tips Dataset
+## Salmonella Shedding Data
 
-- Tips data set recorded by a server in a restaurant over a span of about 10 weeks
+- Fecal *Salmonella* shedding recorded over the course of 21 days
 
-- Server recorded several **variables** about groups they served:
+- Several **variables** were recorded for each pig at certain time points:
 
-    - Amount they were tipped
-    - Cost of the total bill
-    - Several characteristics about the groups being served
+    - Amount of *Salmonella* in feces (log10)
+    - Pig weight (kg)
+    - Dietary treatment group
     
-- **Primary Question**: How do these variable influence the amount being tipped?
+- **Primary Question**: Do the different dietary treatments affect *Salmonella* shedding?
 
 
 ---
 ## First look at data in R
 
-Lets use R to look at the top few rows of the tips data set. First, we load tip using `read_csv`:
+Lets use R to look at the top few rows of the *Salmonella* shedding data set. First, we load tip using `read_csv`:
 
 
 ```r
-tips &lt;- read_csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
+shed &lt;- read_csv("../data/daily_shedding.csv")
+  #read_csv("http://heike.github.io/rwrks/01-r-intro/data/daily_shedding.csv")
 ```
 
 Now, we use the `head` function to look at the first 6 rows of the data:
 
 
 ```r
-head(tips)
+head(shed)
 ```
 
 ```
-## # A tibble: 6 x 7
-##   total_bill   tip sex    smoker day   time    size
-##        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  &lt;int&gt;
-## 1       17.0  1.01 Female No     Sun   Dinner     2
-## 2       10.3  1.66 Male   No     Sun   Dinner     3
-## 3       21.0  3.50 Male   No     Sun   Dinner     3
-## 4       23.7  3.31 Male   No     Sun   Dinner     2
-## 5       24.6  3.61 Female No     Sun   Dinner     4
-## 6       25.3  4.71 Male   No     Sun   Dinner     4
+## # A tibble: 6 x 12
+##   pignum time_point pig_weight  temp pan_wt wet_wt Dry_wt_pan Dry_weight
+##    &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+## 1     77          2         NA   103   1.02  1.09        1.31     0.290 
+## 2     87          2         NA   104   1.04  1.02        1.33     0.290 
+## 3    122          2         NA   104   1.02  0.990       1.11     0.0900
+## 4    160          2         NA   104   1.09  1.00        1.36     0.270 
+## 5    191          2         NA   104   1.03  1.02        1.27     0.240 
+## 6    224          2         NA   103   1.08  1.00        1.39     0.310 
+## # ... with 4 more variables: percent_drymatter &lt;dbl&gt;,
+## #   daily_shedding &lt;dbl&gt;, treatment &lt;chr&gt;, shedding &lt;dbl&gt;
 ```
 
 ---
-## Tips Data: Attributes
+## *Salmonella* Shedding Data: Attributes
 
 How big is this data set and what types of variables are in each column?
 
 
 ```r
-str(tips)
+str(shed)
 ```
 
 ```
-## Classes 'tbl_df', 'tbl' and 'data.frame':	244 obs. of  7 variables:
-##  $ total_bill: num  17 10.3 21 23.7 24.6 ...
-##  $ tip       : num  1.01 1.66 3.5 3.31 3.61 4.71 2 3.12 1.96 3.23 ...
-##  $ sex       : chr  "Female" "Male" "Male" "Male" ...
-##  $ smoker    : chr  "No" "No" "No" "No" ...
-##  $ day       : chr  "Sun" "Sun" "Sun" "Sun" ...
-##  $ time      : chr  "Dinner" "Dinner" "Dinner" "Dinner" ...
-##  $ size      : int  2 3 3 2 4 4 2 4 2 2 ...
+## Classes 'tbl_df', 'tbl' and 'data.frame':	295 obs. of  12 variables:
+##  $ pignum           : int  77 87 122 160 191 224 337 345 419 458 ...
+##  $ time_point       : int  2 2 2 2 2 2 2 2 2 2 ...
+##  $ pig_weight       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ temp             : num  103 104 104 104 104 ...
+##  $ pan_wt           : num  1.02 1.04 1.02 1.09 1.03 1.08 1.03 1.09 1.07 1.04 ...
+##  $ wet_wt           : num  1.09 1.02 0.99 1 1.02 1 1.02 0.99 1.07 1.06 ...
+##  $ Dry_wt_pan       : num  1.31 1.33 1.11 1.36 1.27 1.39 1.3 1.24 1.38 1.26 ...
+##  $ Dry_weight       : num  0.29 0.29 0.09 0.27 0.24 0.31 0.27 0.15 0.31 0.22 ...
+##  $ percent_drymatter: num  26.61 28.43 9.09 27 23.53 ...
+##  $ daily_shedding   : num  5.3 5.7 13.22 6.75 5.86 ...
+##  $ treatment        : chr  "control" "control" "control" "control" ...
+##  $ shedding         : num  2.3 2.48 5.74 2.93 2.54 ...
 ##  - attr(*, "spec")=List of 2
-##   ..$ cols   :List of 7
-##   .. ..$ total_bill: list()
-##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
-##   .. ..$ tip       : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
-##   .. ..$ sex       : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ smoker    : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ day       : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ time      : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ size      : list()
+##   ..$ cols   :List of 12
+##   .. ..$ pignum           : list()
 ##   .. .. ..- attr(*, "class")= chr  "collector_integer" "collector"
+##   .. ..$ time_point       : list()
+##   .. .. ..- attr(*, "class")= chr  "collector_integer" "collector"
+##   .. ..$ pig_weight       : list()
+##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+##   .. ..$ temp             : list()
+##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+##   .. ..$ pan_wt           : list()
+##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+##   .. ..$ wet_wt           : list()
+##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+##   .. ..$ Dry_wt_pan       : list()
+##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+##   .. ..$ Dry_weight       : list()
+##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+##   .. ..$ percent_drymatter: list()
+##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+##   .. ..$ daily_shedding   : list()
+##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+##   .. ..$ treatment        : list()
+##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+##   .. ..$ shedding         : list()
+##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
 ##   ..$ default: list()
 ##   .. ..- attr(*, "class")= chr  "collector_guess" "collector"
 ##   ..- attr(*, "class")= chr "col_spec"
 ```
 
 ---
-## Tips: Variables
+## *Salmonella* Shedding: Variables
 
-Let's get a summary of the values for each variable in tips:
+Let's get a summary of the values for each variable:
 
 
 ```r
-summary(tips)
+summary(shed)
 ```
 
 ```
-##    total_bill         tip             sex               smoker         
-##  Min.   : 3.07   Min.   : 1.000   Length:244         Length:244        
-##  1st Qu.:13.35   1st Qu.: 2.000   Class :character   Class :character  
-##  Median :17.80   Median : 2.900   Mode  :character   Mode  :character  
-##  Mean   :19.79   Mean   : 2.998                                        
-##  3rd Qu.:24.13   3rd Qu.: 3.562                                        
-##  Max.   :50.81   Max.   :10.000                                        
-##      day                time                size     
-##  Length:244         Length:244         Min.   :1.00  
-##  Class :character   Class :character   1st Qu.:2.00  
-##  Mode  :character   Mode  :character   Median :2.00  
-##                                        Mean   :2.57  
-##                                        3rd Qu.:3.00  
-##                                        Max.   :6.00
+##      pignum        time_point     pig_weight         temp      
+##  Min.   :  6.0   Min.   : 0.0   Min.   : 9.48   Min.   :101.2  
+##  1st Qu.:119.0   1st Qu.: 2.0   1st Qu.:16.02   1st Qu.:102.4  
+##  Median :224.0   Median : 7.0   Median :19.78   Median :102.9  
+##  Mean   :234.7   Mean   : 8.8   Mean   :21.01   Mean   :102.9  
+##  3rd Qu.:361.0   3rd Qu.:14.0   3rd Qu.:25.29   3rd Qu.:103.4  
+##  Max.   :472.0   Max.   :21.0   Max.   :36.30   Max.   :105.2  
+##                                 NA's   :59      NA's   :118    
+##      pan_wt          wet_wt        Dry_wt_pan      Dry_weight   
+##  Min.   :1.000   Min.   :0.700   Min.   :1.110   Min.   :0.090  
+##  1st Qu.:1.030   1st Qu.:1.000   1st Qu.:1.300   1st Qu.:0.250  
+##  Median :1.050   Median :1.020   Median :1.320   Median :0.280  
+##  Mean   :1.054   Mean   :1.026   Mean   :1.322   Mean   :0.268  
+##  3rd Qu.:1.070   3rd Qu.:1.050   3rd Qu.:1.353   3rd Qu.:0.290  
+##  Max.   :1.120   Max.   :1.110   Max.   :1.460   Max.   :0.380  
+##  NA's   :122     NA's   :123     NA's   :123     NA's   :123    
+##  percent_drymatter daily_shedding    treatment            shedding     
+##  Min.   : 9.091    Min.   : 0.000   Length:295         Min.   : 0.000  
+##  1st Qu.:24.292    1st Qu.: 0.000   Class :character   1st Qu.: 1.699  
+##  Median :26.923    Median : 3.912   Mode  :character   Median :13.904  
+##  Mean   :26.109    Mean   : 3.765                      Mean   :17.423  
+##  3rd Qu.:28.431    3rd Qu.: 5.521                      3rd Qu.:30.893  
+##  Max.   :36.893    Max.   :13.218                      Max.   :66.207  
+##  NA's   :123
 ```
 
 ---
 ## Scatterplots
 
-Lets look at the relationship between total bill and tip value.  
+Lets look at the relationship between time point and *Salmonella* shedding.  
 
 
 ```r
-ggplot(tips, aes(x = total_bill, y = tip)) + geom_point()
+ggplot(shed, aes(x=time_point, y=shedding)) + geom_point()
 ```
 
 ![](2-MotivatingExample_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
@@ -182,119 +210,134 @@ ggplot(tips, aes(x = total_bill, y = tip)) + geom_point()
 ---
 ## More Scatterplots
 
-Color the points by lunch and dinner groups
+Color the points by treatment groups
 
 
 ```r
-ggplot(tips, aes(x = total_bill, y = tip, colour = time)) + geom_point()
+ggplot(shed, aes(x=time_point, y=shedding, colour = treatment)) + geom_point()
 ```
 
 ![](2-MotivatingExample_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
 
 ---
-## Even More Scatterplots
 
-Add linear regression line to the plot
+## More Scatterplots
+
+Switch to lines for easier reading
 
 
 ```r
-ggplot(tips, aes(x = total_bill, y = tip)) + 
-  geom_point() + 
-  geom_smooth(method = "lm")
+ggplot(shed, aes(x=time_point, y=shedding, colour = treatment)) + geom_line(aes(group=pignum))
 ```
 
 ![](2-MotivatingExample_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 
 ---
-## Rate of Tipping
+## Even More Plots
 
-Tipping is generally based on a percentage of the total bill. 
-
-We will make a new variable in the data: `tipping rate = tip / total bill`
+Add facetting
 
 
 ```r
-tips &lt;- tips %&gt;% 
-  mutate(rate = tip / total_bill)
+ggplot(shed, aes(x=time_point, y=shedding, color=treatment)) + 
+  geom_line(aes(group=pignum)) + 
+  facet_wrap(~treatment)
+```
 
-summary(tips$rate)
+![](2-MotivatingExample_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+---
+## Variable Creation and Data Filtering
+
+We will make a new variable in the data: `gain = weight at day 21 - weight at day 0`.
+
+We will then filter the data to only include the final values.
+
+
+```r
+final_shed &lt;- shed %&gt;% 
+  group_by(pignum) %&gt;% 
+  mutate(gain = pig_weight[time_point == 21] - pig_weight[time_point == 0]) %&gt;% filter(time_point == 21) %&gt;% ungroup()
+
+summary(final_shed$gain)
 ```
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## 0.03564 0.12913 0.15477 0.16080 0.19148 0.71034
+##    8.22   12.40   14.14   14.16   16.04   18.86
 ```
 
 ---
-## Tipping Rate Histogram
+## Histogram
 
-Lets look distribution of tipping rate values with a histogram
+Lets look distribution of the final shedding values with a histogram
 
 
 ```r
-ggplot(tips) + geom_histogram(aes(x = rate), binwidth = .01)
+ggplot(final_shed) + geom_histogram(aes(x = shedding))
 ```
 
-![](2-MotivatingExample_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](2-MotivatingExample_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
 
 ---
-## Someone is an AMAZING tipper...
+## One pig did not shed at all...
 
-One person tipped over 70%, who are they?
+which pig and what treatment did it receive?
 
 
 ```r
-tips[which.max(tips$rate),]
+final_shed[which.min(final_shed$shedding), - c(2:9)]
 ```
 
 ```
-## # A tibble: 1 x 8
-##   total_bill   tip sex   smoker day   time    size  rate
-##        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt;
-## 1       7.25  5.15 Male  Yes    Sun   Dinner     2 0.710
+## # A tibble: 1 x 5
+##   pignum daily_shedding treatment shedding  gain
+##    &lt;int&gt;          &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;
+## 1     97              0 RPS              0  12.9
 ```
 
 ---
-## Rates by Gender
+## Shedding by Treatment
 
-Look at the average tipping rate for men and women seperately
+Look at the average cumulative shedding value for each treatment seperately
 
-.pull-left[
-Using base `R`:
 
 
 ```r
-mean(tips$rate[tips$sex == "Female"])
+# Using base `R`:
+median(final_shed$shedding[final_shed$treatment == "control"])
 ```
 
 ```
-## [1] 0.1664907
+## [1] 44.42518
 ```
 
 ```r
-mean(tips$rate[tips$sex == "Male"])
+# then repeat for each treatment. Or ...
 ```
 
-```
-## [1] 0.1576505
-```
-]
-.pull-right[
-Using `tidyverse`:
 
 
 ```r
-tips %&gt;% 
-  group_by(sex) %&gt;% 
-  summarize(mean_rate = mean(rate))
+# Using `tidyverse`:
+final_shed %&gt;%  group_by(treatment) %&gt;% 
+  summarise(med_shed = median(shedding))
 ```
 
 ```
-## # A tibble: 2 x 2
-##   sex    mean_rate
-##   &lt;chr&gt;      &lt;dbl&gt;
-## 1 Female     0.166
-## 2 Male       0.158
+## # A tibble: 6 x 2
+##   treatment med_shed
+##   &lt;chr&gt;        &lt;dbl&gt;
+## 1 Acid          35.4
+## 2 Bglu          37.6
+## 3 control       44.4
+## 4 RCS           39.4
+## 5 RPS           29.1
+## 6 Zn+Cu         44.1
 ```
 ]
 ---
@@ -304,60 +347,59 @@ There is a difference but is it statistically significant?
 
 
 ```r
-t.test(rate ~ sex, data = tips)
+wilcox.test(shedding ~ treatment, data = final_shed,
+            subset = treatment %in% c("control", "RPS"))
 ```
 
 ```
 ## 
-## 	Welch Two Sample t-test
+## 	Wilcoxon rank sum test
 ## 
-## data:  rate by sex
-## t = 1.1433, df = 206.76, p-value = 0.2542
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -0.006404119  0.024084498
-## sample estimates:
-## mean in group Female   mean in group Male 
-##            0.1664907            0.1576505
+## data:  shedding by treatment
+## W = 75, p-value = 0.01327
+## alternative hypothesis: true location shift is not equal to 0
 ```
 
 ---
 ## Boxplots
 
-Perhaps we are interested in if smokers tip at a different rate than non-smokers.  We could compare the rate values of each group with a side by side boxplot!
+We could compare the cumulative shedding values of each treatment group with a side by side boxplot
 
 
 ```r
-ggplot(tips) + geom_boxplot(aes(smoker, rate))
-```
-
-![](2-MotivatingExample_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
-
-&lt;!--
-## Boxplots Again
-
-What about the difference between male and female smokers and non-smokers?
-
-
-```r
-qplot(smoker, rate, geom = "boxplot", data = tips, color = sex)
+ggplot(final_shed) + 
+  geom_boxplot( aes(treatment, gain, fill = treatment))
 ```
 
 ![](2-MotivatingExample_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
---&gt; 
+
+---
+## Boxplots Again
+
+Alternatively, we could use the original data to compare the daily shedding values of each treatment group with a side by side boxplot over time
+
+
+```r
+shed %&gt;% filter(time_point != 0) %&gt;% ggplot() + 
+  geom_boxplot( aes(treatment, daily_shedding, fill = treatment), position = position_dodge2(preserve = 'total'))  + 
+  facet_wrap(~time_point)
+```
+
+![](2-MotivatingExample_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+
 
 ---
 class: inverse
 
 ## Your Turn 
 
-Try playing with chunks of code from this session to further investigate the tips data:
+Try playing with chunks of code from this session to further investigate the *Salmonella* shedding data:
 
-1. Get a summary of the total bill values
+1. Get a summary of the daily shedding values (use the `shed` data set)
 
-2. Make side by side boxplots of tip rates for different days of the week
+2. Make side by side boxplots of final weight gain by treatment group (use the `final_shed` data set)
 
-3. Find the average tip value for smokers
+3. Compute a wilcox test for control vs. the "Bglu" treatment group
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
