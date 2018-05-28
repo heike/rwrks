@@ -53,134 +53,142 @@ This workshop will focus largely on a group of packages that live together under
 
 ---
 
-## Tips Dataset
+## Salmonella Shedding Data
 
-- Tips data set recorded by a server in a restaurant over a span of about 10 weeks
+- Fecal *Salmonella* shedding recorded over the course of 21 days
 
-- Server recorded several **variables** about groups they served:
+- Several **variables** were recorded for each pig at certain time points:
 
-    - Amount they were tipped
-    - Cost of the total bill
-    - Several characteristics about the groups being served
+    - Amount of *Salmonella* in feces (log10)
+    - Pig weight (kg)
+    - Dietary treatment group
     
-- **Primary Question**: How do these variable influence the amount being tipped?
+- **Primary Question**: Do the different dietary treatments affect *Salmonella* shedding?
 
 
 ---
 ## First look at data in R
 
-Lets use R to look at the top few rows of the tips data set. First, we load tip using `read_csv`:
+Lets use R to look at the top few rows of the *Salmonella* shedding data set. First, we load tip using `read_csv`:
 
 ```{r message=FALSE, warning=FALSE}
-tips <- read_csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
+shed <- read_csv("http://heike.github.io/rwrks/01-r-intro/data/daily_shedding.csv")
 ```
 
 Now, we use the `head` function to look at the first 6 rows of the data:
 
 ```{r}
-head(tips)
+head(shed)
 ```
 
 ---
-## Tips Data: Attributes
+## *Salmonella* Shedding Data: Attributes
 
 How big is this data set and what types of variables are in each column?
 
 ```{r}
-str(tips)
+str(shed)
 ```
 
 ---
-## Tips: Variables
+## *Salmonella* Shedding: Variables
 
-Let's get a summary of the values for each variable in tips:
+Let's get a summary of the values for each variable:
 
 ```{r}
-summary(tips)
+summary(shed)
 ```
 
 ---
 ## Scatterplots
 
-Lets look at the relationship between total bill and tip value.  
+Lets look at the relationship between time point and *Salmonella* shedding.  
 
-```{r, fig.height=4, fig.width=7}
-ggplot(tips, aes(x = total_bill, y = tip)) + geom_point()
+```{r, fig.height=5, fig.width=8}
+ggplot(shed, aes(x=time_point, y=shedding)) + geom_point()
 ```
 
 ---
 ## More Scatterplots
 
-Color the points by lunch and dinner groups
+Color the points by treatment groups
 
-```{r, fig.height=4, fig.width=7}
-ggplot(tips, aes(x = total_bill, y = tip, colour = time)) + geom_point()
+```{r, fig.height=5, fig.width=9}
+ggplot(shed, aes(x=time_point, y=shedding, colour = treatment)) + geom_point()
 ```
 
 ---
-## Even More Scatterplots
 
-Add linear regression line to the plot
+## More Scatterplots
 
-```{r, fig.height=4, fig.width=7}
-ggplot(tips, aes(x = total_bill, y = tip)) + 
-  geom_point() + 
-  geom_smooth(method = "lm")
+Switch to lines for easier reading
 
+```{r, fig.height=5, fig.width=9}
+ggplot(shed, aes(x=time_point, y=shedding, colour = treatment)) + geom_line(aes(group=pignum))
 ```
 
 ---
-## Rate of Tipping
+## Even More Plots
 
-Tipping is generally based on a percentage of the total bill. 
+Add facetting
 
-We will make a new variable in the data: `tipping rate = tip / total bill`
+```{r, fig.height=5, fig.width=9}
+ggplot(shed, aes(x=time_point, y=shedding, color=treatment)) + 
+  geom_line(aes(group=pignum)) + 
+  facet_wrap(~treatment)
+```
+
+---
+## Variable Creation and Data Filtering
+
+We will make a new variable in the data: `gain = weight at day 21 - weight at day 0`.
+
+We will then filter the data to only include the final values.
 
 ```{r}
-tips <- tips %>% 
-  mutate(rate = tip / total_bill)
+final_shed <- shed %>% 
+  group_by(pignum) %>% 
+  mutate(gain = pig_weight[time_point == 21] - pig_weight[time_point == 0]) %>% filter(time_point == 21) %>% ungroup()
 
-summary(tips$rate)
+summary(final_shed$gain)
 ```
 
 ---
-## Tipping Rate Histogram
+## Histogram
 
-Lets look distribution of tipping rate values with a histogram
+Lets look distribution of the final shedding values with a histogram
 
-```{r, fig.height=4, fig.width=7}
-ggplot(tips) + geom_histogram(aes(x = rate), binwidth = .01)
+```{r, fig.height=5, fig.width=8}
+ggplot(final_shed) + geom_histogram(aes(x = shedding))
 ```
 
 ---
-## Someone is an AMAZING tipper...
+## One pig did not shed at all...
 
-One person tipped over 70%, who are they?
+which pig and what treatment did it receive?
 
 ```{r}
-tips[which.max(tips$rate),]
+final_shed[which.min(final_shed$shedding), - c(2:9)]
 ```
 
 ---
-## Rates by Gender
+## Shedding by Treatment
 
-Look at the average tipping rate for men and women seperately
+Look at the average cumulative shedding value for each treatment seperately
 
-.pull-left[
-Using base `R`:
 
 ```{r}
-mean(tips$rate[tips$sex == "Female"])
-mean(tips$rate[tips$sex == "Male"])
+# Using base `R`:
+median(final_shed$shedding[final_shed$treatment == "control"])
+# then repeat for each treatment. Or ...
+
 ```
-]
-.pull-right[
-Using `tidyverse`:
+
 
 ```{r}
-tips %>% 
-  group_by(sex) %>% 
-  summarize(mean_rate = mean(rate))
+# Using `tidyverse`:
+final_shed %>%  group_by(treatment) %>% 
+  summarise(med_shed = median(shedding))
 ```
 ]
 ---
@@ -189,38 +197,41 @@ tips %>%
 There is a difference but is it statistically significant?
 
 ```{r}
-t.test(rate ~ sex, data = tips)
+wilcox.test(shedding ~ treatment, data = final_shed,
+            subset = treatment %in% c("control", "RPS"))
 ```
 
 ---
 ## Boxplots
 
-Perhaps we are interested in if smokers tip at a different rate than non-smokers.  We could compare the rate values of each group with a side by side boxplot!
+We could compare the cumulative shedding values of each treatment group with a side by side boxplot
 
-```{r, fig.height=3, fig.width=7}
-ggplot(tips) + geom_boxplot(aes(smoker, rate))
-
+```{r, fig.height=5, fig.width=9}
+ggplot(final_shed) + 
+  geom_boxplot( aes(treatment, shedding, fill = treatment))
 ```
 
-<!--
+---
 ## Boxplots Again
 
-What about the difference between male and female smokers and non-smokers?
+Alternatively, we could use the original data to compare the daily shedding values of each treatment group with a side by side boxplot over time
 
-```{r, fig.height=3, fig.width=7}
-qplot(smoker, rate, geom = "boxplot", data = tips, color = sex)
+```{r, fig.height=4, fig.width=9}
+shed %>% filter(time_point != 0) %>% ggplot() + 
+  geom_boxplot( aes(treatment, daily_shedding, fill = treatment), position = position_dodge2(preserve = 'total'))  + 
+  facet_wrap(~time_point)
 ```
---> 
+
 
 ---
 class: inverse
 
 ## Your Turn 
 
-Try playing with chunks of code from this session to further investigate the tips data:
+Try playing with chunks of code from this session to further investigate the *Salmonella* shedding data:
 
-1. Get a summary of the total bill values
+1. Get a summary of the daily shedding values (use the `shed` data set)
 
-2. Make side by side boxplots of tip rates for different days of the week
+2. Make side by side boxplots of final weight gain by treatment group (use the `final_shed` data set)
 
-3. Find the average tip value for smokers
+3. Compute a wilcox test for control vs. the "Bglu" treatment group 
