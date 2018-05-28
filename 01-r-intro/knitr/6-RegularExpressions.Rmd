@@ -40,8 +40,7 @@ library(tidyverse)
 - R language provides this capability through `grep`, `gsub`, ...
 
 ---
-
-## Example: 
+## Example
 
 ```{r}
 # http://heike.github.io/rwrks/01-r-intro/data/meta.txt")

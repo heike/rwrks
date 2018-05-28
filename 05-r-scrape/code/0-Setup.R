@@ -6,3 +6,5 @@ install.packages("ggrepel")
 library(rvest)
 library(httr)
 library(XML2R)
+
+install.packages(c("rvest", "httr", "tidytext"))

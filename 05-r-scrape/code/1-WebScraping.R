@@ -39,7 +39,7 @@ library(tidyverse)
 library(rvest)
 myhtml <- read_html(myurl)
 myhtml
-
+# .summary_text
 ## ----getdesc-------------------------------------------------------------
 myhtml %>% html_nodes(".summary_text") %>% html_text()
 
@@ -47,6 +47,8 @@ myhtml %>% html_nodes(".summary_text") %>% html_text()
 myhtml %>% html_nodes("table") %>% html_table(header = TRUE)
 
 ## ----savetidy, message = FALSE, warning = FALSE--------------------------
+install.packages("stringr")
+install.packages("magrittr")
 library(stringr)
 library(magrittr)
 mydat <- myhtml %>% 
@@ -55,6 +57,7 @@ mydat <- myhtml %>%
   html_table(header = TRUE)
 mydat <- mydat[,c(2,4)]
 names(mydat) <- c("Actor", "Role")
+head(mydat)
 mydat <- mydat %>% 
   mutate(Actor = Actor,
          Role = str_replace_all(Role, "\n  ", ""))
@@ -107,7 +110,19 @@ myhtml %>%
 ## ----childex-------------------------------------------------------------
 myhtml %>% 
   html_children() %>% 
+  html_children() %>% 
+  html_children() %>% 
+  html_children()
   html_name()
+  
+# Jimmy's your turn
+  
+myurl <- "https://en.wikipedia.org/wiki/Neil_Patrick_Harris"
+
+read_html(myurl) %>% 
+  html_nodes("table") %>%
+  extract2(6) %>% 
+  html_table()
 
 ## ----getyears------------------------------------------------------------
 url <- "http://avalon.law.yale.edu/subject_menus/inaug.asp"
@@ -135,6 +150,11 @@ urlstump <- "http://avalon.law.yale.edu/"
 inaugurls <- paste0(urlstump, str_replace(inaugadds_adds, "../", ""))
 all_inaugs_tidy$url <- inaugurls
 head(all_inaugs_tidy)
+
+inaugurls[1] %>% read_html() %>%
+  html_nodes("p") %>% 
+  html_text() -> address
+
 
 ## ----functiongetspeech, cache=TRUE, message = FALSE, warning = FALSE-----
 get_inaugurations <- function(url){
@@ -202,6 +222,11 @@ ggplot(presidential_wordtotals) +
 ## ------------------------------------------------------------------------
 library(httr)
 sam <- GET("https://api.github.com/users/sctyner")
+sam$url
+sam$status_code
+sam$all_headers
+sam$cookies
+sam$content
 content(sam)[c("name", "company")]
 
 ## ------------------------------------------------------------------------
@@ -233,6 +258,8 @@ tabs <- collapse_obs(obs)
 left_join(as.data.frame(tabs[[1]]), as.data.frame(tabs[[2]])) 
 
 ## ------------------------------------------------------------------------
+install.packages("jsonlite")
+
 library(jsonlite)
 mario <- fromJSON("http://bit.ly/mario-json")
 str(mario) 
@@ -244,7 +271,15 @@ mario$vehicles
 ## ------------------------------------------------------------------------
 vehicles <- rbind(mario$vehicles[[1]], mario$vehicles[[2]])
 vehicles <- cbind(driver = mario$driver, vehicles)
-
+vehicles
 ## ------------------------------------------------------------------------
 workshop_commits_raw <- fromJSON("https://api.github.com/repos/heike/rwrks/commits")
+workshop_commits_raw$commit %>% glimpse()
+
+workshop_commits_raw$commit$author %>% glimpse()
+
+library(ggplot2)
+
+qplot(workshop_commits_raw$commit$author$name, fill = workshop_commits_raw$commit$author$name)
+
 
