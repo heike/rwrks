@@ -127,7 +127,7 @@ Can you think of anything that is missing from the syntax (that you might want w
 Have a look at R Markdown presentations and templates.
 
 <div align="center">
-  <img src="images/pres.png" width=600 height=300>
+  <img src="images/pres.png" height=300>
 </div>
 
 **Pro tip**: run `devtools::install_github("rstudio/rticles")` to get more templates
@@ -164,7 +164,11 @@ In this case, when you click "Knit HTML", RStudio calls `rmarkdown::render("file
 Any writing, written using the Markup syntax 
 
 ```
-This is a really smart sentence you wrote. You also cite your work [@ref1]. You also emphasize *important* words. 
+This is a really smart sentence you wrote. 
+
+You also cite your work [@ref1]. 
+
+You also emphasize *important* words. 
 ```
 
 ---
@@ -173,9 +177,12 @@ This is a really smart sentence you wrote. You also cite your work [@ref1]. You 
 
 A code chunk is a concept borrowed from the [knitr](http://yihui.name/knitr/) package (which, in turn, was inspired by [literate programming](http://en.wikipedia.org/wiki/Literate_programming)). In .Rmd files, you can start/end a code chunk with three back-ticks.
 
-```{r chunk1, verbatim = TRUE}
+````
+```{r, eval=TRUE}`r ''`
 1 + 1
 ```
+2
+````
 
 ---
 
@@ -210,48 +217,39 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
 ---
-## Formatting R output
+## Formatting Tabular Data
 
-```{r}
-m <- lm(mpg ~ disp, data = mtcars)
-summary(m) # output isn't very attractive
+The function `knitr::kable()` will render a markdown table from a data frame: 
+
+````
+```{r, , results='asis'}`r ''`
+dat <- head(cars)
+knitr::kable(dat)
+```
+````
+
+shows as 
+
+```{r, echo = FALSE, results='asis'}
+dat <- head(cars)
+knitr::kable(dat, format = "html")
 ```
 
 ---
 
 ## Formatting R output
 
-[pander](http://rapporter.github.io/pander/) is one great option.
+Other options: 
 
-```{r}
-library(pander)
-pander(m)
-```
+- [pander](http://rapporter.github.io/pander/) 
+- [xtable](https://CRAN.R-project.org/package=xtable)
 
----
-
-```{r}
-a <- anova(m)
-a
-```
-
----
-
-```{r}
-pander(a)
-```
-
----
-
-## Pander knows about a lot of stuff!
-
-```{r}
-methods(pander)
-```
 
 ---
 class: inverse
 
 ## Your Turn
 
-* Look through the list of pander methods. Can you apply any of the methods that we haven't discussed? We just saw `pander.lm` and `pander.anova`.
+- Take one plot from a previous set of slides from today and create an RMarkdown document that contains some written content in addition to the plot. Explore the many chunk options for plots to do this. 
+
+- **Bonus:** Use `knitr::include_graphics()` to include an image from your computer or the web from within an R code chunk. 

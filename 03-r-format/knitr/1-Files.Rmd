@@ -10,6 +10,10 @@ output:
       countIncrementalSlides: false
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message= FALSE, warning = FALSE)
+```
+
 ## Data in Excel
 
 - Formats xls and csv - what's the difference?
@@ -25,47 +29,38 @@ output:
 ## Gas Prices in the Midwest
 
 ```{r message=FALSE, warning=FALSE}
-midwest <- readr::read_csv("http://heike.github.io/rwrks/03-r-format/data/midwest.csv")
+library(readr)
+midwest <- read_csv("http://heike.github.io/rwrks/03-r-format/data/midwest.csv")
 head(midwest)
 ```
 
----
-## Gas Prices
-
-```{r}
-str(midwest)
-```
-
-There is clearly some work to be done...
 
 ---
-## `read.csv` vs. `read.table`
+## `read_csv` vs. `read_*`
 
-`read.csv` is really just a wrapper for `read.table` with certain parameters set:
+`read_csv` is just one way to read a file using the `readr` package: 
 
-```{r}
-read.csv
-```
-
-So to properly read in this data, it's probably best to use `read.table` directly
-
-```{r, eval=FALSE}
-?read.table
-```
+- `read_delim`: the most generic function. Use the `delim` argument to read a file with any type of delimiter 
+- `read_tsv`: read tab separated files 
+- `read_lines`: read a file into a vector that has one element per line of the file
+- `read_file`: read a file into a single character element
+- `read_table`: read a file separated by space
 
 ---
 class: inverse
 ## Your Turn 
 
-Have a look at the parameters of read.table (?read.table) to solve the following problems:
+Have a look at the parameters of `read_csv` to solve the following problems:
 
 1. Read the first two lines of the file into an object called `midwest_names`
 
 2. Read everything EXCEPT the first two lines into an object called `midwest_data`
 
+Hint: Visit http://heike.github.io/rwrks/03-r-format/data/midwest.csv to download the data and look at it in Excel to help figure out what the issue is. 
+
 ```{r, echo=FALSE}
-midwest_names <- read.table("http://heike.github.io/rwrks/03-r-format/data/midwest.csv", nrows = 2, sep = ",", stringsAsFactors = FALSE)
-midwest_data <- read.table("http://heike.github.io/rwrks/03-r-format/data/midwest.csv", skip = 2, sep = ",", stringsAsFactors = FALSE)
+midwest_names <- read_csv("http://heike.github.io/rwrks/03-r-format/data/midwest.csv", n_max= 2, col_names = FALSE)
+midwest_data <- read_csv("http://heike.github.io/rwrks/03-r-format/data/midwest.csv", skip = 2, col_names = FALSE)
 ```
 
 ---
@@ -73,22 +68,23 @@ midwest_data <- read.table("http://heike.github.io/rwrks/03-r-format/data/midwes
 ## Quick Lesson in Data Cleaning
 
 ```{r, warning=FALSE, message=FALSE}
-values <- c(midwest_data$V3, midwest_data$V5, midwest_data$V7, 
-            midwest_data$V9, midwest_data$V11)
-dates <- c(paste(midwest_data$V1, midwest_data$V2, sep = "-"), 
-           paste(midwest_data$V1, midwest_data$V4, sep = "-"),
-           paste(midwest_data$V1, midwest_data$V6, sep = "-"),
-           paste(midwest_data$V1, midwest_data$V8, sep = "-"),
-           paste(midwest_data$V1, midwest_data$V10, sep = "-"))
+library(lubridate)
+library(tidyverse)
+values <- c(midwest_data$X3, midwest_data$X5, midwest_data$X7, 
+            midwest_data$X9, midwest_data$X11)
+dates <- c(paste(midwest_data$X1, midwest_data$X2, sep = "-"), 
+           paste(midwest_data$X1, midwest_data$X4, sep = "-"),
+           paste(midwest_data$X1, midwest_data$X6, sep = "-"),
+           paste(midwest_data$X1, midwest_data$X8, sep = "-"),
+           paste(midwest_data$X1, midwest_data$X10, sep = "-"))
 
 dates <- dates[!is.na(values)]
 values <- values[!is.na(values)]
 
-library(lubridate)
 dates <- ymd(dates)
 
-midwest_gas <- data.frame(date = dates, price = values)
-midwest_gas <- midwest_gas[with(midwest_gas, order(date)), ]
+midwest_gas <- data_frame(date = dates, price = values)
+midwest_gas <- arrange(midwest_gas, dates)
 ```
 
 ---

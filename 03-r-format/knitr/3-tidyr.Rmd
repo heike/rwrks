@@ -16,17 +16,13 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 data(french_fries, package="reshape2")
 ```
-class: inverse, middle, center
 
-## The `tidyr` package
-
----
 ## What is tidy data?
 
 > Happy families are all alike; every unhappy family is unhappy in its own way.<br>
 Leo Tolstoy
 
-- Resource: follow along tidyr vignette 
+- Resource: follow along `tidyr` vignette 
 
 - available as `vignette("tidy-data", package="tidyr")`
 
@@ -281,10 +277,6 @@ img <- readPNG("images/tablelong2.png")
 ## Sources of Messiness
 
 
- *Happy families are all alike; every unhappy family is unhappy in its own way. - Leo Tolstoy*  
-<br/>
---
-
 **Five main ways tables of data tend not to be tidy:**
 
 1. Column headers are values, not variable names.
@@ -424,10 +416,14 @@ Very few functions are needed to tidy data:
 
 ## Untidy data
 
-```{r, echo=TRUE}
-data(french_fries, package="reshape2")
+```{r, echo=TRUE, eval=FALSE}
+french_fries <- read_csv("frenchfries.csv")
 head(french_fries)
+```
 
+```{r, echo=TRUE}
+french_fries <- read_csv("../data/frenchfries.csv")
+head(french_fries)
 ```
 
 ---
