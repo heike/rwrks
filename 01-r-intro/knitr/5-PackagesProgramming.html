@@ -50,6 +50,15 @@ class: center, middle, inverse, title-slide
 
 - `knitr`: integrate LaTeX, HTML, or Markdown with R for easy reproducible research
 
+- `vegan`: Ordination methods, diversity analysis and other
+functions for community and vegetation ecologists.
+
+- `phyloseq`: Handling and analysis of high-throughput microbiome census data
+
+- `ggtree`: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data
+
+- `Biostrings`: Efficient manipulation of biological strings
+
 &lt;!-- this needs updated!! --&gt;
 
 ---
@@ -130,31 +139,31 @@ for (i in 1:3) {
 
 
 ```r
-tips &lt;- read.csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
+final_shed &lt;- read.csv("http://heike.github.io/rwrks/01-r-intro/data/final_shedding.csv")
 
-id &lt;- c("total_bill", "tip", "size")
+id &lt;- c("pig_weight", "shedding", "daily_shedding")
 for (colname in id) {
     print(colname)
 }
 ```
 
 ```
-## [1] "total_bill"
-## [1] "tip"
-## [1] "size"
+## [1] "pig_weight"
+## [1] "shedding"
+## [1] "daily_shedding"
 ```
 
 ```r
 # this does NOT work if the csv is read in using read_csv
 for(colname in id) {
-    print(paste(colname, mymean(tips[, colname])))
+    print(paste(colname, mymean(final_shed[, colname])))
 }
 ```
 
 ```
-## [1] "total_bill 19.7859426229508"
-## [1] "tip 2.99827868852459"
-## [1] "size 2.56967213114754"
+## [1] "pig_weight 28.8230508474576"
+## [1] "shedding 40.6754134817021"
+## [1] "daily_shedding 3.44509255080266"
 ```
 
 ---
@@ -185,7 +194,7 @@ class: inverse
 
 2. Add checks to your function to make sure the data is either numeric or logical.  If it is logical convert it to numeric.
 
-3. Loop over the columns of the diamonds data set and apply your function to all of the numeric columns.
+3. The diamonds data set is included in the `ggplot2` package and is well known as a convenient data set for examples. It can be read into your environment with the function `data("diamonds", package = "ggplot2")`. Loop over the columns of the diamonds data set and apply your function to all of the numeric columns.
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({

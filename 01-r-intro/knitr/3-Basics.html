@@ -218,7 +218,7 @@ Use `rep` to construct this vector: `1 2 3 4 5 1 2 3 4 5 1 2 3 4 5`
 ---
 ## Data Frames: Introduction
 
-- `tips` is a data frame.
+- `final_shed` is a data frame.
 
 - Data frames hold data sets
 
@@ -230,8 +230,8 @@ Use `rep` to construct this vector: `1 2 3 4 5 1 2 3 4 5 1 2 3 4 5`
 
 
 ```r
-tip &lt;- tips$tip
-bill &lt;- tips$total_bill
+shedding &lt;- final_shed$shedding
+treatment &lt;- final_shed$treatment
 ```
 
 .footnote[
@@ -256,11 +256,11 @@ We can extract the different elements of the vector like so:
 
 
 ```r
-bill[3]
+shedding[3]
 ```
 
 ```
-## [1] 21.01
+## [1] 59.04973
 ```
 
 ---
@@ -270,27 +270,27 @@ We saw that we can access individual elements of the vector. But **indexing** is
 
 
 ```r
-head(tip)
+head(shedding)
 ```
 
 ```
-## [1] 1.01 1.66 3.50 3.31 3.61 4.71
-```
-
-```r
-tip[c(1, 3, 5)]
-```
-
-```
-## [1] 1.01 3.50 3.61
+## [1] 37.14022 43.88073 59.04973 44.96963 38.74342 56.12656
 ```
 
 ```r
-tip[1:5]
+shedding[c(1, 3, 5)]
 ```
 
 ```
-## [1] 1.01 1.66 3.50 3.31 3.61
+## [1] 37.14022 59.04973 38.74342
+```
+
+```r
+shedding[1:5]
+```
+
+```
+## [1] 37.14022 43.88073 59.04973 44.96963 38.74342
 ```
 
 ---
@@ -344,25 +344,13 @@ x[x &gt; 3.5]
 
 
 ```r
-rate &lt;- tips$rate
-head(rate)
+bad_shedder &lt;- shedding &gt; 50
+shedding[bad_shedder]
 ```
 
 ```
-## [1] 0.05944673 0.16054159 0.16658734 0.13978041 0.14680765 0.18623962
-```
-
-```r
-sad_tip &lt;- rate &lt; 0.10
-rate[sad_tip]
-```
-
-```
-##  [1] 0.05944673 0.07180385 0.07892660 0.05679667 0.09935739 0.05643341
-##  [7] 0.09553024 0.07861635 0.07296137 0.08146640 0.09984301 0.09452888
-## [13] 0.07717751 0.07398274 0.06565988 0.09560229 0.09001406 0.07745933
-## [19] 0.08364236 0.06653360 0.08527132 0.08329863 0.07936508 0.03563814
-## [25] 0.07358352 0.08822232 0.09820426
+## [1] 59.04973 56.12656 66.20657 51.98984 58.53921 64.74017 64.27066 56.06566
+## [9] 53.76049
 ```
 
 ---
@@ -370,7 +358,7 @@ class: inverse
 
 ## Your Turn 
 
-1. Find out how many people tipped over 20%.
+1. Find out how many pigs had a total shedding value of less than 30 log10 CFUs.
 
 **Hint**: if you use the `sum` function on a logical vector, it'll return how many TRUEs are in the vector:
 
@@ -383,7 +371,7 @@ sum(c(TRUE, TRUE, FALSE, TRUE, FALSE))
 ## [1] 3
 ```
 
-2. **More Challenging**: Calculate the sum of the total bills of anyone who tipped over 20%
+2. **More Challenging**: Calculate the sum of the total shedding log10 CFUs of all pigs with a total shedding value of less than 30 log10 CFUs.
 
 ---
 ## Element-wise Logical Operators
@@ -409,16 +397,19 @@ c(T, T, F, F) | c(T, F, T, F)
 ```
 
 ```r
-# Which are big bills with a poor tip rate?
-id &lt;- (bill &gt; 40 &amp; rate &lt; .10)
-tips[id,]
+# Which are high shedders in the control group?
+id &lt;- (shedding &gt; 50 &amp; treatment == "control")
+final_shed[id,]
 ```
 
 ```
-##     total_bill tip    sex smoker day   time size       rate
-## 103      44.30 2.5 Female    Yes Sat Dinner    3 0.05643341
-## 183      45.35 3.5   Male    Yes Sun Dinner    3 0.07717751
-## 185      40.55 3.0   Male    Yes Sun Dinner    2 0.07398274
+## # A tibble: 4 x 7
+##   pignum time_point pig_weight daily_shedding treatment shedding  gain
+##    &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;
+## 1    122         21       33.9           5.01 control       59.0  16.8
+## 2    224         21       22.9           3.91 control       56.1  11.4
+## 3    337         21       29.5           5.52 control       66.2  16.2
+## 4    419         21       31.0           6.21 control       52.0  16.8
 ```
 
 ---
@@ -429,12 +420,12 @@ We can modify vectors using indexing as well:
 
 
 ```r
-x &lt;- bill[1:5]
+x &lt;- shedding[1:5]
 x
 ```
 
 ```
-## [1] 16.99 10.34 21.01 23.68 24.59
+## [1] 37.14022 43.88073 59.04973 44.96963 38.74342
 ```
 
 ```r
@@ -443,7 +434,7 @@ x
 ```
 
 ```
-## [1] 20.00 10.34 21.01 23.68 24.59
+## [1] 20.00000 43.88073 59.04973 44.96963 38.74342
 ```
 
 ---
@@ -453,21 +444,21 @@ Elements of a vector must all be the same type:
 
 
 ```r
-head(rate)
+head(shedding)
 ```
 
 ```
-## [1] 0.05944673 0.16054159 0.16658734 0.13978041 0.14680765 0.18623962
+## [1] 37.14022 43.88073 59.04973 44.96963 38.74342 56.12656
 ```
 
 ```r
-rate[sad_tip] &lt;- ":-("
-head(rate)
+shedding[bad_shedder] &lt;- ":-("
+head(shedding)
 ```
 
 ```
-## [1] ":-("               "0.160541586073501" "0.166587339362208"
-## [4] "0.139780405405405" "0.146807645384303" "0.186239620403321"
+## [1] "37.1402150411922" "43.8807276727966" ":-("             
+## [4] "44.9696314253854" "38.7434232007542" ":-("
 ```
 
 By changing a value to a string, all the other values were also changed.
@@ -483,19 +474,18 @@ By changing a value to a string, all the other values were also changed.
     
 
 ```r
-str(tips)
+str(final_shed)
 ```
 
 ```
-## 'data.frame':	244 obs. of  8 variables:
-##  $ total_bill: num  17 10.3 21 23.7 24.6 ...
-##  $ tip       : num  1.01 1.66 3.5 3.31 3.61 4.71 2 3.12 1.96 3.23 ...
-##  $ sex       : Factor w/ 2 levels "Female","Male": 1 2 2 2 1 2 2 2 2 2 ...
-##  $ smoker    : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
-##  $ day       : Factor w/ 4 levels "Fri","Sat","Sun",..: 3 3 3 3 3 3 3 3 3 3 ...
-##  $ time      : Factor w/ 2 levels "Dinner","Lunch": 1 1 1 1 1 1 1 1 1 1 ...
-##  $ size      : int  2 3 3 2 4 4 2 4 2 2 ...
-##  $ rate      : num  0.0594 0.1605 0.1666 0.1398 0.1468 ...
+## Classes 'tbl_df', 'tbl' and 'data.frame':	59 obs. of  7 variables:
+##  $ pignum        : int  77 87 122 160 191 224 337 345 419 458 ...
+##  $ time_point    : int  21 21 21 21 21 21 21 21 21 21 ...
+##  $ pig_weight    : num  25.4 23.9 33.9 28.4 28.9 ...
+##  $ daily_shedding: num  4.61 3.91 5.01 3.91 3.91 ...
+##  $ treatment     : chr  "control" "control" "control" "control" ...
+##  $ shedding      : num  37.1 43.9 59 45 38.7 ...
+##  $ gain          : num  13.9 11.7 16.8 15.1 14.6 ...
 ```
 
 ---
@@ -505,28 +495,28 @@ We can convert between different types using the `as` series of functions:
 
 
 ```r
-size &lt;- head(tips$size)
-size
+pignum &lt;- head(final_shed$pignum)
+pignum
 ```
 
 ```
-## [1] 2 3 3 2 4 4
-```
-
-```r
-as.character(size)
-```
-
-```
-## [1] "2" "3" "3" "2" "4" "4"
+## [1]  77  87 122 160 191 224
 ```
 
 ```r
-as.numeric("2")
+as.character(pignum)
 ```
 
 ```
-## [1] 2
+## [1] "77"  "87"  "122" "160" "191" "224"
+```
+
+```r
+as.numeric("77")
+```
+
+```
+## [1] 77
 ```
 
 ---
@@ -538,7 +528,8 @@ A couple of the more common ones are `length`, which returns the length (number 
 
 
 ```r
-x &lt;- tip[1:5]
+pig_weight &lt;- final_shed$pig_weight
+x &lt;- pig_weight[1:5]
 length(x)
 ```
 
@@ -551,7 +542,7 @@ sum(x)
 ```
 
 ```
-## [1] 13.09
+## [1] 140.36
 ```
 
 ---
@@ -561,27 +552,27 @@ Using the basic functions we've learned it wouldn't be hard to compute some basi
 
 
 ```r
-(n &lt;- length(tip))
+(n &lt;- length(pig_weight))
 ```
 
 ```
-## [1] 244
-```
-
-```r
-(meantip &lt;- sum(tip) / n)
-```
-
-```
-## [1] 2.998279
+## [1] 59
 ```
 
 ```r
-(standdev &lt;- sqrt(sum((tip - meantip)^2) / (n - 1)))
+(meanweight &lt;- sum(pig_weight) / n)
 ```
 
 ```
-## [1] 1.383638
+## [1] 28.82305
+```
+
+```r
+(standdev &lt;- sqrt(sum((pig_weight - meanweight)^2) / (n - 1)))
+```
+
+```
+## [1] 4.10429
 ```
 
 But we don't have to.
@@ -591,37 +582,37 @@ But we don't have to.
 
 
 ```r
-mean(tip)
+mean(pig_weight)
 ```
 
 ```
-## [1] 2.998279
-```
-
-```r
-sd(tip)
-```
-
-```
-## [1] 1.383638
+## [1] 28.82305
 ```
 
 ```r
-summary(tip)
+sd(pig_weight)
+```
+
+```
+## [1] 4.10429
+```
+
+```r
+summary(pig_weight)
 ```
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   1.000   2.000   2.900   2.998   3.562  10.000
+##   19.50   25.79   28.80   28.82   32.24   36.30
 ```
 
 ```r
-quantile(tip, c(.025, .975))
+quantile(pig_weight, c(.025, .975))
 ```
 
 ```
 ##   2.5%  97.5% 
-## 1.1760 6.4625
+## 22.279 35.952
 ```
 
 &lt;!-- 

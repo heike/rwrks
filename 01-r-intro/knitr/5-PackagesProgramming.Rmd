@@ -44,6 +44,15 @@ output:
 
 - `knitr`: integrate LaTeX, HTML, or Markdown with R for easy reproducible research
 
+- `vegan`: Ordination methods, diversity analysis and other
+functions for community and vegetation ecologists.
+
+- `phyloseq`: Handling and analysis of high-throughput microbiome census data
+
+- `ggtree`: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data
+
+- `Biostrings`: Efficient manipulation of biological strings
+
 <!-- this needs updated!! -->
 
 ---
@@ -112,16 +121,16 @@ for (i in 1:3) {
 ## For Loops
 
 ```{r message=FALSE, warning=FALSE}
-tips <- read.csv("http://heike.github.io/rwrks/01-r-intro/data/tips.csv")
+final_shed <- read.csv("http://heike.github.io/rwrks/01-r-intro/data/final_shedding.csv")
 
-id <- c("total_bill", "tip", "size")
+id <- c("pig_weight", "shedding", "daily_shedding")
 for (colname in id) {
     print(colname)
 }
 
 # this does NOT work if the csv is read in using read_csv
 for(colname in id) {
-    print(paste(colname, mymean(tips[, colname])))
+    print(paste(colname, mymean(final_shed[, colname])))
 }
 ```
 
@@ -144,36 +153,4 @@ class: inverse
 
 2. Add checks to your function to make sure the data is either numeric or logical.  If it is logical convert it to numeric.
 
-3. Loop over the columns of the diamonds data set and apply your function to all of the numeric columns.
-
-```{r, eval=FALSE, echo=FALSE}
-# \begin{frame}
-#     \frametitle{What you've learned!}
-#     \begin{itemize}
-#         \item Use R for scientific/statistical calculations
-#         \item Be able to create or read in data and have the ability to manipulate the data accordingly
-#         \item Have the ability to explore data set characteristics and calculate summary statistics for real data sets
-#         \item Use the help functionality to find the functions you need to do what you want to do
-#         \item Install, use, and search for helpful external packages
-#         \item How to use basic programming constructs to make working with data easier
-#   \end{itemize}
-# \end{frame}
-# 
-# 
-# \begin{frame}
-#     \frametitle{Questions?}
-#     \begin{itemize}
-#         \item Any Questions???
-#   \end{itemize}
-# \end{frame}
-# 
-# 
-# 
-# \begin{frame}
-#     \frametitle{Feedback Survey}
-#     \begin{itemize}
-#         \item Please let us know how we did with the feedback survey!
-#     \item  \url{http://heike.wufoo.com/forms/r-workshop-your-opinion-matters/}
-#   \end{itemize}
-# \end{frame}
-```
+3. The diamonds data set is included in the `ggplot2` package and is well known as a convenient data set for examples. It can be read into your environment with the function `data("diamonds", package = "ggplot2")`. Loop over the columns of the diamonds data set and apply your function to all of the numeric columns.
