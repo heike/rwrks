@@ -256,7 +256,7 @@ We will then filter the data to only include the final values.
 ```r
 final_shed &lt;- shed %&gt;% 
   group_by(pignum) %&gt;% 
-  mutate(gain = pig_weight[time_point == 21] - pig_weight[time_point == 0]) %&gt;% filter(time_point == 21) %&gt;% ungroup()
+  mutate(gain = pig_weight[time_point == 21] - pig_weight[time_point == 0]) %&gt;% filter(time_point == 21) %&gt;% ungroup() %&gt;% select(-c(4:9))
 
 summary(final_shed$gain)
 ```
@@ -289,14 +289,14 @@ which pig and what treatment did it receive?
 
 
 ```r
-final_shed[which.min(final_shed$shedding), - c(2:9)]
+final_shed[which.min(final_shed$shedding),]
 ```
 
 ```
-## # A tibble: 1 x 5
-##   pignum daily_shedding treatment shedding  gain
-##    &lt;int&gt;          &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;
-## 1     97              0 RPS              0  12.9
+## # A tibble: 1 x 7
+##   pignum time_point pig_weight daily_shedding treatment shedding  gain
+##    &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;
+## 1     97         21       24.9              0 RPS              0  12.9
 ```
 
 ---

@@ -148,7 +148,7 @@ We will then filter the data to only include the final values.
 ```{r}
 final_shed <- shed %>% 
   group_by(pignum) %>% 
-  mutate(gain = pig_weight[time_point == 21] - pig_weight[time_point == 0]) %>% filter(time_point == 21) %>% ungroup()
+  mutate(gain = pig_weight[time_point == 21] - pig_weight[time_point == 0]) %>% filter(time_point == 21) %>% ungroup() %>% select(-c(4:9))
 
 summary(final_shed$gain)
 ```
@@ -168,7 +168,7 @@ ggplot(final_shed) + geom_histogram(aes(x = shedding))
 which pig and what treatment did it receive?
 
 ```{r}
-final_shed[which.min(final_shed$shedding), - c(2:9)]
+final_shed[which.min(final_shed$shedding),]
 ```
 
 ---
