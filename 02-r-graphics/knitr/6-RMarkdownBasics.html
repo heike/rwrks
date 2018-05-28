@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RMarkdown Basics</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Haley Jeppson, Sam Tyner" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# RMarkdown Basics
+### Haley Jeppson, Sam Tyner
+
+---
+
+
+## What do you use to write? 
+
+- Microsoft Word 
+- LaTeX / Overleaf
+- Pages 
+- Google Docs 
+- Others? 
+
+&gt;- How do you get your results from `R` into those documents? 
+
+---
+
+## Another way...
+
+- RMarkdown documents (.Rmd)
+- Put results from `R` directly into your writing
+- Fosters reproducibility and transparency
+
+---
+
+## Hello R Markdown!
+
+&lt;div align="center"&gt;
+  &lt;img src="images/newFile.png" width=750 height=500&gt;
+&lt;/div&gt;
+
+---
+
+## Choose your output format!
+
+&lt;div align="center"&gt;
+  &lt;img src="images/knit.png" width=750 height=500&gt;
+&lt;/div&gt;
+
+---
+
+## *Why* R Markdown?
+
+- It's **simple**. Focus on writing, rather than debugging silly errors (I'm looking at you *LaTeX*).
+
+- It's **flexible**. Markdown was created to simplify writing HTML, but thanks to [pandoc](http://pandoc.org/), Markdown converts to many different formats!
+
+- It's **dynamic**. Find a critical error? Get a new dataset? Regenerate your report without copy/paste hell!
+
+- Encourages **transparency**. Collaborators (including your future self) will thank you for integrating your analysis &amp; report.
+
+- Enables **interactivity/reactivity**. Allow your audience to explore the analysis (rather than passively read it).
+
+---
+## First things first, *what* is Markdown?
+
+- Markdown is a particular type of markup language.
+
+- Markup languages are designed produce documents from plain text.
+
+- *LaTeX* is another (less human friendly) markup language for creating pdf documents.
+
+- *LaTeX* gives you much greater control, but it is restricted to pdf and has a **much** greater learning curve.
+
+- Markdown is becoming a standard. Many websites will generate HTML from Markdown (e.g. GitHub, Stack Overflow, reddit).
+
+---
+## *Who* is using R Markdown, and *for what*?
+
+* The [R Markdown website](http://rmarkdown.rstudio.com/) is built with R Markdown.
+
+* The [new edition of the ggplot2 book](https://github.com/hadley/ggplot2-book/) uses it.
+
+* R package vignettes (for example, [this one for `plotly`](http://cpsievert.github.io/plotly/pipe-dsl/)).
+
+* [Many](http://lincolnmullen.com/projects/dh-r/index.html) great [books](https://bookdown.org/yihui/blogdown/) use R markdown! You can write a whole book in RMarkdown with [`bookdown`](https://bookdown.org/)
+
+* People are [blogging with it](https://juliasilge.com/).
+
+---
+## What is *R* Markdown?
+
+* Straight from the [R Markdown home page](http://rmarkdown.rstudio.com/):
+
+&gt; R Markdown documents are fully reproducible. Use a productive *notebook interface* to weave together narrative text and code to produce elegantly formatted output. Use multiple languages including `R`, Python, and SQL.
+
+---
+class: inverse
+
+## Your Turn
+
+Study the first page of the [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf). 
+
+Yes, the *entire* markdown syntax can be described in one page!
+
+Can you think of anything that is missing from the syntax (that you might want when creating documents)?
+
+---
+
+## Markdown doesn't natively support...
+
+- Some appearance related things e.g. image/figure alignment and text coloring require HTML or LaTeX. 
+
+---
+
+## There is hope...
+
+- You don't *have to* restrict yourself to markdown. You can always include HTML/`LaTeX` markup, but don't expect it to convert between output formats.
+
+- There are many efforts to extend Markdown (often requires a little css or html knowledge)
+
+- More features are added and more templates created all the time! 
+
+- Example: see the `rticles` package for PLOS, PNAS, Elselvier, and many, many other journal templates.  
+
+---
+
+## Your Turn 
+
+Have a look at R Markdown presentations and templates.
+
+&lt;div align="center"&gt;
+  &lt;img src="images/pres.png" height=300&gt;
+&lt;/div&gt;
+
+**Pro tip**: run `devtools::install_github("rstudio/rticles")` to get more templates
+
+---
+
+## Contents of a .Rmd
+
+1. The YAML front matter
+2. The markdown
+3. Code chunks
+
+---
+
+## YAML Front Matter
+
+The stuff at the top of the .Rmd file (called YAML front matter) tells **rmarkdown** what output format you want. 
+
+```
+---
+title: "Untitled"
+author: "Sam Tyner"
+date: "May 16, 2016"
+output: html_document
+---
+```
+
+In this case, when you click "Knit HTML", RStudio calls `rmarkdown::render("file.Rmd", html_document())`. You can certainly change these default values (see the [source of this presentation](https://raw.githubusercontent.com/cpsievert/slides/gh-pages/rmd/index.Rmd)). &lt;- FIX  THIS LINK! 
+
+---
+
+## Markdown
+
+Any writing, written using the Markup syntax 
+
+```
+This is a really smart sentence you wrote. 
+
+You also cite your work [@ref1]. 
+
+You also emphasize *important* words. 
+```
+
+---
+
+## What is a code chunk?
+
+A code chunk is a concept borrowed from the [knitr](http://yihui.name/knitr/) package (which, in turn, was inspired by [literate programming](http://en.wikipedia.org/wiki/Literate_programming)). In .Rmd files, you can start/end a code chunk with three back-ticks.
+
+````
+```{r, eval=TRUE}
+1 + 1
+```
+2
+````
+
+---
+
+## Code chunk options
+
+There are a plethora of [chunk options](http://yihui.name/knitr/options/) in **knitr** (engine is one of them). Here are some that I typically use:
+
+* `echo`: Show the code?
+* `eval`: Run the code?
+* `message`: Relay messages?
+* `warning`: Relay warnings?
+* `fig.width` and `fig.height`: Change size of figure output.
+* `cache`: Save the output of this chunk (so we don't have to run it next time)?
+
+---
+class: inverse
+
+## Your Turn
+
+Study the second page of the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) and go back to the Hello R Markdown example we created.
+
+**Easy**: Modify the figure sizing and alignment.
+
+**Medium**: Add a figure caption.
+
+**Hard**: Can you create an animation? (Hint: look at the `fig.show` chunk option -- you might need to the **animation** package for this)
+
+**Pro Tip**: Don't like the default chunk option value? Change it at the top of the document:
+
+
+```r
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+---
+## Formatting Tabular Data
+
+The function `knitr::kable()` will render a markdown table from a data frame: 
+
+````
+```{r, , results='asis'}
+dat &lt;- head(cars)
+knitr::kable(dat)
+```
+````
+
+shows as 
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; speed &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; dist &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Formatting R output
+
+Other options: 
+
+- [pander](http://rapporter.github.io/pander/) 
+- [xtable](https://CRAN.R-project.org/package=xtable)
+
+
+---
+class: inverse
+
+## Your Turn
+
+- Take one plot from a previous set of slides from today and create an RMarkdown document that contains some written content in addition to the plot. Explore the many chunk options for plots to do this. 
+
+- **Bonus:** Use `knitr::include_graphics()` to include an image from your computer or the web from within an R code chunk.
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

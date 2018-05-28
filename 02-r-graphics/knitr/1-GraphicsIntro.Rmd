@@ -211,32 +211,38 @@ grid.arrange(p1, p2, p3, p4, p5, ncol = 5, nrow = 1)
 
 ```
 
-```{r int, fig.height=4, fig.width=20, fig.pos="center"}
+```{r int, fig.height=4, fig.width=20, fig.pos="center", message = FALSE, warning = FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(ggradar)
+library(ggmosaic)
 
 iris2 <- iris %>% mutate(obs = 1:150) %>% gather(variable, value, -c(obs, Species)) 
 
 #i1 <- ggplot()+ labs(x="", y="", title="Cartogram")
 
-library(GGally)
 
-i2 <- ggparcoord(data = iris, columns = 1:4, groupColumn = 5) +scale_colour_grey(start=0.2, end= 0.7) + theme(legend.position = "none")+ labs(x="", y="", title="Parallel Coordinates")
 
-data(diamonds)
-library(ggmosaic)
+i2 <- ggplot(data = iris2) + 
+ geom_line(aes(x = variable, y = value, group = interaction(Species, obs), color = Species)) + 
+  #ggparcoord(data = iris, columns = 1:4, groupColumn = 5) +
+  scale_colour_grey(start=0.2, end= 0.7) + 
+  theme(legend.position = "none") + 
+  labs(x="", y="", title="Parallel Coordinates")
 
-i3 <- ggplot(diamonds) + geom_mosaic(aes(x=product(color), fill = cut))+scale_fill_grey(start=0.2, end= 0.7) + theme(legend.position = "none") + labs(x="", y="", title="Mosaic Plot")
+i3 <- ggplot(diamonds) + 
+  ggmosaic::geom_mosaic(aes(x=ggmosaic::product(color), fill = cut)) +
+  scale_fill_grey(start=0.2, end= 0.7) + 
+  theme(legend.position = "none") + labs(x="", y="", title="Mosaic Plot")
 
-library(ggradar)
-
-suppressPackageStartupMessages(library(dplyr))
-library(scales)
 
 mtcars %>%
-     add_rownames( var = "group" ) %>%
-     mutate_each(funs(rescale), -group) %>%
+    tibble::rownames_to_column(var = "group") %>% 
+     mutate_at(-1, funs(scales::rescale)) %>%
      tail(4) %>% select(1:10) -> mtcars_radar
 
- i4 <-ggradar(mtcars_radar, group.line.width = .7,
+ i4 <- ggradar(mtcars_radar, group.line.width = .7,
    group.point.size = 2, axis.label.size = 3.5, grid.label.size = 2.5, background.circle.transparency = 0.1, plot.legend =FALSE)+scale_colour_grey(start=0.4, end= 0.9)+ theme(legend.position = "none") + labs(x="", y="", title="Radar Charts")
 # i4 <- ggplot()+ labs(x="", y="", title="Radar Charts")
 
