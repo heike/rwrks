@@ -218,7 +218,7 @@ Alternatively, we could use the original data to compare the daily shedding valu
 
 ```{r, fig.height=4, fig.width=9}
 shed %>% filter(time_point != 0) %>% ggplot() + 
-  geom_boxplot( aes(treatment, daily_shedding, fill = treatment), position = position_dodge2(preserve = 'total'))  + 
+  geom_boxplot( aes(treatment, daily_shedding, fill = treatment), position = "dodge")  + 
   facet_wrap(~time_point)
 ```
 
