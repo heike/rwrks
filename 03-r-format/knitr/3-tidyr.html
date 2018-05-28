@@ -4,7 +4,8 @@
     <title>tidyr</title>
     <meta charset="utf-8">
     <meta name="author" content="Haley Jeppson, Sam Tyner" />
-    <link href="libs/remark-css-0.0.1/example.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
@@ -18,17 +19,13 @@ class: center, middle, inverse, title-slide
 
 
 
-class: inverse, middle, center
 
-## The `tidyr` package
-
----
 ## What is tidy data?
 
 &gt; Happy families are all alike; every unhappy family is unhappy in its own way.&lt;br&gt;
 Leo Tolstoy
 
-- Resource: follow along tidyr vignette 
+- Resource: follow along `tidyr` vignette 
 
 - available as `vignette("tidy-data", package="tidyr")`
 
@@ -285,10 +282,6 @@ Neither #1 nor #2 are "clean" versions of the data: observed information is part
 ## Sources of Messiness
 
 
- *Happy families are all alike; every unhappy family is unhappy in its own way. - Leo Tolstoy*  
-&lt;br/&gt;
---
-
 **Five main ways tables of data tend not to be tidy:**
 
 1. Column headers are values, not variable names.
@@ -430,18 +423,44 @@ Very few functions are needed to tidy data:
 
 
 ```r
-data(french_fries, package="reshape2")
+french_fries &lt;- read_csv("frenchfries.csv")
+head(french_fries)
+```
+
+
+```r
+french_fries &lt;- read_csv("../data/frenchfries.csv")
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   time = col_integer(),
+##   treatment = col_integer(),
+##   subject = col_integer(),
+##   rep = col_integer(),
+##   potato = col_double(),
+##   buttery = col_double(),
+##   grassy = col_double(),
+##   rancid = col_double(),
+##   painty = col_double()
+## )
+```
+
+```r
 head(french_fries)
 ```
 
 ```
-##    time treatment subject rep potato buttery grassy rancid painty
-## 61    1         1       3   1    2.9     0.0    0.0    0.0    5.5
-## 25    1         1       3   2   14.0     0.0    0.0    1.1    0.0
-## 62    1         1      10   1   11.0     6.4    0.0    0.0    0.0
-## 26    1         1      10   2    9.9     5.9    2.9    2.2    0.0
-## 63    1         1      15   1    1.2     0.1    0.0    1.1    5.1
-## 27    1         1      15   2    8.8     3.0    3.6    1.5    2.3
+## # A tibble: 6 x 9
+##    time treatment subject   rep potato buttery grassy rancid painty
+##   &lt;int&gt;     &lt;int&gt;   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1     1         1       3     1   2.90   0.      0.     0.     5.50
+## 2     1         1       3     2  14.0    0.      0.     1.10   0.  
+## 3     1         1      10     1  11.0    6.40    0.     0.     0.  
+## 4     1         1      10     2   9.90   5.90    2.90   2.20   0.  
+## 5     1         1      15     1   1.20   0.100   0.     1.10   5.10
+## 6     1         1      15     2   8.80   3.00    3.60   1.50   2.30
 ```
 
 ---
@@ -461,7 +480,7 @@ ggplot(french_fries) +
   xlab("variable") + ylab("rating")
 ```
 
-![](3-tidyr_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+![](3-tidyr_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -479,13 +498,15 @@ head(french_fries_long)
 ```
 
 ```
-##   time treatment subject rep variable rating
-## 1    1         1       3   1   potato    2.9
-## 2    1         1       3   2   potato   14.0
-## 3    1         1      10   1   potato   11.0
-## 4    1         1      10   2   potato    9.9
-## 5    1         1      15   1   potato    1.2
-## 6    1         1      15   2   potato    8.8
+## # A tibble: 6 x 6
+##    time treatment subject   rep variable rating
+##   &lt;int&gt;     &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;
+## 1     1         1       3     1 potato     2.90
+## 2     1         1       3     2 potato    14.0 
+## 3     1         1      10     1 potato    11.0 
+## 4     1         1      10     2 potato     9.90
+## 5     1         1      15     1 potato     1.20
+## 6     1         1      15     2 potato     8.80
 ```
 
 ---
@@ -498,7 +519,7 @@ ggplot(french_fries_long) +
   geom_boxplot(aes(x = variable, y = rating, fill = variable))
 ```
 
-![](3-tidyr_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+![](3-tidyr_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
 
 
 ---
@@ -512,13 +533,15 @@ head(french_fries_long)
 ```
 
 ```
-##   time treatment subject rep variable rating
-## 1    1         1       3   1   potato    2.9
-## 2    1         1       3   2   potato   14.0
-## 3    1         1      10   1   potato   11.0
-## 4    1         1      10   2   potato    9.9
-## 5    1         1      15   1   potato    1.2
-## 6    1         1      15   2   potato    8.8
+## # A tibble: 6 x 6
+##    time treatment subject   rep variable rating
+##   &lt;int&gt;     &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;
+## 1     1         1       3     1 potato     2.90
+## 2     1         1       3     2 potato    14.0 
+## 3     1         1      10     1 potato    11.0 
+## 4     1         1      10     2 potato     9.90
+## 5     1         1      15     1 potato     1.20
+## 6     1         1      15     2 potato     8.80
 ```
 
 ---
@@ -535,13 +558,15 @@ head(french_fries_wide)
 ```
 
 ```
-##   time treatment subject rep buttery grassy painty potato rancid
-## 1    1         1       3   1     0.0    0.0    5.5    2.9    0.0
-## 2    1         1       3   2     0.0    0.0    0.0   14.0    1.1
-## 3    1         1      10   1     6.4    0.0    0.0   11.0    0.0
-## 4    1         1      10   2     5.9    2.9    0.0    9.9    2.2
-## 5    1         1      15   1     0.1    0.0    5.1    1.2    1.1
-## 6    1         1      15   2     3.0    3.6    2.3    8.8    1.5
+## # A tibble: 6 x 9
+##    time treatment subject   rep buttery grassy painty potato rancid
+##   &lt;int&gt;     &lt;int&gt;   &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1     1         1       3     1   0.      0.     5.50   2.90   0.  
+## 2     1         1       3     2   0.      0.     0.    14.0    1.10
+## 3     1         1      10     1   6.40    0.     0.    11.0    0.  
+## 4     1         1      10     2   5.90    2.90   0.     9.90   2.20
+## 5     1         1      15     1   0.100   0.     5.10   1.20   1.10
+## 6     1         1      15     2   3.00    3.60   2.30   8.80   1.50
 ```
 
 We are now back to our original format
@@ -560,13 +585,15 @@ head(french_fries_wide)
 ```
 
 ```
-##   time treatment subject variable   1    2
-## 1    1         1       3  buttery 0.0  0.0
-## 2    1         1       3   grassy 0.0  0.0
-## 3    1         1       3   painty 5.5  0.0
-## 4    1         1       3   potato 2.9 14.0
-## 5    1         1       3   rancid 0.0  1.1
-## 6    1         1      10  buttery 6.4  5.9
+## # A tibble: 6 x 6
+##    time treatment subject variable   `1`   `2`
+##   &lt;int&gt;     &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
+## 1     1         1       3 buttery   0.    0.  
+## 2     1         1       3 grassy    0.    0.  
+## 3     1         1       3 painty    5.50  0.  
+## 4     1         1       3 potato    2.90 14.0 
+## 5     1         1       3 rancid    0.    1.10
+## 6     1         1      10 buttery   6.40  5.90
 ```
 
 ---
@@ -581,7 +608,7 @@ french_fries_wide %&gt;%
   geom_abline(colour = "grey50")
 ```
 
-![](3-tidyr_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+![](3-tidyr_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
 
 ---
 ## separate
@@ -684,10 +711,10 @@ today() - days(2)
 ```
 
 ```
-## [1] "2018-05-12 19:21:35 CDT"
-## [1] "2018-05-12"
-## [1] "2018-05-12 23:21:35 CDT"
-## [1] "2018-05-10"
+## [1] "2018-05-28 17:59:45 CDT"
+## [1] "2018-05-28"
+## [1] "2018-05-28 21:59:45 CDT"
+## [1] "2018-05-26"
 ```
 
 ---
@@ -733,7 +760,7 @@ class: inverse
 
 3. Plot the date versus the average departure delay
 
-![](3-tidyr_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+![](3-tidyr_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
 
 ---
 class: inverse
@@ -751,7 +778,7 @@ billboard &lt;- read.csv("http://heike.github.io/rwrks/03-r-format/data/billboar
 
 - Use ``ggplot2`` to create something like this:
 
-![](3-tidyr_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+![](3-tidyr_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
@@ -759,15 +786,33 @@ billboard &lt;- read.csv("http://heike.github.io/rwrks/03-r-format/data/billboar
 "highlightLines": true,
 "countIncrementalSlides": false
 });
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
-(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-  }
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
 });
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

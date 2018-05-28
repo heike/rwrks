@@ -3,7 +3,8 @@
   <head>
     <title>Tidying and Joining Data with tidyr</title>
     <meta charset="utf-8">
-    <link href="libs/remark-css-0.0.1/example.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
@@ -21,12 +22,17 @@ class: center, middle, inverse, title-slide
 ## Recall - Sources of Messiness
 
 1. Column headers are values, not variable names.&lt;br&gt;
+
 e.g. *treatmenta, treatmentb*
+
 2. Multiple variables are stored in one column.&lt;br&gt;
+
 e.g. *Fall 2015, Spring 2016* or *"1301 8th St SE, Orange City, Iowa 51041
 (42.99755, -96.04149)", "2102 Durant, Harlan, Iowa 51537
 (41.65672, -95.33780)"*
+
 3. Multiple observational units are stored in the same table.
+
 4. A single observational unit is stored in multiple tables.
 
 ---
@@ -96,7 +102,9 @@ For each person, recorded age, sex, height and target weight, and then at multip
 
 Messy (3): *Multiple observational units are stored in the same table.*
 
-What does that mean? The *key is split*, i.e. for some values all key variables are necessary, while other values only need some key variables.
+What does that mean? The *key is split*, 
+
+i.e. for some values all key variables are necessary, while other values only need some key variables.
 
 ![](../images/normal-not-2.png)
 
@@ -105,8 +113,11 @@ What does that mean? The *key is split*, i.e. for some values all key variables 
 ## Why do we need to take care of split keys?
 
 - Data redundancy introduces potential problems (same student *should* have the same student ID)
+
 - to check data consistency, we split data set into parts - this process is called *normalizing*
+
 - normalization reduces overall data size
+
 - useful way of thinking about objects under study
 
 ---
@@ -117,306 +128,6 @@ Splitting into separate datasets:
 
 ![](../images/normal-split.png)
 
-&lt;!---
-## Example: Box office gross
-
-The-Numbers website publishes [weekly charts](http://www.the-numbers.com/weekend-box-office-chart) of the gross income of all movies playing across the US. A set of [scraped data](../data/boxoffice.csv) with movies for the last two years is available in the repo.
-
-
-```
-##   Rank Rank.Last.Week                        Movie      Distributor
-## 1    1            (1)                        Split        Universal
-## 2    2            new              A Dog’s Purpose        Universal
-## 3    3            (3)               Hidden Figures 20th Century Fox
-## 4    4            new Resident Evil: The Final Ch…    Sony Pictures
-##         Gross Change Thtrs. Per.Thtr.  Total.Gross Days       Date
-## 1 $25,655,440   -36%  3,199    $8,020  $77,385,530   10 2017-01-27
-## 2 $18,222,810         3,059    $5,957  $18,222,810    3 2017-01-27
-## 3 $14,003,275   -11%  3,351    $4,179 $104,024,969   36 2017-01-27
-## 4 $13,601,682         3,104    $4,382  $13,601,682    3 2017-01-27
-```
-
-What are the key variables? Why is the key split?
-
-## First round of Data tidying
-
-
-```r
-box &lt;- box %&gt;% mutate(
-  Gross = parse_number(Gross),
-  Total.Gross = parse_number(Total.Gross),
-  Days = parse_number(Days),
-  Theaters = parse_number(Thtrs.)
-) 
-```
-
-- All other variables are derived from these four variables, `Movie` name, `Rank`, `Date` and `Distributor`. 
-- We should take re-calculate the derived variabes to check for consistency. 
-
-## Taking care of the split key
-
-
-```r
-# if we get an error with a message about the length of a dataset
-# we know we have a problem
-movie &lt;- box %&gt;% group_by(Movie) %&gt;% summarize(
-  Distributor = unique(Distributor) 
-)
-```
-
-`Error: expecting a single value`
-
-Bingo! but what now? 
-
-
-```r
-box %&gt;% group_by(Movie) %&gt;% summarize(
-  Distributor = length(unique(Distributor))
-) %&gt;% arrange(desc(Distributor))
-```
-
-```
-## # A tibble: 1,386 x 2
-##    Movie                        Distributor
-##    &lt;fct&gt;                              &lt;int&gt;
-##  1 Girlhood                               2
-##  2 The Witness                            2
-##  3 1,000 Rupee Note                       1
-##  4 10 Cloverfield Lane                    1
-##  5 10 Days in a Madhouse                  1
-##  6 13 Hours: The Secret Soldie…           1
-##  7 1915                                   1
-##  8 2015 Oscar Shorts                      1
-##  9 2016 Oscar Shorts                      1
-## 10 20th Century Women                     1
-## # ... with 1,376 more rows
-```
-
-## Looking into inconsistencies
-
-The movie *Girlhood* has two distributors: " "  and `Strand` - i.e. the first week the distributor is missing, let's fix that:
-
-
-```r
-box &lt;- box %&gt;% mutate(
-  Distributor = replace(Distributor, Movie=="Girlhood", "Strand")
-)
-```
-
-The movie `The Witness` is actually two different movies, one that came out in October 2015, another one that came out in June 2016. Movie name by itself is not a key. Let's derive the *release date* for each movie:
-
-
-```r
-box &lt;- box %&gt;% mutate(Release = lubridate::ymd(Date)-Days)
-```
-
-## Splitting into separate datasets - Take 2
-
-
-```r
-movie &lt;- box %&gt;% group_by(Movie, Release) %&gt;% summarize(
-  Distributor = unique(Distributor) 
-)
-dim(movie)
-```
-
-```
-## [1] 1406    3
-```
-
-```r
-length(unique(box$Movie))
-```
-
-```
-## [1] 1386
-```
-
-Still not quite right - the number of days is a derived variable, and is not quite consistent. 
-
-## 
-
-
-```r
-movie %&gt;% group_by(Movie) %&gt;% count() %&gt;% arrange(desc(n)) %&gt;% head(5)
-```
-
-```
-## # A tibble: 5 x 2
-## # Groups:   Movie [5]
-##   Movie               n
-##   &lt;fct&gt;           &lt;int&gt;
-## 1 Hot Water           3
-## 2 3 Hearts            2
-## 3 Beyond the Mask     2
-## 4 Boychoir            2
-## 5 Boy Meets Girl      2
-```
-
-```r
-movie %&gt;% filter(Movie =="Hot Water")
-```
-
-```
-## # A tibble: 3 x 3
-## # Groups:   Movie [1]
-##   Movie     Release    Distributor     
-##   &lt;fct&gt;     &lt;date&gt;     &lt;fct&gt;           
-## 1 Hot Water 2016-03-04 Indican Pictures
-## 2 Hot Water 2016-04-22 Indican Pictures
-## 3 Hot Water 2016-05-02 Indican Pictures
-```
-
-## Different approach
-
-
-```r
-# introduce release date for each movie and distributor separately
-box &lt;- box %&gt;% group_by(Movie, Distributor) %&gt;% 
-  mutate(
-    Release = min(lubridate::ymd(Date))-Days[which.min(lubridate::ymd(Date))]
-    )
-
-# split again
-movie &lt;- box %&gt;% group_by(Movie, Release) %&gt;% summarize(
-  Distributor = unique(Distributor) 
-)
-dim(movie)
-```
-
-```
-## [1] 1387    3
-```
-
-```r
-length(unique(box$Movie)) # should be one less than above (b/c The Witness)
-```
-
-```
-## [1] 1386
-```
-
-Better!
-
-## Your Turn  (10 mins)
-
-
-- Re-derive derived variables: `%Change`, `Rank last week`, `Days`, `Gross Per Theater`.&lt;br&gt;
-- Is `Total.Gross` strictly increasing? And does `Gross` match with the differences from one week to the next?
-
-How much of this can you do in 10 mins?
-
-## 
-
-
-
-```r
-# days and per theatre gross:
-box &lt;- box %&gt;% ungroup() %&gt;% mutate(
-  Days_new = lubridate::ymd(Date) - lubridate::ymd(Release),
-  Per.Theater = Gross/Theaters
-) 
-box %&gt;% select(Movie, Days, Days_new)
-```
-
-```
-## # A tibble: 10,327 x 3
-##    Movie                         Days Days_new
-##    &lt;fct&gt;                        &lt;dbl&gt; &lt;time&gt;  
-##  1 Split                        10.0  10      
-##  2 A Dog’s Purpose               3.00 3       
-##  3 Hidden Figures               36.0  36      
-##  4 Resident Evil: The Final Ch…  3.00 3       
-##  5 La La Land                   52.0  52      
-##  6 xXx: Return of Xander Cage   10.0  10      
-##  7 Sing                         40.0  40      
-##  8 Rogue One: A Star Wars Story 45.0  45      
-##  9 Monster Trucks               17.0  17      
-## 10 Gold                          3.00 3       
-## # ... with 10,317 more rows
-```
-
-##
-
-
-```r
-# introduce change variable and rank-last-week:
-box &lt;- box %&gt;% group_by(Movie, Release) %&gt;% arrange(Date) %&gt;% mutate(
-  Change = c(NA, diff(Gross)/Gross[-length(Gross)])*100,
-  Rank.Last.Week_new = c(NA, Rank[-length(Rank)]),
-  Days_diff = c(NA, diff(Days_new))
-) 
-# some of these ranks are not from last week:
-box &lt;- box %&gt;% mutate(
-  Rank.Last.Week_new = replace(Rank.Last.Week_new, Days_diff != 7, NA)
-)
-
-box %&gt;% filter(Movie=="3 Hearts") %&gt;% arrange(Days_new) %&gt;% as.data.frame() %&gt;% head(3)
-```
-
-```
-##   Rank Rank.Last.Week    Movie       Distributor Gross    Change Thtrs.
-## 1   68            new 3 Hearts Cohen Media Group 11336        NA      4
-## 2   70           (68) 3 Hearts Cohen Media Group  4243 -62.57057      4
-## 3   66            new 3 Hearts Cohen Media Group 11794 177.96370      1
-##   Per.Thtr. Total.Gross Days       Date Theaters    Release Days_new
-## 1    $2,834       11336    7 2015-02-13        4 2015-02-06   7 days
-## 2    $1,061       21942   14 2015-02-20        4 2015-02-06  14 days
-## 3   $11,794       33736    3 2015-03-13        1 2015-02-06  35 days
-##   Per.Theater Rank.Last.Week_new Days_diff
-## 1     2834.00                 NA        NA
-## 2     1060.75                 68         7
-## 3    11794.00                 NA        21
-```
-
-##
-
-
-```r
-box &lt;- box %&gt;% group_by(Movie, Release) %&gt;% 
-  arrange(Days) %&gt;% mutate(
-    Gross_new = c(NA, diff(Total.Gross))
-  )
-
-box %&gt;% 
-  ggplot(aes(Gross, Gross_new, colour = Gross_new &lt; 0)) + geom_point()
-```
-
-```
-## Warning: Removed 1387 rows containing missing values (geom_point).
-```
-
-![](4-joining_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
-
-```r
-box %&gt;% ungroup() %&gt;%  filter(Gross_new &lt;0) %&gt;% select(Movie, Date, Gross, Gross_new, Total.Gross) %&gt;% arrange(Gross_new)
-```
-
-```
-## # A tibble: 34 x 5
-##    Movie                        Date        Gross Gross_new Total.Gross
-##    &lt;fct&gt;                        &lt;fct&gt;       &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-##  1 The Hunger Games: Mockingja… 2016-02-12 308370 -54787187   281340856
-##  2 The Hunger Games: Mockingja… 2016-02-19 192870 -54744318   281666058
-##  3 The Hunger Games: Mockingja… 2016-02-05 162227 -54728905   280976000
-##  4 The Hunger Games: Mockingja… 2016-01-29 380044 -54280391   280847534
-##  5 The Lion in Winter           2017-01-20    692 -22275822       18177
-##  6 Born to be Wild 3D           2015-10-30   1010 -21957516     2439919
-##  7 Daughters of the Dust (Re-I… 2016-12-02   7232 - 1641815       40465
-##  8 The Battle of Algiers        2016-12-02    725 -  798615       55102
-##  9 Army of Shadows              2015-11-20   1946 -  722470       27396
-## 10 The Third Man                2015-11-06    572 -  559097      445344
-## # ... with 24 more rows
-```
-
-## 
-
-Now we have finally a clean data set and could get started on an analysis!
-
-Can you predict the Total Gross of a movie based on the opening weekend and the second week?
-
-
-----&gt;
 ---
 class: inverse, middle, center
 
@@ -426,9 +137,9 @@ class: inverse, middle, center
 
 ## Messy (4)
 
-Messy (4): *Values for a single observational unit are stored across multiple tables.*
+**Messy (4)**: Values for a single observational unit are stored across multiple tables.
 
-After data are normalized by splitting, we want to de-normalize again by *joining* datasets.
+After data are normalized by splitting, we want to de-normalize again by **joining** datasets.
 
 ---
 
@@ -474,10 +185,13 @@ LahmanData
 
 ## Lahman database
 
-The Lahman database consists of 24 data frames that are linked by `playerID`. &lt;br&gt;
+The Lahman database consists of 24 data frames that are linked by `playerID`.
+
 This is clean, but not very readable. &lt;br&gt;
+
 The `Master` table includes names and other attributes for each player. &lt;br&gt;
-*Joining* multiple tables helps us to bring together (pieces of) information from multiple sources.
+
+**Joining** multiple tables helps us to bring together (pieces of) information from multiple sources.
 
 ---
 
@@ -485,7 +199,8 @@ The `Master` table includes names and other attributes for each player. &lt;br&g
 
 
 ```r
-HallOfFame &lt;- HallOfFame %&gt;% group_by(playerID) %&gt;% 
+HallOfFame &lt;- HallOfFame %&gt;%
+  group_by(playerID) %&gt;% 
   mutate(times = order(yearID)) 
 
 HallOfFame %&gt;%
@@ -495,7 +210,7 @@ HallOfFame %&gt;%
   geom_point() 
 ```
 
-![](4-joining_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+![](4-joining_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -511,7 +226,7 @@ HallOfFame %&gt;%
   geom_point() 
 ```
 
-![](4-joining_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+![](4-joining_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -524,8 +239,11 @@ HallOfFame %&gt;%
 ## Joins - more specific idea
 
 - Data sets are joined along values of variables. 
+
 - In `dplyr` there are various join functions: `left_join`, `inner_join`, `full_join`, ...
+
 - Differences between join functions only visible, if not all values in one set have values in the other
+
 - We've already done some joining - maps example. Joining by state name
 
 ---
@@ -569,7 +287,9 @@ df2
 ## Left join
 
 - all elements in the *left* data set are kept
+
 - non-matches are filled in by `NA`
+
 - `right_join` works symmetric
 
 
@@ -693,7 +413,7 @@ hof_bats %&gt;%
   geom_point(aes(color = inducted))
 ```
 
-![](4-joining_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+![](4-joining_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -718,7 +438,7 @@ hof_pitch %&gt;%
 ## Warning: Removed 2 rows containing missing values (geom_point).
 ```
 
-![](4-joining_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+![](4-joining_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
 
 
 ---
@@ -763,15 +483,33 @@ labels &lt;- Voted %&gt;% group_by(playerID) %&gt;% summarize(
 "highlightLines": true,
 "countIncrementalSlides": false
 });
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
-(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-  }
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
 });
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

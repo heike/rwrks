@@ -4,7 +4,8 @@
     <title>Reading Files</title>
     <meta charset="utf-8">
     <meta name="author" content="Haley Jeppson, Sam Tyner" />
-    <link href="libs/remark-css-0.0.1/example.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
@@ -14,6 +15,8 @@ class: center, middle, inverse, title-slide
 ### Haley Jeppson, Sam Tyner
 
 ---
+
+
 
 
 ## Data in Excel
@@ -32,7 +35,8 @@ class: center, middle, inverse, title-slide
 
 
 ```r
-midwest &lt;- readr::read_csv("http://heike.github.io/rwrks/03-r-format/data/midwest.csv")
+library(readr)
+midwest &lt;- read_csv("http://heike.github.io/rwrks/03-r-format/data/midwest.csv")
 head(midwest)
 ```
 
@@ -49,93 +53,29 @@ head(midwest)
 ## # ... with 2 more variables: `Week 5` &lt;chr&gt;, X11 &lt;chr&gt;
 ```
 
----
-## Gas Prices
-
-
-```r
-str(midwest)
-```
-
-```
-## Classes 'tbl_df', 'tbl' and 'data.frame':	212 obs. of  11 variables:
-##  $ Year-Month: chr  NA "1994-Nov" "1994-Dec" "1995-Jan" ...
-##  $ Week 1    : chr  "End Date" NA "5-Dec" "2-Jan" ...
-##  $ X3        : chr  "Value" NA "1.086" "1.025" ...
-##  $ Week 2    : chr  "End Date" NA "12-Dec" "9-Jan" ...
-##  $ X5        : chr  "Value" NA "1.057" "1.046" ...
-##  $ Week 3    : chr  "End Date" NA "19-Dec" "16-Jan" ...
-##  $ X7        : chr  "Value" NA "1.039" "1.031" ...
-##  $ Week 4    : chr  "End Date" "28-Nov" "26-Dec" "23-Jan" ...
-##  $ X9        : chr  "Value" "1.122" "1.027" "1.054" ...
-##  $ Week 5    : chr  "End Date" NA NA "30-Jan" ...
-##  $ X11       : chr  "Value" NA NA "1.055" ...
-##  - attr(*, "spec")=List of 2
-##   ..$ cols   :List of 11
-##   .. ..$ Year-Month: list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ Week 1    : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ X3        : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ Week 2    : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ X5        : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ Week 3    : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ X7        : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ Week 4    : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ X9        : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ Week 5    : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ X11       : list()
-##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   ..$ default: list()
-##   .. ..- attr(*, "class")= chr  "collector_guess" "collector"
-##   ..- attr(*, "class")= chr "col_spec"
-```
-
-There is clearly some work to be done...
 
 ---
-## `read.csv` vs. `read.table`
+## `read_csv` vs. `read_*`
 
-`read.csv` is really just a wrapper for `read.table` with certain parameters set:
+`read_csv` is just one way to read a file using the `readr` package: 
 
-
-```r
-read.csv
-```
-
-```
-## function (file, header = TRUE, sep = ",", quote = "\"", dec = ".", 
-##     fill = TRUE, comment.char = "", ...) 
-## read.table(file = file, header = header, sep = sep, quote = quote, 
-##     dec = dec, fill = fill, comment.char = comment.char, ...)
-## &lt;bytecode: 0x31c1a30&gt;
-## &lt;environment: namespace:utils&gt;
-```
-
-So to properly read in this data, it's probably best to use `read.table` directly
-
-
-```r
-?read.table
-```
+- `read_delim`: the most generic function. Use the `delim` argument to read a file with any type of delimiter 
+- `read_tsv`: read tab separated files 
+- `read_lines`: read a file into a vector that has one element per line of the file
+- `read_file`: read a file into a single character element
+- `read_table`: read a file separated by space
 
 ---
 class: inverse
 ## Your Turn 
 
-Have a look at the parameters of read.table (?read.table) to solve the following problems:
+Have a look at the parameters of `read_csv` to solve the following problems:
 
 1. Read the first two lines of the file into an object called `midwest_names`
 
 2. Read everything EXCEPT the first two lines into an object called `midwest_data`
+
+Hint: Visit http://heike.github.io/rwrks/03-r-format/data/midwest.csv to download the data and look at it in Excel to help figure out what the issue is. 
 
 
 
@@ -145,22 +85,23 @@ Have a look at the parameters of read.table (?read.table) to solve the following
 
 
 ```r
-values &lt;- c(midwest_data$V3, midwest_data$V5, midwest_data$V7, 
-            midwest_data$V9, midwest_data$V11)
-dates &lt;- c(paste(midwest_data$V1, midwest_data$V2, sep = "-"), 
-           paste(midwest_data$V1, midwest_data$V4, sep = "-"),
-           paste(midwest_data$V1, midwest_data$V6, sep = "-"),
-           paste(midwest_data$V1, midwest_data$V8, sep = "-"),
-           paste(midwest_data$V1, midwest_data$V10, sep = "-"))
+library(lubridate)
+library(tidyverse)
+values &lt;- c(midwest_data$X3, midwest_data$X5, midwest_data$X7, 
+            midwest_data$X9, midwest_data$X11)
+dates &lt;- c(paste(midwest_data$X1, midwest_data$X2, sep = "-"), 
+           paste(midwest_data$X1, midwest_data$X4, sep = "-"),
+           paste(midwest_data$X1, midwest_data$X6, sep = "-"),
+           paste(midwest_data$X1, midwest_data$X8, sep = "-"),
+           paste(midwest_data$X1, midwest_data$X10, sep = "-"))
 
 dates &lt;- dates[!is.na(values)]
 values &lt;- values[!is.na(values)]
 
-library(lubridate)
 dates &lt;- ymd(dates)
 
-midwest_gas &lt;- data.frame(date = dates, price = values)
-midwest_gas &lt;- midwest_gas[with(midwest_gas, order(date)), ]
+midwest_gas &lt;- data_frame(date = dates, price = values)
+midwest_gas &lt;- arrange(midwest_gas, dates)
 ```
 
 ---
@@ -173,7 +114,7 @@ library(ggplot2)
 ggplot(midwest_gas, aes(x = date, y = price)) + geom_line()
 ```
 
-![](1-Files_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+![](1-Files_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -274,15 +215,33 @@ http://wwwn.cdc.gov/Nchs/Nhanes/Search/nhanes13_14.aspx
 "highlightLines": true,
 "countIncrementalSlides": false
 });
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
-(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-  }
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
 });
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
