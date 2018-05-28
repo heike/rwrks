@@ -13,8 +13,10 @@ flower$Species == "setosa"
 ## ------------------------------------------------------------------------
 flower[flower$Species=="setosa", ]
 
-## ------------------------------------------------------------------------
-mydf <- data.frame(NUMS = 1:5, 
+## ----message=FALSE, warning=FALSE----------------------------------------
+library(tidyverse)
+
+mydf <- data_frame(NUMS = 1:5, 
                    lets = letters[1:5],
                    vehicle = c("car", "boat", "car", "car", "boat"))
 mydf
@@ -51,5 +53,5 @@ tout$p.value
 tout[[3]]
 
 ## ---- eval=FALSE---------------------------------------------------------
-## littledata <- read.csv("PretendData.csv")
+## littledata <- read_csv("PretendData.csv")
 
