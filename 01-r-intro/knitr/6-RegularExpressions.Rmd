@@ -19,7 +19,7 @@ library(tidyverse)
 
 ## Regular Expressions 
 
-<img src="images/email.png" class="cover" width=1800>
+<img src="images/email.png" class="cover" width=1600>
 
 ---
 
@@ -40,16 +40,35 @@ library(tidyverse)
 - R language provides this capability through `grep`, `gsub`, ...
 
 ---
-## Example
+## Example: State names
+
+`state.name` is a built in dataset within R that contains all the U.S. state names.
 
 ```{r}
-# http://heike.github.io/rwrks/01-r-intro/data/meta.txt")
-meta <- read.table("../data/meta.txt")
+data(state)
+```
+
+How many state names contain the pattern "ne"?
+
+```{r}
+grep(pattern = "ne", state.name)
+
+state.name[7]
+
+grep(pattern = "ne", state.name, value = TRUE)
+
 ```
 
 ---
 
 ## Example
+
+We don’t care about the casing so we will make our pattern more promiscuous.
+
+```{r}
+grep(pattern = "[nN]e", state.name, value = TRUE)
+
+```
 
 ---
 
@@ -87,6 +106,14 @@ meta <- read.table("../data/meta.txt")
 - `+` indicates there is **one or more** of the preceding element, eg `ab+c` matches "abc", "abbc", "abbbc", ...
 
 - `.` matches any **single** character, eg `a.c` matches "abc" or "atc"
+
+- `{n}` indicates the preceding element is matched exactly *n* times
+
+- `{n,}` indicates the preceding element is matched *n* or more times
+
+- `{n,m}` indicates the preceding element is matched at least *n* times, but not more than *m* times
+
+
 
 ---
 ## Advanced Patterns
@@ -153,22 +180,6 @@ What do these regular expressions do?
 `(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})`
 
 ---
-class: inverse
-
-## Your Turn (5 min)
-
-- write out the regular expression for a number in scientific notation
-
-<!--
-```
-grep("[+-]?([0-9]+\\.)?[0-9]+[eE][+-]?[0-9]+", c("1e-4", "-2.13e-1", "2E4"))
-```
--->
-
-- how can we try out whether the pattern works?
-
-
----
 
 ## Regular expressions in R
 
@@ -189,14 +200,23 @@ gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
 ---
 class: inverse
 
-## Your Turn (8 min)
+## Your Turn
 
+1. How many state names contain one or two S's?
+
+2. For any state that has a name in the form `New ----`, replace `New` with `Old`.
 
 ---
 class: inverse
 
 ## Your Turn - Solution
 
+```{r}
+grep(pattern = "s{1,2}", state.name, value = TRUE)
+
+gsub("New", "Old", state.name)
+
+```
 
 ---
 
@@ -206,21 +226,46 @@ class: inverse
 
 - using `\\1`, `\\2`, `\\3`, ... we can extract the first, second, third ... pattern
 
-Imagine, we want to extract the day number for each row
+Imagine want to extract some sample data that has been coded into our sample names.
+
+For example, X1P10N2AFD0 encodes the experiment, pig number, pen, tissue, and day.
 
 ```{r}
+meta <- read.table("http://heike.github.io/rwrks/01-r-intro/data/meta.txt")
 head(meta)
 ```
+
+---
+
+## Example
+
+Imagine, we want to extract the day number for each row.
 
 We use the expression `D` as cue; the number after that is the day:
 
 ```{r}
-gsub('.*D([:digit:]*)','\\1', meta$Group)
+meta$day <- gsub('.*D([:digit:]*)','\\1', meta$Group)
+head(meta)
 ```
 
 
 ---
 class: inverse
 
-## Your Turn (5 min)
+## Your Turn
 
+Extract the pen number, experiment, and tissue for each row.
+
+
+
+---
+class: inverse
+
+## Your Turn - Solution
+
+```{r}
+meta$pen <- sub('X.P.*N(..).*D.*', '\\1', meta$Group)
+meta$experiment <- sub('(X.)P[:digit:]*.*', '\\1', meta$Group)
+meta$tissue <- sub('X.P.*N..(.*)D.*', '\\1', meta$Group)
+head(meta)
+```

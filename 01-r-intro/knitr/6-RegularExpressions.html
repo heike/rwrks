@@ -19,7 +19,7 @@ class: center, middle, inverse, title-slide
 
 ## Regular Expressions 
 
-&lt;img src="images/email.png" class="cover" width=1800&gt;
+&lt;img src="images/email.png" class="cover" width=1600&gt;
 
 ---
 
@@ -40,18 +40,58 @@ class: center, middle, inverse, title-slide
 - R language provides this capability through `grep`, `gsub`, ...
 
 ---
+## Example: State names
 
-## Example: 
+`state.name` is a built in dataset within R that contains all the U.S. state names.
 
 
 ```r
-# http://heike.github.io/rwrks/01-r-intro/data/meta.txt")
-meta &lt;- read.table("../data/meta.txt")
+data(state)
+```
+
+How many state names contain the pattern "ne"?
+
+
+```r
+grep(pattern = "ne", state.name)
+```
+
+```
+## [1]  7 19 23 42
+```
+
+```r
+state.name[7]
+```
+
+```
+## [1] "Connecticut"
+```
+
+```r
+grep(pattern = "ne", state.name, value = TRUE)
+```
+
+```
+## [1] "Connecticut" "Maine"       "Minnesota"   "Tennessee"
 ```
 
 ---
 
 ## Example
+
+We don’t care about the casing so we will make our pattern more promiscuous.
+
+
+```r
+grep(pattern = "[nN]e", state.name, value = TRUE)
+```
+
+```
+##  [1] "Connecticut"   "Maine"         "Minnesota"     "Nebraska"     
+##  [5] "Nevada"        "New Hampshire" "New Jersey"    "New Mexico"   
+##  [9] "New York"      "Tennessee"
+```
 
 ---
 
@@ -89,6 +129,14 @@ meta &lt;- read.table("../data/meta.txt")
 - `+` indicates there is **one or more** of the preceding element, eg `ab+c` matches "abc", "abbc", "abbbc", ...
 
 - `.` matches any **single** character, eg `a.c` matches "abc" or "atc"
+
+- `{n}` indicates the preceding element is matched exactly *n* times
+
+- `{n,}` indicates the preceding element is matched *n* or more times
+
+- `{n,m}` indicates the preceding element is matched at least *n* times, but not more than *m* times
+
+
 
 ---
 ## Advanced Patterns
@@ -155,22 +203,6 @@ What do these regular expressions do?
 `(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})`
 
 ---
-class: inverse
-
-## Your Turn (5 min)
-
-- write out the regular expression for a number in scientific notation
-
-&lt;!--
-```
-grep("[+-]?([0-9]+\\.)?[0-9]+[eE][+-]?[0-9]+", c("1e-4", "-2.13e-1", "2E4"))
-```
---&gt;
-
-- how can we try out whether the pattern works?
-
-
----
 
 ## Regular expressions in R
 
@@ -191,14 +223,49 @@ gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
 ---
 class: inverse
 
-## Your Turn (8 min)
+## Your Turn
 
+1. How many state names contain one or two S's?
+
+2. For any state that has a name in the form `New ----`, replace `New` with `Old`.
 
 ---
 class: inverse
 
 ## Your Turn - Solution
 
+
+```r
+grep(pattern = "s{1,2}", state.name, value = TRUE)
+```
+
+```
+##  [1] "Alaska"        "Arkansas"      "Illinois"      "Kansas"       
+##  [5] "Louisiana"     "Massachusetts" "Minnesota"     "Mississippi"  
+##  [9] "Missouri"      "Nebraska"      "New Hampshire" "New Jersey"   
+## [13] "Pennsylvania"  "Rhode Island"  "Tennessee"     "Texas"        
+## [17] "Washington"    "West Virginia" "Wisconsin"
+```
+
+```r
+gsub("New", "Old", state.name)
+```
+
+```
+##  [1] "Alabama"        "Alaska"         "Arizona"        "Arkansas"      
+##  [5] "California"     "Colorado"       "Connecticut"    "Delaware"      
+##  [9] "Florida"        "Georgia"        "Hawaii"         "Idaho"         
+## [13] "Illinois"       "Indiana"        "Iowa"           "Kansas"        
+## [17] "Kentucky"       "Louisiana"      "Maine"          "Maryland"      
+## [21] "Massachusetts"  "Michigan"       "Minnesota"      "Mississippi"   
+## [25] "Missouri"       "Montana"        "Nebraska"       "Nevada"        
+## [29] "Old Hampshire"  "Old Jersey"     "Old Mexico"     "Old York"      
+## [33] "North Carolina" "North Dakota"   "Ohio"           "Oklahoma"      
+## [37] "Oregon"         "Pennsylvania"   "Rhode Island"   "South Carolina"
+## [41] "South Dakota"   "Tennessee"      "Texas"          "Utah"          
+## [45] "Vermont"        "Virginia"       "Washington"     "West Virginia" 
+## [49] "Wisconsin"      "Wyoming"
+```
 
 ---
 
@@ -208,65 +275,82 @@ class: inverse
 
 - using `\\1`, `\\2`, `\\3`, ... we can extract the first, second, third ... pattern
 
-Imagine, we want to extract the day number for each row
+Imagine want to extract some sample data that has been coded into our sample names.
+
+For example, X1P10N2AFD0 encodes the experiment, pig number, pen, tissue, and day.
 
 
 ```r
+meta &lt;- read.table("http://heike.github.io/rwrks/01-r-intro/data/meta.txt")
 head(meta)
 ```
 
 ```
-##   label      Group numOtus
-## 1  0.03 FS1EP1ABD0    5802
-## 2  0.03 FS1EP1ABD1    5802
-## 3  0.03 FS1EP1AD11    5802
-## 4  0.03  FS1EP1AD4    5802
-## 5  0.03 FS1EP1BD11    5802
-## 6  0.03  FS1EP1BD4    5802
+##    label       Group numOtus
+## 27  0.03 X1P10N2ACD4    5802
+## 28  0.03 X1P10N2AFD0    5802
+## 29  0.03 X1P10N2AFD4    5802
+## 30  0.03 X1P10N2AID4    5802
+## 31  0.03 X1P11N2ACD4    5802
+## 32  0.03 X1P11N2AFD0    5802
 ```
+
+---
+
+## Example
+
+Imagine, we want to extract the day number for each row.
 
 We use the expression `D` as cue; the number after that is the day:
 
 
 ```r
-gsub('.*D([:digit:]*)','\\1', meta$Group)
+meta$day &lt;- gsub('.*D([:digit:]*)','\\1', meta$Group)
+head(meta)
 ```
 
 ```
-##   [1] "0"  "1"  "11" "4"  "11" "4"  "0"  "1"  "11" "4"  "7"  "11" "4"  "7" 
-##  [15] "0"  "1"  "11" "4"  "7"  "11" "4"  "7"  "4"  "4"  "1"  "1"  "4"  "0" 
-##  [29] "4"  "4"  "4"  "0"  "4"  "4"  "4"  "0"  "4"  "4"  "4"  "0"  "4"  "4" 
-##  [43] "4"  "0"  "4"  "4"  "4"  "0"  "4"  "4"  "4"  "0"  "4"  "4"  "4"  "0" 
-##  [57] "4"  "4"  "4"  "0"  "4"  "4"  "4"  "4"  "4"  "4"  "0"  "4"  "4"  "4" 
-##  [71] "0"  "4"  "4"  "0"  "4"  "4"  "7"  "0"  "4"  "7"  "7"  "7"  "0"  "4" 
-##  [85] "7"  "7"  "7"  "0"  "4"  "7"  "7"  "7"  "0"  "4"  "7"  "7"  "7"  "0" 
-##  [99] "4"  "7"  "7"  "7"  "0"  "4"  "7"  "7"  "7"  "0"  "4"  "7"  "7"  "7" 
-## [113] "0"  "4"  "7"  "7"  "4"  "0"  "4"  "4"  "7"  "0"  "4"  "7"  "7"  "7" 
-## [127] "0"  "4"  "7"  "7"  "7"  "0"  "4"  "7"  "7"  "7"  "0"  "4"  "7"  "7" 
-## [141] "7"  "0"  "4"  "7"  "7"  "7"  "0"  "4"  "7"  "7"  "7"  "0"  "4"  "7" 
-## [155] "7"  "7"  "0"  "4"  "7"  "7"  "7"  "0"  "4"  "7"  "7"  "7"  "0"  "4" 
-## [169] "7"  "7"  "4"  "0"  "4"  "4"  "7"  "0"  "4"  "7"  "7"  "7"  "0"  "4" 
-## [183] "7"  "7"  "7"  "0"  "4"  "7"  "7"  "14" "0"  "11" "14" "4"  "7"  "14"
-## [197] "14" "0"  "11" "14" "4"  "7"  "14" "14" "0"  "11" "14" "4"  "7"  "14"
-## [211] "14" "0"  "11" "14" "4"  "7"  "14" "14" "0"  "11" "14" "4"  "7"  "14"
-## [225] "14" "0"  "11" "14" "4"  "7"  "14" "14" "0"  "11" "14" "4"  "7"  "14"
-## [239] "4"  "0"  "4"  "4"  "4"  "0"  "4"  "4"  "14" "0"  "11" "14" "4"  "7" 
-## [253] "14" "14" "0"  "11" "14" "4"  "7"  "14" "14" "11" "14" "4"  "7"  "14"
-## [267] "14" "0"  "11" "14" "4"  "7"  "14" "14" "0"  "11" "14" "7"  "14" "14"
-## [281] "0"  "11" "14" "4"  "7"  "14" "14" "0"  "11" "14" "4"  "7"  "14" "14"
-## [295] "11" "14" "4"  "7"  "14" "14" "0"  "11" "14" "4"  "7"  "14" "14" "0" 
-## [309] "11" "14" "4"  "7"  "14" "14" "0"  "11" "14" "4"  "7"  "14" "14" "0" 
-## [323] "11" "14" "4"  "7"  "14" "14" "0"  "11" "14" "4"  "7"  "14" "14" "0" 
-## [337] "11" "14" "4"  "7"  "14" "14" "0"  "11" "14" "4"  "7"  "14" "14" "0" 
-## [351] "11" "14" "4"  "7"  "14" "4"  "0"  "4"  "4"  "4"  "4"  "4"  "4"  "0" 
-## [365] "4"  "4"  "4"  "4"  "4"  "33" "33" "33" "33" "33" "33" "33"
+##    label       Group numOtus day
+## 27  0.03 X1P10N2ACD4    5802   4
+## 28  0.03 X1P10N2AFD0    5802   0
+## 29  0.03 X1P10N2AFD4    5802   4
+## 30  0.03 X1P10N2AID4    5802   4
+## 31  0.03 X1P11N2ACD4    5802   4
+## 32  0.03 X1P11N2AFD0    5802   0
 ```
 
 
 ---
 class: inverse
 
-## Your Turn (5 min)
+## Your Turn
+
+Extract the pen number, experiment, and tissue for each row.
+
+
+
+---
+class: inverse
+
+## Your Turn - Solution
+
+
+```r
+meta$pen &lt;- sub('X.P.*N(..).*D.*', '\\1', meta$Group)
+meta$experiment &lt;- sub('(X.)P[:digit:]*.*', '\\1', meta$Group)
+meta$tissue &lt;- sub('X.P.*N..(.*)D.*', '\\1', meta$Group)
+head(meta)
+```
+
+```
+##    label       Group numOtus day pen experiment tissue
+## 27  0.03 X1P10N2ACD4    5802   4  2A         X1      C
+## 28  0.03 X1P10N2AFD0    5802   0  2A         X1      F
+## 29  0.03 X1P10N2AFD4    5802   4  2A         X1      F
+## 30  0.03 X1P10N2AID4    5802   4  2A         X1      I
+## 31  0.03 X1P11N2ACD4    5802   4  2A         X1      C
+## 32  0.03 X1P11N2AFD0    5802   0  2A         X1      F
+```
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
