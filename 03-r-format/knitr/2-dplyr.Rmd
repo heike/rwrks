@@ -70,20 +70,27 @@ There are five primary `dplyr` *verbs*, representing distinct data analysis task
 
 ## Filter
 
-```{r message = FALSE, warning=FALSE}
+Read in the french fries data (in the folder 03-r-format/data). The data are from an experiment on the effect of using three different fryer oils had on the taste of the fries.
+
+```{r message = FALSE, warning=FALSE, eval = FALSE}
 library(tidyverse)
-data(french_fries, package = "reshape2")
+french_fries <- read_csv("frenchfries.csv")
+french_fries %>% 
+  filter(subject == 3, time == 1) %>% 
+  head(3)
+```
+```{r message = FALSE, warning=FALSE, echo = FALSE}
+library(tidyverse)
+french_fries <- read_csv("../data/frenchfries.csv")
 french_fries %>% 
   filter(subject == 3, time == 1) %>% 
   head(3)
 ```
 
-Look at `?reshape2::french_fries` to learn more 
-
 `filter` is similar to the base function `subset`
 
 ---
-## Filter (con't)
+## Filter (cont.)
 
 Multiple conditions in `filter` are combined with a logical AND (i.e. all conditions must be fulfilled) 
 
@@ -308,7 +315,7 @@ reps
 
 ---
 
-## Are replicates similar? (cont'd)
+## Are replicates similar? (contd.)
 
 ```{r fig.height=4, warning=FALSE}
 reps %>% 
@@ -400,13 +407,13 @@ class: inverse
 
 ## Your Turn (10 min)
 
-1. Create a line plots representing the weight of each Chick 
-
-**Hint**: check out `?group` and consider what varible or variables you might map to this option
+1. Create a line plot with each line representing the weight of each Chick 
 
 2. Focus on weight on day 21. Draw side-by-side dotplots of weight by diet. 
 
 3. **Bonus**: Use `summarize` the average weight on day 21 under each diet. Overlay the dotplots by error bars around the average weight under each diet (see `?geom_errorbar`)
+
+**Hint** for 1: check out `?group` and consider what varible or variables you might map to this option
 
 ---
 
