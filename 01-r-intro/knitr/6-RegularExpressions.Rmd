@@ -25,7 +25,9 @@ library(tidyverse)
 
 ## [xkcd #208](https://xkcd.com/208/)
 
-![](https://imgs.xkcd.com/comics/regular_expressions.png)
+
+<img src="https://imgs.xkcd.com/comics/regular_expressions.png" height=500>
+
 
 ---
 
