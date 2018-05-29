@@ -1,4 +1,4 @@
-pignum,time_point,pig_weight,temp,pan_wt,wet_wt,Dry_wt_pan,Dry_weight,percent_drymatter,daily_shedding,treatment,shedding
+pignum,time_point,pig_weight,temp,pan_wt,wet_wt,Dry_wt_pan,Dry_weight,percent_drymatter,daily_shedding,treatment,total_shedding
 77,2,NA,102.7,1.02,1.09,1.31,0.29,26.60550459,5.29831736654804,control,2.30102999566398
 87,2,NA,104.3,1.04,1.02,1.33,0.29,28.43137255,5.7037824746562,control,2.47712125471966
 122,2,NA,104.4,1.02,0.99,1.11,0.09,9.090909091,13.2176735572087,control,5.74036268949424

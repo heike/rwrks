@@ -1,4 +1,4 @@
-pignum,time_point,pig_weight,daily_shedding,treatment,shedding,gain
+pignum,time_point,pig_weight,daily_shedding,treatment,total_shedding,gain
 77,21,25.36,4.60517018598809,control,37.140215041192185,13.92
 87,21,23.86,3.91202300542815,control,43.88072767279656,11.7
 122,21,33.86,5.01063529409626,control,59.04973393943041,16.8
