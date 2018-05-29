@@ -4,8 +4,7 @@
     <title>Motivating Example</title>
     <meta charset="utf-8">
     <meta name="author" content="Haley Jeppson and Sam Tyner" />
-    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/example.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
@@ -93,14 +92,14 @@ head(shed)
 ## # A tibble: 6 x 12
 ##   pignum time_point pig_weight  temp pan_wt wet_wt Dry_wt_pan Dry_weight
 ##    &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-## 1     77          2         NA  103.   1.02  1.09        1.31     0.290 
-## 2     87          2         NA  104.   1.04  1.02        1.33     0.290 
-## 3    122          2         NA  104.   1.02  0.990       1.11     0.0900
-## 4    160          2         NA  104.   1.09  1.00        1.36     0.270 
-## 5    191          2         NA  104.   1.03  1.02        1.27     0.240 
-## 6    224          2         NA  103.   1.08  1.00        1.39     0.310 
+## 1     77          2         NA   103   1.02  1.09        1.31     0.290 
+## 2     87          2         NA   104   1.04  1.02        1.33     0.290 
+## 3    122          2         NA   104   1.02  0.990       1.11     0.0900
+## 4    160          2         NA   104   1.09  1.00        1.36     0.270 
+## 5    191          2         NA   104   1.03  1.02        1.27     0.240 
+## 6    224          2         NA   103   1.08  1.00        1.39     0.310 
 ## # ... with 4 more variables: percent_drymatter &lt;dbl&gt;,
-## #   daily_shedding &lt;dbl&gt;, treatment &lt;chr&gt;, shedding &lt;dbl&gt;
+## #   daily_shedding &lt;dbl&gt;, treatment &lt;chr&gt;, total_shedding &lt;dbl&gt;
 ```
 
 ---
@@ -126,7 +125,7 @@ str(shed)
 ##  $ percent_drymatter: num  26.61 28.43 9.09 27 23.53 ...
 ##  $ daily_shedding   : num  5.3 5.7 13.22 6.75 5.86 ...
 ##  $ treatment        : chr  "control" "control" "control" "control" ...
-##  $ shedding         : num  2.3 2.48 5.74 2.93 2.54 ...
+##  $ total_shedding   : num  2.3 2.48 5.74 2.93 2.54 ...
 ##  - attr(*, "spec")=List of 2
 ##   ..$ cols   :List of 12
 ##   .. ..$ pignum           : list()
@@ -151,7 +150,7 @@ str(shed)
 ##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
 ##   .. ..$ treatment        : list()
 ##   .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
-##   .. ..$ shedding         : list()
+##   .. ..$ total_shedding   : list()
 ##   .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
 ##   ..$ default: list()
 ##   .. ..- attr(*, "class")= chr  "collector_guess" "collector"
@@ -185,7 +184,7 @@ summary(shed)
 ##  3rd Qu.:1.070   3rd Qu.:1.050   3rd Qu.:1.353   3rd Qu.:0.290  
 ##  Max.   :1.120   Max.   :1.110   Max.   :1.460   Max.   :0.380  
 ##  NA's   :122     NA's   :123     NA's   :123     NA's   :123    
-##  percent_drymatter daily_shedding    treatment            shedding     
+##  percent_drymatter daily_shedding    treatment         total_shedding  
 ##  Min.   : 9.091    Min.   : 0.000   Length:295         Min.   : 0.000  
 ##  1st Qu.:24.292    1st Qu.: 0.000   Class :character   1st Qu.: 1.699  
 ##  Median :26.923    Median : 3.912   Mode  :character   Median :13.904  
@@ -202,7 +201,7 @@ Lets look at the relationship between time point and *Salmonella* shedding.
 
 
 ```r
-ggplot(shed, aes(x=time_point, y=shedding)) + geom_point()
+ggplot(shed, aes(x=time_point, y=total_shedding)) + geom_point()
 ```
 
 ![](2-MotivatingExample_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
@@ -214,7 +213,7 @@ Color the points by treatment groups
 
 
 ```r
-ggplot(shed, aes(x=time_point, y=shedding, colour = treatment)) + geom_point()
+ggplot(shed, aes(x=time_point, y=total_shedding, colour = treatment)) + geom_point()
 ```
 
 ![](2-MotivatingExample_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
@@ -227,7 +226,7 @@ Switch to lines for easier reading
 
 
 ```r
-ggplot(shed, aes(x=time_point, y=shedding, colour = treatment)) + geom_line(aes(group=pignum))
+ggplot(shed, aes(x=time_point, y=total_shedding, colour = treatment)) + geom_line(aes(group=pignum))
 ```
 
 ![](2-MotivatingExample_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
@@ -239,7 +238,7 @@ Add facetting
 
 
 ```r
-ggplot(shed, aes(x=time_point, y=shedding, color=treatment)) + 
+ggplot(shed, aes(x=time_point, y=total_shedding, color=treatment)) + 
   geom_line(aes(group=pignum)) + 
   facet_wrap(~treatment)
 ```
@@ -274,7 +273,7 @@ Lets look distribution of the final shedding values with a histogram
 
 
 ```r
-ggplot(final_shed) + geom_histogram(aes(x = shedding))
+ggplot(final_shed) + geom_histogram(aes(x = total_shedding))
 ```
 
 ```
@@ -290,21 +289,15 @@ which pig and what treatment did it receive?
 
 
 ```r
-final_shed[which.min(final_shed$shedding),]
+final_shed[which.min(final_shed$total_shedding),]
 ```
 
 ```
-<<<<<<< HEAD
 ## # A tibble: 1 x 7
-##   pignum time_point pig_weight daily_shedding treatment shedding  gain
-##    &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;
-## 1     97         21       24.9              0 RPS              0  12.9
-=======
-## # A tibble: 1 x 5
-##   pignum daily_shedding treatment shedding  gain
-##    &lt;int&gt;          &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;
-## 1     97             0. RPS             0.  12.9
->>>>>>> 742022b32257092c539fbc92f0aa4eb4923e844d
+##   pignum time_point pig_weight daily_shedding treatment total_shedding
+##    &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;
+## 1     97         21       24.9              0 RPS                    0
+## # ... with 1 more variable: gain &lt;dbl&gt;
 ```
 
 ---
@@ -316,7 +309,7 @@ Look at the average cumulative shedding value for each treatment seperately
 
 ```r
 # Using base `R`:
-median(final_shed$shedding[final_shed$treatment == "control"])
+median(final_shed$total_shedding[final_shed$treatment == "control"])
 ```
 
 ```
@@ -332,7 +325,7 @@ median(final_shed$shedding[final_shed$treatment == "control"])
 ```r
 # Using `tidyverse`:
 final_shed %&gt;%  group_by(treatment) %&gt;% 
-  summarise(med_shed = median(shedding))
+  summarise(med_shed = median(total_shedding))
 ```
 
 ```
@@ -354,7 +347,7 @@ There is a difference but is it statistically significant?
 
 
 ```r
-wilcox.test(shedding ~ treatment, data = final_shed,
+wilcox.test(total_shedding ~ treatment, data = final_shed,
             subset = treatment %in% c("control", "RPS"))
 ```
 
@@ -362,7 +355,7 @@ wilcox.test(shedding ~ treatment, data = final_shed,
 ## 
 ## 	Wilcoxon rank sum test
 ## 
-## data:  shedding by treatment
+## data:  total_shedding by treatment
 ## W = 75, p-value = 0.01327
 ## alternative hypothesis: true location shift is not equal to 0
 ```
@@ -375,7 +368,7 @@ We could compare the cumulative shedding values of each treatment group with a s
 
 ```r
 ggplot(final_shed) + 
-  geom_boxplot( aes(treatment, shedding, fill = treatment))
+  geom_boxplot( aes(treatment, total_shedding, fill = treatment))
 ```
 
 ![](2-MotivatingExample_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
@@ -414,33 +407,15 @@ Try playing with chunks of code from this session to further investigate the *Sa
 "highlightLines": true,
 "countIncrementalSlides": false
 });
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
-  window.dispatchEvent(new Event('resize'));
-});
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
-  if (!r) return;
-  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
-  d.head.appendChild(s);
-})();</script>
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
 
-<script>
-(function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
-  for (i = 0; i < codes.length;) {
-    code = codes[i];
-    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
-      text = code.textContent;
-      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
-          /^\$\$(.|\s)+\$\$$/.test(text) ||
-          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
-        code.outerHTML = code.innerHTML;  // remove <code></code>
-        continue;
-      }
-    }
-    i++;
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
   }
-})();
+});
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

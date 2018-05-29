@@ -175,7 +175,7 @@ Use `rep` to construct this vector: `1 2 3 4 5 1 2 3 4 5 1 2 3 4 5`
 - We can access different columns using the `$` operator.
 
 ```{r}
-shedding <- final_shed$shedding
+shedding <- final_shed$total_shedding
 treatment <- final_shed$treatment
 ```
 

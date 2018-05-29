@@ -105,7 +105,7 @@ summary(shed)
 Lets look at the relationship between time point and *Salmonella* shedding.  
 
 ```{r, fig.height=5, fig.width=8}
-ggplot(shed, aes(x=time_point, y=shedding)) + geom_point()
+ggplot(shed, aes(x=time_point, y=total_shedding)) + geom_point()
 ```
 
 ---
@@ -114,7 +114,7 @@ ggplot(shed, aes(x=time_point, y=shedding)) + geom_point()
 Color the points by treatment groups
 
 ```{r, fig.height=5, fig.width=9}
-ggplot(shed, aes(x=time_point, y=shedding, colour = treatment)) + geom_point()
+ggplot(shed, aes(x=time_point, y=total_shedding, colour = treatment)) + geom_point()
 ```
 
 ---
@@ -124,7 +124,7 @@ ggplot(shed, aes(x=time_point, y=shedding, colour = treatment)) + geom_point()
 Switch to lines for easier reading
 
 ```{r, fig.height=5, fig.width=9}
-ggplot(shed, aes(x=time_point, y=shedding, colour = treatment)) + geom_line(aes(group=pignum))
+ggplot(shed, aes(x=time_point, y=total_shedding, colour = treatment)) + geom_line(aes(group=pignum))
 ```
 
 ---
@@ -133,7 +133,7 @@ ggplot(shed, aes(x=time_point, y=shedding, colour = treatment)) + geom_line(aes(
 Add facetting
 
 ```{r, fig.height=5, fig.width=9}
-ggplot(shed, aes(x=time_point, y=shedding, color=treatment)) + 
+ggplot(shed, aes(x=time_point, y=total_shedding, color=treatment)) + 
   geom_line(aes(group=pignum)) + 
   facet_wrap(~treatment)
 ```
@@ -159,7 +159,7 @@ summary(final_shed$gain)
 Lets look distribution of the final shedding values with a histogram
 
 ```{r, fig.height=5, fig.width=8}
-ggplot(final_shed) + geom_histogram(aes(x = shedding))
+ggplot(final_shed) + geom_histogram(aes(x = total_shedding))
 ```
 
 ---
@@ -168,7 +168,7 @@ ggplot(final_shed) + geom_histogram(aes(x = shedding))
 which pig and what treatment did it receive?
 
 ```{r}
-final_shed[which.min(final_shed$shedding),]
+final_shed[which.min(final_shed$total_shedding),]
 ```
 
 ---
@@ -179,7 +179,7 @@ Look at the average cumulative shedding value for each treatment seperately
 
 ```{r}
 # Using base `R`:
-median(final_shed$shedding[final_shed$treatment == "control"])
+median(final_shed$total_shedding[final_shed$treatment == "control"])
 # then repeat for each treatment. Or ...
 
 ```
@@ -188,7 +188,7 @@ median(final_shed$shedding[final_shed$treatment == "control"])
 ```{r}
 # Using `tidyverse`:
 final_shed %>%  group_by(treatment) %>% 
-  summarise(med_shed = median(shedding))
+  summarise(med_shed = median(total_shedding))
 ```
 ]
 ---
@@ -197,7 +197,7 @@ final_shed %>%  group_by(treatment) %>%
 There is a difference but is it statistically significant?
 
 ```{r}
-wilcox.test(shedding ~ treatment, data = final_shed,
+wilcox.test(total_shedding ~ treatment, data = final_shed,
             subset = treatment %in% c("control", "RPS"))
 ```
 
@@ -208,7 +208,7 @@ We could compare the cumulative shedding values of each treatment group with a s
 
 ```{r, fig.height=5, fig.width=9}
 ggplot(final_shed) + 
-  geom_boxplot( aes(treatment, shedding, fill = treatment))
+  geom_boxplot( aes(treatment, total_shedding, fill = treatment))
 ```
 
 ---

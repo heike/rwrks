@@ -1,17 +1,3 @@
----
-title: "Data Visualization"
-subtitle: "Using ggplot2"
-author: "Haley Jeppson and Sam Tyner"
-output:
-  xaringan::moon_reader:
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
----
-
-```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
 	echo = TRUE,
@@ -19,9 +5,6 @@ knitr::opts_chunk$set(
 	warning = FALSE,
 	cache = TRUE
 )
-```
-
-```{r, echo=FALSE}
 library(ggplot2)
 library(ggsci)
 library(ggthemes)
@@ -57,24 +40,6 @@ grid_arrange_shared_legend <- function(..., ncol = length(list(...)), nrow = 1, 
 
 }
 
-```
-
-class: center, middle
-
-# POLISHING PLOTS
-
----
-class: inverse, center, middle
-
-# Visual Appearance
-
----
-
-## Built-In Themes
-
-
-
-```{r, echo=FALSE, fig.height=7, fig.width=10, message=FALSE, warning=FALSE}
 
 mtcars$gear <- factor(mtcars$gear)
 
@@ -88,13 +53,6 @@ p5 <- p0 + theme_void() + labs(title = "theme_void")
 p6 <- p0 + theme_minimal() + labs(title = "theme_minimal")
 
 grid.arrange(p1, p2, p3, p4, p5, p6, nrow = 2)
-```
-
----
-
-## Other Themes: ggthemes a ggplot2 extension
-
-```{r, echo=FALSE, fig.height=7, fig.width=10}
 library(ggthemes)
 
 # Economist theme
@@ -125,60 +83,17 @@ p9 <- p0 + theme_excel() + scale_colour_excel() + labs(title = "Excel 2003")
 
 
 grid.arrange(p1, p0, p3, p4, p5, p6, p7, p8, p9, nrow = 3)
-```
-
-
-
----
-
-## Setting Themes
-
-You can globally set a theme with the `theme_set()` function:
-
-```{r, fig.width=10, fig.height=4}
 theme_set(theme_bw())
 
 ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + geom_point()
 
-```
-
-
----
-
-## Elements in a theme
-
-The function `theme()` is used to control non-data parts of the graph including:
-
-- **Line elements**: axis lines, minor and major grid lines, plot panel border, axis ticks background color, etc.  
-- **Text elements**: plot title, axis titles, legend title and text, axis tick mark labels, etc.  
-- **Rectangle elements**: plot background, panel background, legend background, etc.  
-
-There is a specific function to modify each of these three elements :
-
-- `element_line()` to modify the line elements of the theme
-- `element_text()` to modify the text elements
-- `element_rect()` to change the appearance of the rectangle elements
-- `element_blank()` to draw nothing and assign no space
-
-**Note**: `rel()` is used to specify sizes relative to the parent, `margins()` is used to specify the margins of elements.
-
----
-
-
-## Modifying a plot
-
-```{r, fig.height=4, fig.width=10, eval = FALSE}
-p1 <- ggplot(mpg) + 
-  geom_bar(aes(x = class, colour = manufacturer, fill = manufacturer) ) 
-
-p2 <- p1 + theme_classic() + theme(
-  ## modify plot background
-  plot.background = element_rect(fill = "lightskyblue1",colour = "pink",size = 0.5, linetype = "longdash")
-  )
-```
-
-
-```{r, fig.height=4, fig.width=10, echo = FALSE}
+## p1 <- ggplot(mpg) +
+##   geom_bar(aes(x = class, colour = manufacturer, fill = manufacturer) )
+## 
+## p2 <- p1 + theme_classic() + theme(
+##   ## modify plot background
+##   plot.background = element_rect(fill = "lightskyblue1",colour = "pink",size = 0.5, linetype = "longdash")
+##   )
 p1 <- ggplot(mpg) + 
   geom_bar(aes(x = class, colour = manufacturer, fill = manufacturer) ) 
 
@@ -187,13 +102,6 @@ p2 <- p1 + theme_classic() + theme(
   plot.background = element_rect(fill = "lightskyblue1",colour = "pink",size = 0.5, linetype = "longdash")
   )
 grid.arrange(p1, p2, nrow = 1)
-```
-
----
-
-## Plot Legends
-
-```{r, fig.height=4, fig.width=10}
 p3 <- p2 + theme(
   ### move and modify legend 
   legend.title = element_blank(),
@@ -201,125 +109,42 @@ p3 <- p2 + theme(
   legend.key = element_rect(fill = "lightskyblue1", color = "lightskyblue1"),
   legend.background = element_rect( fill = "lightskyblue1",color = "pink", size = 0.5,linetype = "longdash")
   )
-```
-
-
-```{r, fig.height=4, fig.width=10, echo = FALSE}
 grid.arrange(p2, p3, nrow = 1)
-```
-
----
-
-## Modifying Axes
-
-```{r, echo=TRUE, fig.height=3.5, fig.width=10}
 p4 <- p3 + theme(
   ### remove axis ticks
   axis.ticks=element_blank(),
   ### modify axis lines
   axis.line.y = element_line(colour = "pink", size = 1, linetype = "dashed"),
   axis.line.x = element_line(colour = "pink", size = 1.2, linetype = "dashed"))
-```
-
-```{r, echo=FALSE, fig.height=3.5, fig.width=10}
 grid.arrange(p3, p4, nrow = 1)
-```
-
-
----
-
-## Plot Labels
-
-Can be modified in several ways:
-- `labs()`, `xlab()`, `ylab()`, `ggtitle()`
-- You can also set axis and legend labels in the individual scales (using the first argument, the name)
-.
-```{r, echo=TRUE, fig.height=3.5, fig.width=10}
 p5 <- p4 + labs(x = "Class of car", 
                 y = "",
                 title = "Cars by class and manufacturer",
                 subtitle = "With a custom theme!!")
-```
-
-```{r, echo=FALSE, fig.height=3.5, fig.width=10}
 grid.arrange(p4, p5, nrow = 1)
-```
-
-
----
-
-## Zooming
-
-```{r, echo=TRUE, fig.height=3.5, fig.width=10}
 p <- ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + geom_point() 
 p_zoom_in <- p + xlim(2, 4) + ylim(10, 25)
 p_zoom_out <- p + xlim(0,7) + ylim(0, 45)
-```
-
-```{r, echo=FALSE, fig.height=3.5, fig.width=10}
 p <- ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + geom_point() + theme(legend.position = "none") + ggtitle("Default")+ scale_color_locuszoom()
 p_zoom_in <- p + xlim(2, 4) + ylim(10, 25) + ggtitle("Zoomed in")
 p_zoom_out <- p + xlim(0,7) + ylim(0, 45) + ggtitle("Zoomed out")
 grid.arrange(p, p_zoom_in, p_zoom_out, nrow = 1)
-```
-
----
-class: inverse, center, middle
-
-# Interactive graphics
-
----
-## Plotly
-
-```{r, fig.height=3.5, fig.width=10}
 p <- ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + geom_point() + scale_color_locuszoom()
 
 library(plotly)
 ggplotly(p)
 
-```
-
----
-class: inverse, center, middle
-
-# Saving graphics
-
-
----
-
-## Saving your Work
-
-We can save the results of a plot to a file (as an image) using the `ggsave()` function:
-
-```{r, eval=FALSE}
-p1 <- ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + 
-  geom_point()
-
-ggsave("mpg_by_wt.pdf", plot = p1)
-```
-
----
-
-## Your Turn
-
-1. Create a scatterplot of y versus x from the `diamonds` data, colored by clarity
-2. Use the black and white theme
-3. Include an informative title
-4. Move the legend to the bottom
-5. Save your plot to a pdf file and open it in a pdf viewer.
-
-```{r, fig.width=10, fig.height=4}
+## p1 <- ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) +
+##   geom_point()
+## 
+## ggsave("mpg_by_wt.pdf", plot = p1)
 ggplot(data = diamonds, aes(x = x, y = y))
-```
-
-```{r, echo=FALSE, fig.width=10, fig.height=4, eval = FALSE}
-p1 <- ggplot(data = diamonds, aes(x = x, y = y, colour = clarity)) +
-    geom_point() +
-    ggtitle("Diamond y by x") +
-    theme(
-        legend.position = "bottom"
-    )
-p1
-
-# ggsave("yourturn.pdf", plot = p1)
-```
+## p1 <- ggplot(data = diamonds, aes(x = x, y = y, colour = clarity)) +
+##     geom_point() +
+##     ggtitle("Diamond y by x") +
+##     theme(
+##         legend.position = "bottom"
+##     )
+## p1
+## 
+## # ggsave("yourturn.pdf", plot = p1)
