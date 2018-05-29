@@ -1,12 +1,9 @@
-## ----setup, include=FALSE------------------------------------------------
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
 	echo = FALSE,
 	message = FALSE,
 	warning = FALSE
 )
-
-## ------------------------------------------------------------------------
 library(tidyverse)
 library(ggsci)
 library(ggthemes)
@@ -42,16 +39,10 @@ grid_arrange_shared_legend <- function(..., ncol = length(list(...)), nrow = 1, 
 
 }
 
-
-## ------------------------------------------------------------------------
 data(iris)
 knitr::kable(head(iris), format = 'html')
-
-## ---- fig.height=4, fig.width=7, fig.align = "center"--------------------
 data(iris)
 ggplot(iris) + geom_point(aes(x= Sepal.Length, y=Sepal.Width, colour = Species), size = 2.5)+ scale_color_locuszoom()
-
-## ----beg, fig.height=4, fig.width=20, fig.pos="center"-------------------
 data(mtcars)
 
 
@@ -72,8 +63,6 @@ map2 <- map %>% filter(region == "iowa")
 p5 <- data %>% filter(state == "iowa") %>% ggplot() + geom_map(aes(map_id=state), map=map2, fill = "grey33") + expand_limits(x = map2$long, y = map2$lat)+ labs(title = "Map")
 grid.arrange(p1, p2, p3, p4, p5, ncol = 5, nrow = 1)
 
-
-## ------------------------------------------------------------------------
 # library(devtools)
 # devtools::install_github("mangothecat/fftw3")
 # install_github('omegahat/Rcartogram')
@@ -108,8 +97,6 @@ grid.arrange(p1, p2, p3, p4, p5, ncol = 5, nrow = 1)
 # ## Display the plot and give it a title
 # (my_map <- my_map + ggtitle("Cartogram of the World Population (2013)"))
 
-
-## ----int, fig.height=4, fig.width=20, fig.pos="center", message = FALSE, warning = FALSE----
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -157,8 +144,6 @@ i5 <-ggplot(data = df.team_data, aes(x = metrics, y = teams)) +
 grid.arrange(i2, i3, i4, i5, ncol = 4, nrow = 1)
 
 
-## ----adv, fig.height=4, fig.width=18, fig.pos="center"-------------------
-
 a1 <- ggplot(diamonds, aes(depth)) +
     geom_density(aes(fill = cut), alpha = .8) +
     xlim(55, 70) + labs(x="", y="", title="Density Plot")+scale_colour_grey(start=0.6, end= 0.9)+scale_fill_grey(start=0.6, end= 0.9) + theme(legend.position = "none")
@@ -176,8 +161,6 @@ a3 <- ggplot(data = blood$edges, aes(from_id = from, to_id = to)) +
 
 grid.arrange(a1, a2, a3, ncol = 3, nrow = 1)
 
-
-## ----plots-3, fig.align='bottom', fig.height=5, fig.width=15-------------
 library(ggsci)
 data(diamonds)
 p1 <- ggplot(diamonds, aes(cut, fill=cut)) + geom_bar() + labs(title = "Bar Chart", subtitle = "Cartesian coordinates")+ scale_fill_locuszoom()
@@ -185,21 +168,15 @@ p2 <- ggplot(diamonds, aes(factor(1), fill=cut)) + geom_bar(width=1) + labs(x=""
 p3 <- ggplot(diamonds, aes(factor(1), fill=cut)) + geom_bar(width=1) + coord_polar(theta= "y") + labs(x="", title = "Fill-Bar", subtitle = "Polar coordinates")+ scale_fill_locuszoom()
 
 grid.arrange(p1, p2, p3, ncol = 3, nrow = 1)
-
-## ----plots-4, fig.align='top', fig.height=5, fig.width=15----------------
 p1 <- ggplot(diamonds, aes(cut, fill=cut)) + geom_bar() + labs(title = "Bar Chart", subtitle = "Cartesian coordinates")+ scale_fill_locuszoom()
 p2 <- ggplot(diamonds, aes(factor(1), fill=cut)) + geom_bar(width=1) + labs(x="", title = "Fill-Bar", subtitle = "Cartesian coordinates") + scale_fill_locuszoom()
 p3 <- ggplot(diamonds, aes(factor(1), fill=cut)) + geom_bar(width=1) + coord_polar(theta= "y") + labs(x="", title = "Fill-Bar", subtitle = "Polar coordinates")+ scale_fill_locuszoom()
 grid.arrange(p1, p2, p3, ncol = 3, nrow = 1)
-
-## ---- eval=FALSE, fig.align='center', include=FALSE----------------------
 ## library(ggplot2)
 ## data(iris)
 ## p <- ggplot(data = iris, mapping = aes(x = Petal.Length, y = Petal.Width))
 ## p
 ## p + geom_point()
-
-## ---- eval=FALSE, fig.align='center', fig.height=4, fig.width=8, include=FALSE----
 ## 
 ## p1 <- ggplot(data = iris, mapping = aes(x = Petal.Length, y = Petal.Width))
 ## 
@@ -208,75 +185,44 @@ grid.arrange(p1, p2, p3, ncol = 3, nrow = 1)
 ## 
 ## grid.arrange(p1, p2, ncol = 2, nrow = 1)
 ## 
-
-## ---- fig.width=10, fig.height=6, echo = TRUE----------------------------
 ggplot(data = diamonds)
-
-## ---- eval=FALSE, fig.height=6, fig.width=10, echo = TRUE----------------
 ## ggplot(data = diamonds, aes(x = carat, y = price))
 ## 
-
-## ---- echo=FALSE, fig.height=6, fig.width=10-----------------------------
 ggplot(data = diamonds, aes(x = carat, y = price))+ scale_fill_locuszoom()
-
-## ---- eval=FALSE, fig.width=10, fig.height=5, echo = TRUE----------------
 ## ggplot(data = diamonds, aes(x = carat, y = price)) +
 ##     geom_point()
-
-## ---- echo=FALSE, fig.width=10, fig.height=5-----------------------------
 ggplot(data = diamonds, aes(x = carat, y = price)) +
     geom_point()+ scale_color_locuszoom()
-
-## ---- eval=FALSE, fig.width=10, fig.height=5, echo = TRUE----------------
 ## ggplot(data = diamonds, aes(x = carat, y = price)) +
 ##     geom_point(aes(colour = cut))
-
-## ---- echo=FALSE, fig.width=10, fig.height=5-----------------------------
 ggplot(data = diamonds, aes(x = carat, y = price)) +
     geom_point(aes(colour = cut)) + scale_color_locuszoom()
-
-## ---- eval = FALSE, fig.width=10, fig.height=5, echo = TRUE--------------
 ## ggplot(data = diamonds, aes(x = carat, y = price)) +
 ##     geom_point(aes(colour = cut)) +
 ##    geom_smooth()
-
-## ---- echo = FALSE, fig.width=10, fig.height=5---------------------------
 ggplot(data = diamonds, aes(x = carat, y = price)) +
     geom_point(aes(colour = cut)) +
     geom_smooth() + scale_color_locuszoom()
-
-## ---- fig.width=10, fig.height=5, eval = FALSE, echo = TRUE--------------
 ## ggplot(data = diamonds, aes(x = carat, y = price) +
 ##     geom_point(aes(colour = cut), size = 2, alpha = .5) +
 ##     geom_smooth((aes(fill = cut), colour = "lightgrey"))
-
-## ---- fig.width=10, fig.height=5, echo = FALSE---------------------------
 ggplot(data = diamonds, aes(x = carat, y = price)) +
     geom_point(aes(colour = cut), size = 2, alpha = .5) + scale_color_locuszoom()+ scale_fill_locuszoom()+
     geom_smooth(aes(fill = cut), colour = "lightgrey")
-
-## ---- fig.width=10, fig.height=5, eval = FALSE, echo = TRUE--------------
 ## ggplot(data = diamonds, aes(x = carat, y = price)) +
 ##     geom_point(aes(colour = cut), size = 2, alpha = .5) +
 ##     geom_smooth(aes(fill = cut)) +
 ##     scale_y_log10()
-
-## ---- fig.width=10, fig.height=5, echo = FALSE---------------------------
 ggplot(data = diamonds, aes(x = carat, y = price)) +
     geom_point(aes(colour = cut), size = 2, alpha = .5) +
     geom_smooth(aes(fill = cut)) + scale_color_locuszoom()+ scale_fill_locuszoom()+ scale_y_log10()
-
-## ---- fig.width=10, fig.height=5, eval = FALSE, echo = TRUE--------------
 ## ggplot(data = diamonds, aes(x = carat, y = price)) +
 ##     geom_point(aes(colour = cut), size = 2, alpha = .5) +
 ##     geom_smooth() +
 ##     scale_y_log10() +
 ##     facet_wrap(~cut)
-
-## ---- fig.width=10, fig.height=5, echo = FALSE---------------------------
 ggplot(data = diamonds, aes(x = carat, y = price)) +
     geom_point(aes(colour = cut), size = 2, alpha = .5) +
     geom_smooth(aes(fill = cut)) + scale_color_locuszoom()+ scale_fill_locuszoom()+
     scale_y_log10()+
     facet_wrap(~cut)
-

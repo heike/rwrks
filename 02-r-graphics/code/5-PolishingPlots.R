@@ -1,4 +1,3 @@
-## ----setup, include=FALSE------------------------------------------------
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
 	echo = TRUE,
@@ -6,8 +5,6 @@ knitr::opts_chunk$set(
 	warning = FALSE,
 	cache = TRUE
 )
-
-## ---- echo=FALSE---------------------------------------------------------
 library(ggplot2)
 library(ggsci)
 library(ggthemes)
@@ -44,8 +41,6 @@ grid_arrange_shared_legend <- function(..., ncol = length(list(...)), nrow = 1, 
 }
 
 
-## ---- echo=FALSE, fig.height=7, fig.width=10, message=FALSE, warning=FALSE----
-
 mtcars$gear <- factor(mtcars$gear)
 
 p0 <- ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + geom_point() 
@@ -58,8 +53,6 @@ p5 <- p0 + theme_void() + labs(title = "theme_void")
 p6 <- p0 + theme_minimal() + labs(title = "theme_minimal")
 
 grid.arrange(p1, p2, p3, p4, p5, p6, nrow = 2)
-
-## ---- echo=FALSE, fig.height=7, fig.width=10-----------------------------
 library(ggthemes)
 
 # Economist theme
@@ -90,14 +83,10 @@ p9 <- p0 + theme_excel() + scale_colour_excel() + labs(title = "Excel 2003")
 
 
 grid.arrange(p1, p0, p3, p4, p5, p6, p7, p8, p9, nrow = 3)
-
-## ---- fig.width=10, fig.height=4-----------------------------------------
 theme_set(theme_bw())
 
 ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + geom_point()
 
-
-## ---- fig.height=4, fig.width=10, eval = FALSE---------------------------
 ## p1 <- ggplot(mpg) +
 ##   geom_bar(aes(x = class, colour = manufacturer, fill = manufacturer) )
 ## 
@@ -105,8 +94,6 @@ ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + geom_point()
 ##   ## modify plot background
 ##   plot.background = element_rect(fill = "lightskyblue1",colour = "pink",size = 0.5, linetype = "longdash")
 ##   )
-
-## ---- fig.height=4, fig.width=10, echo = FALSE---------------------------
 p1 <- ggplot(mpg) + 
   geom_bar(aes(x = class, colour = manufacturer, fill = manufacturer) ) 
 
@@ -115,8 +102,6 @@ p2 <- p1 + theme_classic() + theme(
   plot.background = element_rect(fill = "lightskyblue1",colour = "pink",size = 0.5, linetype = "longdash")
   )
 grid.arrange(p1, p2, nrow = 1)
-
-## ---- fig.height=4, fig.width=10-----------------------------------------
 p3 <- p2 + theme(
   ### move and modify legend 
   legend.title = element_blank(),
@@ -124,58 +109,36 @@ p3 <- p2 + theme(
   legend.key = element_rect(fill = "lightskyblue1", color = "lightskyblue1"),
   legend.background = element_rect( fill = "lightskyblue1",color = "pink", size = 0.5,linetype = "longdash")
   )
-
-## ---- fig.height=4, fig.width=10, echo = FALSE---------------------------
 grid.arrange(p2, p3, nrow = 1)
-
-## ---- echo=TRUE, fig.height=3.5, fig.width=10----------------------------
 p4 <- p3 + theme(
   ### remove axis ticks
   axis.ticks=element_blank(),
   ### modify axis lines
   axis.line.y = element_line(colour = "pink", size = 1, linetype = "dashed"),
   axis.line.x = element_line(colour = "pink", size = 1.2, linetype = "dashed"))
-
-## ---- echo=FALSE, fig.height=3.5, fig.width=10---------------------------
 grid.arrange(p3, p4, nrow = 1)
-
-## ---- echo=TRUE, fig.height=3.5, fig.width=10----------------------------
 p5 <- p4 + labs(x = "Class of car", 
                 y = "",
                 title = "Cars by class and manufacturer",
                 subtitle = "With a custom theme!!")
-
-## ---- echo=FALSE, fig.height=3.5, fig.width=10---------------------------
 grid.arrange(p4, p5, nrow = 1)
-
-## ---- echo=TRUE, fig.height=3.5, fig.width=10----------------------------
 p <- ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + geom_point() 
 p_zoom_in <- p + xlim(2, 4) + ylim(10, 25)
 p_zoom_out <- p + xlim(0,7) + ylim(0, 45)
-
-## ---- echo=FALSE, fig.height=3.5, fig.width=10---------------------------
 p <- ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + geom_point() + theme(legend.position = "none") + ggtitle("Default")+ scale_color_locuszoom()
 p_zoom_in <- p + xlim(2, 4) + ylim(10, 25) + ggtitle("Zoomed in")
 p_zoom_out <- p + xlim(0,7) + ylim(0, 45) + ggtitle("Zoomed out")
 grid.arrange(p, p_zoom_in, p_zoom_out, nrow = 1)
-
-## ---- fig.height=3.5, fig.width=10---------------------------------------
 p <- ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) + geom_point() + scale_color_locuszoom()
 
 library(plotly)
 ggplotly(p)
 
-
-## ---- eval=FALSE---------------------------------------------------------
 ## p1 <- ggplot(mtcars, aes(x = wt, y = mpg, colour = gear)) +
 ##   geom_point()
 ## 
 ## ggsave("mpg_by_wt.pdf", plot = p1)
-
-## ---- fig.width=10, fig.height=4-----------------------------------------
 ggplot(data = diamonds, aes(x = x, y = y))
-
-## ---- echo=FALSE, fig.width=10, fig.height=4, eval = FALSE---------------
 ## p1 <- ggplot(data = diamonds, aes(x = x, y = y, colour = clarity)) +
 ##     geom_point() +
 ##     ggtitle("Diamond y by x") +
@@ -185,4 +148,3 @@ ggplot(data = diamonds, aes(x = x, y = y))
 ## p1
 ## 
 ## # ggsave("yourturn.pdf", plot = p1)
-
