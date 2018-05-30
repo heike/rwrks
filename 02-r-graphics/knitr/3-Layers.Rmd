@@ -17,7 +17,8 @@ knitr::opts_chunk$set(
 	echo = FALSE,
 	message = FALSE,
 	warning = FALSE,
-	cache = TRUE
+	cache = TRUE,
+	purl = FALSE
 )
 ```
 
@@ -106,12 +107,30 @@ img <- readPNG("images/ggplot2-notation.png")
 
 
 ```{r plots-4, fig.align='bottom', fig.height=5, fig.width=15}
-p1 <- ggplot(data = mpg, aes(x = class, y = hwy))
-p2 <- ggplot(data = mpg, aes(x = class, y = hwy)) + geom_boxplot()
-p3 <- ggplot(data = mpg, aes(x = class, y = hwy)) + geom_jitter() + geom_boxplot() 
+p1 <- ggplot(data = mpg, aes(x = class, y = hwy)) + labs(title = "")
+p2 <- ggplot(data = mpg, aes(x = class, y = hwy)) + geom_boxplot() + labs(title = "+ geom_boxplot()")
+p3 <- ggplot(data = mpg, aes(x = class, y = hwy)) + geom_jitter() + geom_boxplot() + labs(title = "+ geom_jitter() + geom_boxplot()")
 grid.arrange(p1, p2, p3, ncol = 3, nrow = 1)
 ```
 
+```{r, eval = FALSE, purl = TRUE}
+
+ ggplot(data = mpg, aes(x = class, y = hwy)) + labs(title = "")
+ggplot(data = mpg, aes(x = class, y = hwy)) + geom_boxplot() + labs(title = "+ geom_boxplot()")
+ggplot(data = mpg, aes(x = class, y = hwy)) + geom_jitter() + geom_boxplot() + labs(title = "+ geom_jitter() + geom_boxplot()")
+
+```
+---
+class: inverse
+## Your Turn
+
+Change the code below to have the points **on top** of the boxplots.
+
+```{r echo=TRUE, fig.height=4, fig.width=8, purl=TRUE}
+ggplot(data = mpg, aes(x = class, y = hwy)) + 
+  geom_jitter() + 
+  geom_boxplot()
+```
 ---
 
 
@@ -124,6 +143,12 @@ In ggplot2, we use a geom function to represent data points, and use the geom's 
 p1 <- ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_text(aes(label = class))+ scale_color_locuszoom() +labs(x = "city mpg", y = "highway mpg", title = "Geom Text")
 p2 <- ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_point()+ scale_color_locuszoom() + labs(x = "city mpg", y = "highway mpg", title = "Geom Point")
 grid.arrange(p2, p1, ncol = 2, nrow = 1)
+```
+
+```{r, eval = FALSE, purl = TRUE}
+ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_text(aes(label = class)) + labs(x = "city mpg", y = "highway mpg", title = "Geom Text")
+
+ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_point() + labs(x = "city mpg", y = "highway mpg", title = "Geom Point")
 ```
 
 Once our data is formatted and we know what type of variables we are working with, we can select the correct geom for our visualization. 
@@ -155,6 +180,15 @@ p3 <- ggplot(data = mpg, aes(x = class, y = hwy, colour = class)) + geom_jitter(
 grid.arrange(p1, p2, p3, ncol = 3, nrow = 1)
 ```
 
+```{r, eval = FALSE, purl = TRUE}
+ggplot(data = mpg, aes(x = class, y = hwy, colour = class)) + geom_jitter(width = 0.1)
+
+ggplot(data = mpg, aes(x = class, y = hwy, colour = class)) + geom_violin(aes(fill = class), alpha = 0.4) 
+
+ggplot(data = mpg, aes(x = class, y = hwy, colour = class)) + geom_jitter(width = 0.1) + geom_violin(aes(fill = class), alpha = 0.4)
+
+
+```
 ---
 # Alternative method of building layers: Stats
 
@@ -296,3 +330,5 @@ grid.arrange(r1, r2, r3, r5, r4, r7, r8, nrow = 2)
 ---
 
 ## ggplot2 extenstions
+
+[gallery](http://www.ggplot2-exts.org/gallery/)

@@ -64,6 +64,21 @@ Complete the template below to build a graph
 
 &lt;img src="3-Layers_files/figure-html/plots-4-1.png"  /&gt;
 
+
+---
+class: inverse
+## Your Turn
+
+Change the code below to have the points **on top** of the boxplots.
+
+
+```r
+ggplot(data = mpg, aes(x = class, y = hwy)) + 
+  geom_jitter() + 
+  geom_boxplot()
+```
+
+![](3-Layers_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
 ---
 
 
@@ -72,14 +87,16 @@ Complete the template below to build a graph
 In ggplot2, we use a geom function to represent data points, and use the geom's aesthetic properties to represent variables.
 
 
-&lt;img src="3-Layers_files/figure-html/unnamed-chunk-3-1.png"  /&gt;
+&lt;img src="3-Layers_files/figure-html/unnamed-chunk-5-1.png"  /&gt;
+
+
 
 Once our data is formatted and we know what type of variables we are working with, we can select the correct geom for our visualization. 
 
 ---
 # Available geoms 
 
-&lt;img src="3-Layers_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="3-Layers_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -91,17 +108,18 @@ Once our data is formatted and we know what type of variables we are working wit
 
 - A plot may have multiple layers
  
-&lt;img src="3-Layers_files/figure-html/unnamed-chunk-5-1.png"  /&gt;
+&lt;img src="3-Layers_files/figure-html/unnamed-chunk-8-1.png"  /&gt;
+
 
 ---
 # Alternative method of building layers: Stats
 
 A stat builds a new variable to plot (e.g., count and proportion)
 .pull-left[
-&lt;img src="3-Layers_files/figure-html/unnamed-chunk-6-1.png"  /&gt;
+&lt;img src="3-Layers_files/figure-html/unnamed-chunk-10-1.png"  /&gt;
 ]
 .pull-right[
-&lt;img src="3-Layers_files/figure-html/unnamed-chunk-7-1.png"  /&gt;
+&lt;img src="3-Layers_files/figure-html/unnamed-chunk-11-1.png"  /&gt;
 ]
 
 
@@ -118,7 +136,7 @@ ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_point()
 ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_point() +facet_grid(.~class)
 ```
 
-&lt;img src="3-Layers_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="3-Layers_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Faceting Options
@@ -151,7 +169,7 @@ Position adjustments determine how to arrange geoms that would otherwise occupy 
 
 `ggplot(mpg, aes(fl, fill = drv)) + geom_bar(position = "")`
 
-&lt;img src="3-Layers_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="3-Layers_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 # Position Adjustments: Jitter
@@ -159,7 +177,7 @@ Position adjustments determine how to arrange geoms that would otherwise occupy 
 - **Jitter**: Add random noise to X &amp; Y position of each element to avoid overplotting
 - There is also a jitter geom 
 
-&lt;img src="3-Layers_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="3-Layers_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -176,13 +194,15 @@ Position adjustments determine how to arrange geoms that would otherwise occupy 
 
 
 
-&lt;img src="3-Layers_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="3-Layers_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 
 
 
 ---
 
 ## ggplot2 extenstions
+
+[gallery](http://www.ggplot2-exts.org/gallery/)
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
