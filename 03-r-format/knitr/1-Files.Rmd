@@ -167,7 +167,7 @@ class: inverse
 
 The NHANES (National Health and Nutrition Survey) publishes data in the SAS xport format:
 
-http://wwwn.cdc.gov/Nchs/Nhanes/Search/nhanes13_14.aspx
+https://wwwn.cdc.gov/Nchs/Nhanes/continuousnhanes/default.aspx?BeginYear=2013
 
 1. Scroll to the bottom, choose one of the datasets (Demographics, Examination, etc.). Download the Data file (XPT)
 
