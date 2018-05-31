@@ -206,9 +206,7 @@ HallOfFame %>%
 
 - In `dplyr` there are various join functions: `left_join`, `inner_join`, `full_join`, ...
 
-- Differences between join functions only visible, if not all values in one set have values in the other
-
-- We've already done some joining - maps example. Joining by state name
+- Differences between join functions are only visible if not all values in one set have values in the other
 
 ---
 
