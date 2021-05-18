@@ -154,7 +154,7 @@ ggplot(data = mpg, aes(x = cty, y = hwy, colour = class)) + geom_point() + labs(
 Once our data is formatted and we know what type of variables we are working with, we can select the correct geom for our visualization. 
 
 ---
-# Available geoms 
+## Available geoms 
 
 ```{r, echo=FALSE, fig.align="center"}
 library(png)
@@ -331,4 +331,4 @@ grid.arrange(r1, r2, r3, r5, r4, r7, r8, nrow = 2)
 
 ## ggplot2 extenstions
 
-[gallery](http://www.ggplot2-exts.org/gallery/)
+[gallery](https://exts.ggplot2.tidyverse.org/)
